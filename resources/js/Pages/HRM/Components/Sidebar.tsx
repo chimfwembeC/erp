@@ -3,12 +3,12 @@ import { NavLink } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
-    <aside className="text-white w-64 h-screen sticky top-0 p-6 overflow-y-auto  bg-gray-200 h-64">
+    <aside className="bg-gray-800 text-white w-64 h-full p-6 overflow-y-auto">
       <nav className="space-y-4">
         <NavLink
-          to="hrm"
+          to="/hrm"
           className={({ isActive }) =>
-            `block py-2 px-4 rounded-lg hover:text-white ${isActive ? 'bg-gray-800' : 'bg-gray-500'} hover:bg-gray-700`
+            `flex items-center py-2 px-4 rounded-lg transition duration-300 hover:bg-gray-700 ${isActive ? 'bg-gray-900' : ''}`
           }
         >
           Dashboard
@@ -17,7 +17,7 @@ const Sidebar = () => {
         <NavLink
           to="/hrm/employees"
           className={({ isActive }) =>
-            `block py-2 px-4 rounded-lg hover:text-white ${isActive ? 'bg-gray-800' : 'bg-gray-500'} hover:bg-gray-700`
+            `flex items-center py-2 px-4 rounded-lg transition duration-300 hover:bg-gray-700 ${isActive ? 'bg-gray-900' : ''}`
           }
         >
           Employees
@@ -26,7 +26,7 @@ const Sidebar = () => {
         <NavLink
           to="/hrm/attendance"
           className={({ isActive }) =>
-            `block py-2 px-4 rounded-lg hover:text-white ${isActive ? 'bg-gray-800' : 'bg-gray-500'} hover:bg-gray-700`
+            `flex items-center py-2 px-4 rounded-lg transition duration-300 hover:bg-gray-700 ${isActive ? 'bg-gray-900' : ''}`
           }
         >
           Attendance
@@ -35,7 +35,7 @@ const Sidebar = () => {
         <NavLink
           to="/hrm/payroll"
           className={({ isActive }) =>
-            `block py-2 px-4 rounded-lg hover:text-white ${isActive ? 'bg-gray-800' : 'bg-gray-500'} hover:bg-gray-700`
+            `flex items-center py-2 px-4 rounded-lg transition duration-300 hover:bg-gray-700 ${isActive ? 'bg-gray-900' : ''}`
           }
         >
           Payroll
