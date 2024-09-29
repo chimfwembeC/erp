@@ -7,14 +7,42 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
+// Define the structure for sidebar links
+interface SidebarLink {
+  label: string;
+  icon: React.ReactNode;
+  href: string;
+  children?: SidebarLink[];
+}
+
+const sidebarLinks: SidebarLink[] = [
+  { label: 'Dashboard', icon: <Home size={20} />, href: '/dashboard' },
+  {
+    label: 'Employees',
+    icon: <User size={20} />,
+    href: '#',
+    children: [
+      { label: 'Employee List', href: '/employees/list' },
+      { label: 'Attendance', href: '/employees/attendance' },
+    ],
+  },
+  {
+    label: 'Payroll',
+    icon: <FileText size={20} />,
+    href: '#',
+    children: [
+      { label: 'Salary', href: '/payroll/salary' },
+      { label: 'Payroll Reports', href: '/payroll/reports' },
+    ],
+  },
+];
+
 export default function Layout({ title, children }: LayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [employeeDropdownOpen, setEmployeeDropdownOpen] = useState(false);
-  const [payrollDropdownOpen, setPayrollDropdownOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
-  const toggleDropdown = (dropdown: string) => {
-    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
+  const toggleDropdown = (label: string) => {
+    setActiveDropdown(activeDropdown === label ? null : label);
   };
 
   return (
@@ -41,76 +69,44 @@ export default function Layout({ title, children }: LayoutProps) {
 
           {/* Sidebar Links */}
           <ul className="flex-1 p-4 space-y-3 overflow-auto">
-            {/* Dashboard */}
-            <li>
-              <Link
-                href="/dashboard"
-                className="flex items-center p-2 space-x-2 hover:bg-indigo-100 rounded-md"
-              >
-                <Home size={20} />
-                <span>Dashboard</span>
-              </Link>
-            </li>
-
-            {/* Employees Dropdown */}
-            <li>
-              <div
-                onClick={() => setEmployeeDropdownOpen(!employeeDropdownOpen)}
-                className="flex items-center justify-between p-2 space-x-2 hover:bg-indigo-100 rounded-md cursor-pointer"
-              >
-                <div className="flex items-center space-x-2">
-                  <User size={20} />
-                  <span>Employees</span>
-                </div>
-                {employeeDropdownOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-              </div>
-
-              {/* Employees Sub-menu */}
-              {employeeDropdownOpen && (
-                <ul className="pl-6 space-y-2">
-                  <li>
-                    <Link href="/employees/list" className="block p-2 text-sm hover:bg-indigo-50 rounded-md">
-                      Employee List
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/employees/attendance" className="block p-2 text-sm hover:bg-indigo-50 rounded-md">
-                      Attendance
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-
-            {/* Payroll Dropdown */}
-            <li>
-              <div
-                onClick={() => setPayrollDropdownOpen(!payrollDropdownOpen)}
-                className="flex items-center justify-between p-2 space-x-2 hover:bg-indigo-100 rounded-md cursor-pointer"
-              >
-                <div className="flex items-center space-x-2">
-                  <FileText size={20} />
-                  <span>Payroll</span>
-                </div>
-                {payrollDropdownOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-              </div>
-
-              {/* Payroll Sub-menu */}
-              {payrollDropdownOpen && (
-                <ul className="pl-6 space-y-2">
-                  <li>
-                    <Link href="/payroll/salary" className="block p-2 text-sm hover:bg-indigo-50 rounded-md">
-                      Salary
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/payroll/reports" className="block p-2 text-sm hover:bg-indigo-50 rounded-md">
-                      Payroll Reports
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </li>
+            {sidebarLinks.map((link) => (
+              <li key={link.label}>
+                {link.children ? (
+                  <div>
+                    <div
+                      onClick={() => toggleDropdown(link.label)}
+                      className="flex items-center justify-between p-2 space-x-2 hover:bg-indigo-100 rounded-md cursor-pointer"
+                    >
+                      <div className="flex items-center space-x-2">
+                        {link.icon}
+                        <span>{link.label}</span>
+                      </div>
+                      {activeDropdown === link.label ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                    </div>
+                    {/* Nested Links */}
+                    {activeDropdown === link.label && (
+                      <ul className="pl-6 space-y-2">
+                        {link.children?.map((child) => (
+                          <li key={child.label}>
+                            <Link href={child.href} className="block p-2 text-sm hover:bg-indigo-50 rounded-md">
+                              {child.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    href={link.href}
+                    className="flex items-center p-2 space-x-2 hover:bg-indigo-100 rounded-md"
+                  >
+                    {link.icon}
+                    <span>{link.label}</span>
+                  </Link>
+                )}
+              </li>
+            ))}
           </ul>
 
           {/* User Section */}

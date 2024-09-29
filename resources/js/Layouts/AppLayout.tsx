@@ -1,21 +1,195 @@
 import React, { useState } from 'react';
-import { Link } from '@inertiajs/react';
-import { Home, User, FileText, Settings, Bell, Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
+import { Link, usePage } from '@inertiajs/react'; // Added `usePage`
+import { Home, User, FileText, Settings, Bell, Menu, X, ChevronDown, ChevronUp, User2, DollarSign, ShoppingCart, HelpCircle, Clipboard, CheckCircle } from 'lucide-react';
 
 interface LayoutProps {
   title: string;
   children: React.ReactNode;
 }
 
+// Define the structure for sidebar links
+interface SidebarLink {
+  label: string;
+  icon: React.ReactNode;
+  href?: string;
+  children?: SidebarLink[];
+}
+
+const sidebarLinks: SidebarLink[] = [
+  { label: 'Dashboard', icon: <Home size={20} />, href: '/dashboard' },
+  {
+    label: 'Accounting',
+    icon: <DollarSign size={20} />,
+    href: '#',
+    children: [
+      { label: 'Invoices', href: '/accounting/invoices' },
+      { label: 'Expenses', href: '/accounting/expenses' },
+      { label: 'Reports', href: '/accounting/reports' },
+    ],
+  },
+  {
+    label: 'HRM System',
+    icon: <User2 size={20} />,
+    href: '#',
+    children: [
+      { 
+        label: 'Dashboard',
+        href: '/hrm' ,
+        icon: <User2 size={20} />,        
+      },
+      {
+        label: 'Employees',
+        icon: <User size={20} />,
+        href: '#',
+        children: [                    
+          { label: 'Employee List', href: '/employees/list' },
+          { label: 'Attendance', href: '/employees/attendance' },
+        ],
+      },
+      {
+        label: 'Payroll',
+        icon: <FileText size={20} />,
+        href: '#',
+        children: [
+          { label: 'Salary', href: '/payroll/salary' },
+          { label: 'Payroll Reports', href: '/payroll/reports' },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'CRM',
+    icon: <User size={20} />,
+    href: '#',
+    children: [
+      { label: 'Leads', href: '/crm/leads' },
+      { label: 'Opportunities', href: '/crm/opportunities' },
+      { label: 'Customers', href: '/crm/customers' },
+    ],
+  },
+  {
+    label: 'POS',
+    icon: <ShoppingCart size={20} />,
+    href: '#',
+    children: [
+      { label: 'Sales', href: '/pos/sales' },
+      { label: 'Inventory', href: '/pos/inventory' },
+      { label: 'Reports', href: '/pos/reports' },
+    ],
+  },
+  {
+    label: 'SRM',
+    icon: <User2 size={20} />,
+    href: '#',
+    children: [
+      { label: 'Suppliers', href: '/srm/suppliers' },
+      { label: 'Orders', href: '/srm/orders' },
+      { label: 'Contracts', href: '/srm/contracts' },
+    ],
+  },
+  {
+    label: 'Support',
+    icon: <HelpCircle size={20} />,
+    href: '#',
+    children: [
+      { label: 'Tickets', href: '/support/tickets' },
+      { label: 'Knowledge Base', href: '/support/knowledge-base' },
+      { label: 'Feedback', href: '/support/feedback' },
+    ],
+  },
+  {
+    label: 'Testing',
+    icon: <Clipboard size={20} />,
+    href: '#',
+    children: [
+      { label: 'Test Cases', href: '/testing/test-cases' },
+      { label: 'Bug Tracking', href: '/testing/bug-tracking' },
+      { label: 'Reports', href: '/testing/reports' },
+    ],
+  },
+  {
+    label: 'Settings',
+    icon: <Settings size={20} />,
+    href: '#',
+    children: [
+      { label: 'User Management', href: '/settings/user-management' },
+      { label: 'System Settings', href: '/settings/system' },
+      { label: 'Backup', href: '/settings/backup' },
+    ],
+  },
+];
+
 export default function Layout({ title, children }: LayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [employeeDropdownOpen, setEmployeeDropdownOpen] = useState(false);
-  const [payrollDropdownOpen, setPayrollDropdownOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
-  const toggleDropdown = (dropdown: string) => {
-    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
+  // Get the current URL path using usePage hook from Inertia
+  const { url } = usePage();
+
+  const toggleDropdown = (label: string) => {
+    setActiveDropdown(activeDropdown === label ? null : label);
   };
+
+  const isActiveLink = (href?: string) => {
+    return href && url === href; // Check if the current page matches the href
+  };
+
+  const renderLinks = (links: SidebarLink[]) => {
+    return links.map((link) => (
+      <li key={link.label}>
+        {link.children ? (
+          <div>
+            <div
+              onClick={() => toggleDropdown(link.label)}
+              className={`flex items-center justify-between p-2 space-x-2 rounded-md cursor-pointer ${
+                activeDropdown === link.label ? 'bg-indigo-100' : ''
+              }`}
+            >
+              <div className="flex items-center space-x-2">
+                {link.icon}
+                <span>{link.label}</span>
+              </div>
+              {activeDropdown === link.label ? (
+                <ChevronUp size={20} />
+              ) : (
+                <ChevronDown size={20} />
+              )}
+            </div>
+            {/* Nested Links */}
+            {activeDropdown === link.label && (
+              <ul className="pl-6 space-y-2">
+                {link.children.map((child) => (
+                  <li key={child.label}>
+                    <Link
+                      href={child.href!} // Use non-null assertion as `href` is defined for non-dropdown links
+                      className={`flex items-center p-2 space-x-2 rounded-md mt-2 ${
+                        isActiveLink(child.href) ? 'bg-indigo-200 font-bold' : 'hover:bg-indigo-100'
+                      }`}
+                    >
+                      {child.icon}
+                      <span>{child.label}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ) : (
+          <Link
+            href={link.href!} // Use non-null assertion as `href` is defined for non-dropdown links
+            className={`flex items-center p-2 space-x-2 rounded-md ${
+              isActiveLink(link.href) ? 'bg-indigo-200 font-bold' : 'hover:bg-indigo-100'
+            }`}
+          >
+            {link.icon}
+            <span>{link.label}</span>
+          </Link>
+        )}
+      </li>
+    ));
+  };
+  
+  
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-100">
@@ -41,76 +215,7 @@ export default function Layout({ title, children }: LayoutProps) {
 
           {/* Sidebar Links */}
           <ul className="flex-1 p-4 space-y-3 overflow-auto">
-            {/* Dashboard */}
-            <li>
-              <Link
-                href="/dashboard"
-                className="flex items-center p-2 space-x-2 hover:bg-indigo-100 rounded-md"
-              >
-                <Home size={20} />
-                <span>Dashboard</span>
-              </Link>
-            </li>
-
-            {/* Employees Dropdown */}
-            <li>
-              <div
-                onClick={() => setEmployeeDropdownOpen(!employeeDropdownOpen)}
-                className="flex items-center justify-between p-2 space-x-2 hover:bg-indigo-100 rounded-md cursor-pointer"
-              >
-                <div className="flex items-center space-x-2">
-                  <User size={20} />
-                  <span>Employees</span>
-                </div>
-                {employeeDropdownOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-              </div>
-
-              {/* Employees Sub-menu */}
-              {employeeDropdownOpen && (
-                <ul className="pl-6 space-y-2">
-                  <li>
-                    <Link href="/employees/list" className="block p-2 text-sm hover:bg-indigo-50 rounded-md">
-                      Employee List
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/employees/attendance" className="block p-2 text-sm hover:bg-indigo-50 rounded-md">
-                      Attendance
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-
-            {/* Payroll Dropdown */}
-            <li>
-              <div
-                onClick={() => setPayrollDropdownOpen(!payrollDropdownOpen)}
-                className="flex items-center justify-between p-2 space-x-2 hover:bg-indigo-100 rounded-md cursor-pointer"
-              >
-                <div className="flex items-center space-x-2">
-                  <FileText size={20} />
-                  <span>Payroll</span>
-                </div>
-                {payrollDropdownOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-              </div>
-
-              {/* Payroll Sub-menu */}
-              {payrollDropdownOpen && (
-                <ul className="pl-6 space-y-2">
-                  <li>
-                    <Link href="/payroll/salary" className="block p-2 text-sm hover:bg-indigo-50 rounded-md">
-                      Salary
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/payroll/reports" className="block p-2 text-sm hover:bg-indigo-50 rounded-md">
-                      Payroll Reports
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </li>
+            {renderLinks(sidebarLinks)}
           </ul>
 
           {/* User Section */}
@@ -138,17 +243,17 @@ export default function Layout({ title, children }: LayoutProps) {
 
                 <ul className="pl-4 mt-1 space-y-2 text-sm text-gray-600">
                   <li>
-                    <Link href="/profile" className="block p-2 hover:bg-indigo-50 rounded-md">
-                      Manage Profile
+                    <Link href="/profile" className="hover:text-indigo-600">
+                      Profile
                     </Link>
                   </li>
                   <li>
-                    <Link href="/settings" className="block p-2 hover:bg-indigo-50 rounded-md">
+                    <Link href="/settings" className="hover:text-indigo-600">
                       Settings
                     </Link>
                   </li>
                   <li>
-                    <Link href="/logout" className="block p-2 text-red-600 hover:bg-red-50 rounded-md">
+                    <Link href="/logout" className="hover:text-red-600">
                       Logout
                     </Link>
                   </li>
@@ -217,15 +322,19 @@ export default function Layout({ title, children }: LayoutProps) {
               {/* Settings Dropdown */}
               {activeDropdown === 'settings' && (
                 <div className="absolute right-0 top-12 mt-2 w-48 bg-white shadow-lg rounded-lg py-2">
-                  <div className="p-2 px-4 block text-sm text-gray-800 font-semibold">Profile settings</div>
                   <ul>
+                    <li>
+                      <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50">
+                        Profile
+                      </Link>
+                    </li>
                     <li>
                       <Link href="/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50">
                         Settings
                       </Link>
                     </li>
                   </ul>
-                  <div className='m-2'>
+                  <div className="m-2">
                     <Link href="/logout" className="block px-4 py-2 text-white bg-red-500 p-2 rounded-lg hover:bg-red-700">
                       Logout
                     </Link>
@@ -233,29 +342,6 @@ export default function Layout({ title, children }: LayoutProps) {
                 </div>
               )}
             </div>
-
-            {/* Profile Dropdown */}
-            {activeDropdown === 'profile' && (
-              <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg py-2">
-                <ul>
-                  <li>
-                    <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50">
-                      Profile
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50">
-                      Settings
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/logout" className="block px-4 py-2 text-red-600 hover:bg-red-50">
-                      Logout
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            )}
           </nav>
         </header>
 

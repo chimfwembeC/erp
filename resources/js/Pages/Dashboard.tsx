@@ -1,6 +1,6 @@
 import React from 'react';
 import Welcome from '@/Components/Welcome';
-import AppLayout from '@/Layouts/Sidebar';
+import AppLayout from '@/Layouts/AppLayout';
 import Attendance from '@/Components/Attendance';
 
 export default function Dashboard() {
