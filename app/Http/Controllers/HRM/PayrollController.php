@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\HRM;
 
+use App\Http\Controllers\Controller;
 use App\Models\Payroll;
 use App\Models\User;
 use Illuminate\Http\Request;

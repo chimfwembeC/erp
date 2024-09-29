@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class MediaTemplate extends Model
 {
     use HasFactory;
+    protected $table = 'media_templates';
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LandingPages;
+use App\Models\LandingPageSection;
 use Illuminate\Http\Request;
 
 class LandingPagesController extends Controller
@@ -34,9 +35,39 @@ class LandingPagesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(LandingPages $landingPages)
+    // public function show($slug)
+    // {
+    //     $landingPage = LandingPages::where('slug', $slug)->first();
+    
+    //     if (!$landingPage) {
+    //         return response()->json(['error' => 'Landing page not found.'], 404);
+    //     }
+    
+    //     // Retrieve the landing page sections with the correct foreign key
+    //     $sections = LandingPageSection::where('landing_page_id', $landingPage->id)->get();
+    
+    //     return response()->json([
+    //         'landing_page' => $landingPage,
+    //         'sections' => $sections,
+    //     ]);
+    // }
+
+     public function show($slug)
     {
-        //
+        $landingPage = LandingPages::where('slug', $slug)->first();
+
+        if (!$landingPage) {
+            return response()->json(['error' => 'Landing page not found.'], 404);
+        }
+
+        $sections = LandingPageSection::with('section.contentBlocks')
+            ->where('landing_page_id', $landingPage->id)
+            ->get();
+
+        return response()->json([
+            'landing_page' => $landingPage,
+            'sections' => $sections,
+        ]);
     }
 
     /**

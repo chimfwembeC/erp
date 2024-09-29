@@ -16,17 +16,26 @@ class DatabaseSeeder extends Seeder
        
 
         $this->call([
-            UserSeeder::class,
-            DepartmentGroupSeeder::class,
-            DepartmentSeeder::class,
-            BranchSeeder::class,
-            RolesAndPermissionsSeeder::class,
-            AccountSeeder::class,
-            GeneralLedgerSeeder::class,
-            JournalEntrySeeder::class,
-            SalesInvoiceSeeder::class,
-            // PaymentSeeder::class,
-            TaxSeeder::class,
+            // UserSeeder::class,
+            // DepartmentGroupSeeder::class,
+            // DepartmentSeeder::class,
+            // BranchSeeder::class,
+            // RolesAndPermissionsSeeder::class,
+            // AccountSeeder::class,
+            // GeneralLedgerSeeder::class,
+            // JournalEntrySeeder::class,
+            // SalesInvoiceSeeder::class,
+            // // PaymentSeeder::class,
+            // TaxSeeder::class,
+
+            // TemplatesTableSeeder::class,
+            // SectionsTableSeeder::class,
+            // ContentBlocksTableSeeder::class,
+            // MediaTableSeeder::class,
+            MediaTemplateSeeder::class,
+            TemplateVariablesTableSeeder::class,
+            LandingPagesTableSeeder::class,
+            LandingPageSectionsTableSeeder::class
         ]);
     }
 }

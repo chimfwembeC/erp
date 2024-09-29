@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\HRM;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\LeaveRequest;
 use Illuminate\Http\Request;

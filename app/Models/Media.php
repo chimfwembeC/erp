@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Media extends Model
 {
     use HasFactory;
+    protected $fillable = ['url', 'type'];
+
+    // Relationships
+    public function templates()
+    {
+        return $this->belongsToMany(Template::class, 'media_templates');
+    }
 }
