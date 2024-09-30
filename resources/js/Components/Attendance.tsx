@@ -17,7 +17,7 @@ const Attendance = () => {
 
   // Load attendance records and check if already checked in today
   useEffect(() => {
-    axios.get('/attendance')
+    axios.get('/get-attendance')
       .then(response => {
         setAttendanceRecords(response.data);
         // Check if today's check-in exists

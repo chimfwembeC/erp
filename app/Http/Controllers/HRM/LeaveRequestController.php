@@ -3,24 +3,20 @@
 namespace App\Http\Controllers\HRM;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\LeaveRequest;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Illuminate\Http\Response;
 
-class LeaveRequestController extends Controller
+class LeaveController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-        $leaveRequests = LeaveRequest::latest()->get();
-
-        return Inertia::render("LeaveRequest/Index",[
-            'leaveRequests' => $leaveRequests
-        ]);
+        // Retrieve all leave requests
+        $leaveRequests = LeaveRequest::with('user')->get();
+        return response()->json($leaveRequests);
     }
 
     /**
@@ -28,7 +24,7 @@ class LeaveRequestController extends Controller
      */
     public function create()
     {
-        //
+        // Optionally return a view or response to show the creation form
     }
 
     /**
@@ -36,17 +32,18 @@ class LeaveRequestController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            // 'user_id' => '',
+        // Validate the incoming request
+        $validated = $request->validate([
+            // 'user_id' => 'required|exists:users,id',
             'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'status' => 'string',
+            'end_date' => 'required|date|after:start_date',
+            'status' => 'required|string|in:pending,approved,rejected',
         ]);
 
-        LeaveRequest::create(array_merge($validatedData,['user_id' => auth()->user()->id, 'status' => 'pending']));
+        // Create a new leave request
+        $leaveRequest = LeaveRequest::create(array_merge($validated,['user_id' => auth()->user()->id]));
 
-        return redirect()->route('leave-requests.index')->with('success', 'leave request created successfully.');
-
+        return response()->json($leaveRequest, Response::HTTP_CREATED);
     }
 
     /**
@@ -54,10 +51,7 @@ class LeaveRequestController extends Controller
      */
     public function show(LeaveRequest $leaveRequest)
     {
-        //
-        return Inertia::render("Orders/Show",[
-            'leaveRequest' => $leaveRequest->load(['user.departments'])
-        ]);
+        return response()->json($leaveRequest);
     }
 
     /**
@@ -65,10 +59,7 @@ class LeaveRequestController extends Controller
      */
     public function edit(LeaveRequest $leaveRequest)
     {
-        //
-        return Inertia::render("Orders/Edit",[
-            'leaveRequest' => $leaveRequest->load(['user.departments'])
-        ]);
+        // Optionally return a view or response to show the edit form
     }
 
     /**
@@ -76,18 +67,18 @@ class LeaveRequestController extends Controller
      */
     public function update(Request $request, LeaveRequest $leaveRequest)
     {
-        //
-        $validatedData = $request->validate([
-            // 'user_id' => '',
-            'start_date' => 'date',
-            'end_date' => 'date',
-            'status' => 'string',
+        // Validate the incoming request
+        $validated = $request->validate([
+            'user_id' => 'sometimes|required|exists:users,id',
+            'start_date' => 'sometimes|required|date',
+            'end_date' => 'sometimes|required|date|after:start_date',
+            'status' => 'sometimes|required|string|in:pending,approved,rejected',
         ]);
 
-        $leaveRequest->update(array_merge($validatedData));
+        // Update the leave request
+        $leaveRequest->update($validated);
 
-        return redirect()->route('leave-requests.index')->with('success', 'leave request updated successfully.');
-
+        return response()->json($leaveRequest);
     }
 
     /**
@@ -95,8 +86,7 @@ class LeaveRequestController extends Controller
      */
     public function destroy(LeaveRequest $leaveRequest)
     {
-        //
         $leaveRequest->delete();
-        return redirect()->route('leave-requests.index')->with('success', 'leave request updated successfully.');
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

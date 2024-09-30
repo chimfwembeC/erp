@@ -43,6 +43,8 @@ Route::prefix('hrm')->group(function () {
 
     // Attendance Management Routes
     Route::get('/attendance', [AttendanceController::class, 'index'])->name('hrm.attendance.index');
+    Route::get('/get-attendance', [AttendanceController::class, 'getAttendance'])->name('hrm.attendance.getAttendance');
+
     Route::post('/attendance/check-in', [AttendanceController::class, 'checkIn'])->name('hrm.attendance.checkIn');
     Route::post('/attendance/check-out', [AttendanceController::class, 'checkOut'])->name('hrm.attendance.checkOut');
 

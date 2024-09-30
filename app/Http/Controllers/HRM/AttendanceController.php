@@ -6,12 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class AttendanceController extends Controller
 {
-    public function index()
+    public function getAttendance()
     {
         return Auth::user()->attendances; // List all attendance for the authenticated user
+    }
+
+    public function index()
+    {
+        return Inertia::render("HRM/Attendance",[
+            'attendances' => Auth::user()->attendances,
+        ]);
     }
     
     public function checkIn()

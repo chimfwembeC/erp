@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
-import { Link, usePage } from '@inertiajs/react'; // Added `usePage`
+import { Link, router, usePage } from '@inertiajs/react'; // Added `usePage`
 import { Home, User, FileText, Settings, Bell, Menu, X, ChevronDown, ChevronUp, User2, DollarSign, ShoppingCart, HelpCircle, Clipboard, CheckCircle } from 'lucide-react';
+import { useRoute } from 'ziggy-js';
 
 interface LayoutProps {
   title: string;
   children: React.ReactNode;
+}
+
+const route = useRoute();
+
+
+function logout(e: React.FormEvent) {
+  e.preventDefault();
+  router.post(route('logout'));
 }
 
 // Define the structure for sidebar links
@@ -32,20 +41,38 @@ const sidebarLinks: SidebarLink[] = [
     icon: <User2 size={20} />,
     href: '#',
     children: [
-      { 
+      {
         label: 'Dashboard',
-        href: '/hrm' ,
-        icon: <User2 size={20} />,        
+        href: '/hrm',
+        icon: <User2 size={20} />,
       },
       {
-        label: 'Employees',
+        label: 'Attendance',
+        href: '/hrm/attendance',
         icon: <User size={20} />,
-        href: '#',
-        children: [                    
-          { label: 'Employee List', href: '/employees/list' },
-          { label: 'Attendance', href: '/employees/attendance' },
-        ],
       },
+      {
+        label: 'Employee',
+        href: '/hrm/employees',
+        icon: <User size={20} />,
+
+      },
+      {
+        label: 'Employee List',
+        href: '/hrm/payroll',
+        icon: <User size={20} />,
+
+      },
+
+      // {
+      //   label: 'Employees',
+      //   icon: <User size={20} />,
+      //   href: '#',
+      //   children: [
+      //     { label: 'Employee List', href: '/employees/list' },
+      //     { label: 'Attendance', href: '/employees/attendance' },
+      //   ],
+      // },
       {
         label: 'Payroll',
         icon: <FileText size={20} />,
@@ -141,9 +168,8 @@ export default function Layout({ title, children }: LayoutProps) {
           <div>
             <div
               onClick={() => toggleDropdown(link.label)}
-              className={`flex items-center justify-between p-2 space-x-2 rounded-md cursor-pointer ${
-                activeDropdown === link.label ? 'bg-indigo-100' : ''
-              }`}
+              className={`flex items-center justify-between p-2 space-x-2 rounded-md cursor-pointer ${activeDropdown === link.label ? 'bg-indigo-100' : ''
+                }`}
             >
               <div className="flex items-center space-x-2">
                 {link.icon}
@@ -162,9 +188,8 @@ export default function Layout({ title, children }: LayoutProps) {
                   <li key={child.label}>
                     <Link
                       href={child.href!} // Use non-null assertion as `href` is defined for non-dropdown links
-                      className={`flex items-center p-2 space-x-2 rounded-md mt-2 ${
-                        isActiveLink(child.href) ? 'bg-indigo-200 font-bold' : 'hover:bg-indigo-100'
-                      }`}
+                      className={`flex items-center p-2 space-x-2 rounded-md mt-2 ${isActiveLink(child.href) ? 'bg-indigo-200 font-bold' : 'hover:bg-indigo-100'
+                        }`}
                     >
                       {child.icon}
                       <span>{child.label}</span>
@@ -177,9 +202,8 @@ export default function Layout({ title, children }: LayoutProps) {
         ) : (
           <Link
             href={link.href!} // Use non-null assertion as `href` is defined for non-dropdown links
-            className={`flex items-center p-2 space-x-2 rounded-md ${
-              isActiveLink(link.href) ? 'bg-indigo-200 font-bold' : 'hover:bg-indigo-100'
-            }`}
+            className={`flex items-center p-2 space-x-2 rounded-md ${isActiveLink(link.href) ? 'bg-indigo-200 font-bold' : 'hover:bg-indigo-100'
+              }`}
           >
             {link.icon}
             <span>{link.label}</span>
@@ -188,8 +212,8 @@ export default function Layout({ title, children }: LayoutProps) {
       </li>
     ));
   };
-  
-  
+
+
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-100">
@@ -253,9 +277,9 @@ export default function Layout({ title, children }: LayoutProps) {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/logout" className="hover:text-red-600">
+                    <span onClick={logout}  className="hover:text-red-600 cursor-pointer">
                       Logout
-                    </Link>
+                    </span>
                   </li>
                 </ul>
               </details>
@@ -335,9 +359,9 @@ export default function Layout({ title, children }: LayoutProps) {
                     </li>
                   </ul>
                   <div className="m-2">
-                    <Link href="/logout" className="block px-4 py-2 text-white bg-red-500 p-2 rounded-lg hover:bg-red-700">
+                    <span onClick={logout} className="block cursor-pointer text-gray-800 py-2 p-2 rounded-lg hover:text-red-500">
                       Logout
-                    </Link>
+                    </span>
                   </div>
                 </div>
               )}
