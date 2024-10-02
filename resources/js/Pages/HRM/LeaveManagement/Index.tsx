@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import AppLayout from '@/Layouts/AppLayout';
 
-const Index = () => {
-    const [leaveRequests, setLeaveRequests] = useState([]);
+const Index = ({leaveRequests}) => {
+    // const [leaveRequests, setLeaveRequests] = useState([]);
 
-    useEffect(() => {
-        axios.get('/leave_requests').then((response) => {
-            setLeaveRequests(response.data);
-        });
-    }, []);
+    // useEffect(() => {
+    //     axios.get('/leave_requests').then((response) => {
+    //         setLeaveRequests(response.data);
+    //     });
+    // }, []);
 
     const handleApproval = (id, status) => {
         axios.post(`/leave_requests/${id}/approve`, { status }).then(() => {
@@ -17,7 +18,8 @@ const Index = () => {
     };
 
     return (
-        <div className="p-6 bg-white shadow-md rounded-lg">
+        <AppLayout title='Leave Management'>
+            <div className="p-6 bg-white shadow-md rounded-lg">
             <h1 className="text-2xl font-bold mb-6">Leave Requests</h1>
             <table className="min-w-full bg-white">
                 <thead>
@@ -55,6 +57,7 @@ const Index = () => {
                 </tbody>
             </table>
         </div>
+        </AppLayout>
     );
 };
 

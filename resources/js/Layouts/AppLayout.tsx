@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, router, usePage } from '@inertiajs/react'; // Added `usePage`
+import { Head, Link, router, usePage } from '@inertiajs/react'; // Added `usePage`
 import { Home, User, FileText, Settings, Bell, Menu, X, ChevronDown, ChevronUp, User2, DollarSign, ShoppingCart, HelpCircle, Clipboard, CheckCircle, Dot } from 'lucide-react';
 import { useRoute } from 'ziggy-js';
 
@@ -154,6 +154,7 @@ export default function Layout({ title, children }: LayoutProps) {
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-100">
+      <Head title={title} />
       {/* Sidebar */}
       <div
         className={`fixed top-0 left-0 z-30 h-full w-64 bg-white shadow-lg transition-transform duration-300 ease-in-out lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}

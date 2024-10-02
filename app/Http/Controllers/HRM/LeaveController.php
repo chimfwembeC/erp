@@ -5,6 +5,7 @@ namespace App\Http\Controllers\HRM;
 use App\Http\Controllers\Controller;
 use App\Models\LeaveRequest;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class LeaveController extends Controller
 {
@@ -13,7 +14,10 @@ class LeaveController extends Controller
      */
     public function index()
     {
-        //
+        $leaveRequests = LeaveRequest::latest()->get();
+        return Inertia::render("HRM/LeaveManagement/Index",[
+            'leaveRequests' => $leaveRequests,
+        ]);
     }
 
     /**
