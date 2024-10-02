@@ -42,7 +42,7 @@ Route::prefix('hrm')->group(function () {
     Route::delete('/employees/{id}', [EmployeeController::class, 'destroy'])->name('hrm.employees.destroy');
 
     // Attendance Management Routes
-    Route::get('/attendance', [AttendanceController::class, 'index'])->name('hrm.attendance.index');
+    Route::get('/attendances', [AttendanceController::class, 'index'])->name('hrm.attendance.index');
     Route::get('/get-attendance', [AttendanceController::class, 'getAttendance'])->name('hrm.attendance.getAttendance');
 
     Route::post('/attendance/check-in', [AttendanceController::class, 'checkIn'])->name('hrm.attendance.checkIn');
@@ -59,6 +59,15 @@ Route::prefix('hrm')->group(function () {
     Route::put('/leaves/{id}/approve', [LeaveController::class, 'approve'])->name('hrm.leaves.approve');
     Route::put('/leaves/{id}/deny', [LeaveController::class, 'deny'])->name('hrm.leaves.deny');
 });
+
+// { label: 'Overview', href: '/hrm' },
+// { label: 'Departments', href: '/hrm/department' },
+// { label: 'Branches', href: '/hrm/branches' },
+// { label: 'Attendance Management', href: '/hrm/attendance' },
+// { label: 'Employee Management', href: '/hrm/payroll' },
+// { label: 'Leave Management', href: '/hrm/leave' },
+// { label: 'User Management', href: '/hrm/user' },
+// { label: 'Job Applications', href: '/hrm/job-applications' },
 
 Route::get('/attendance', [AttendanceController::class, 'index']);
 Route::post('/attendance/check-in', [AttendanceController::class, 'checkIn']);

@@ -6,7 +6,7 @@ export default function Attendance() {
   return (
     <AppLayout title='Attendance'>
         <div className="h-screen">
-            <AttendanceComponent />
+            
         </div>
     </AppLayout>
   )

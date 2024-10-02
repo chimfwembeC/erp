@@ -1,8 +1,8 @@
 import AppLayout from '@/Layouts/AppLayout';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Employees from './Employees';
-import Attendance from './Attendance';
-import Payroll from './Payroll';
+import Employees from './EmployeeManagement/Index';
+import Attendance from './AttendanceManagement/Attendance';
+import Payroll from './PayrollManagement/Index';
 import Sidebar from './Components/Sidebar';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { useState } from 'react';
@@ -10,8 +10,10 @@ import { User } from 'lucide-react';
 import { CheckCircle } from 'lucide-react';
 import { DollarSign } from 'lucide-react';
 import { FileText } from 'lucide-react';
-import AttendanceChart from './Components/AttendanceChart';
-import PayrollChart from './Components/PayrollChart';
+import AttendanceChart from './Components/Charts/AttendanceChart';
+import PayrollChart from './Components/Charts/PayrollChart';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import InvoiceDocument from './Components/Receipts/InvoiceDocument';
 
 export default function Index() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -22,6 +24,39 @@ export default function Index() {
         setSidebarOpen((prev) => !prev);
     };
 
+    const invoiceData = {
+        "companyLogoUrl": "https://example.com/logo.png",
+        "companyName": "ABC Company",
+        "companyAddress": "123 Main Street, City, State, ZIP",
+        "companyEmail": "support@company.com",
+        "companyPhone": "(123) 456-7890",
+        "companyWebsite": "www.abccompany.com",
+        "invoiceNumber": "INV-1001",
+        "date": "2024-10-01",
+        "dueDate": "2024-10-31",
+        "paymentTerms": "Net 30",
+        "customerName": "John Doe",
+        "customerAddress": "456 Elm Street, City, State, ZIP",
+        "customerEmail": "johndoe@example.com",
+        "customerPhone": "(098) 765-4321",
+        "items": [
+            {
+                "description": "Product 1",
+                "quantity": 2,
+                "unitPrice": 50.00
+            },
+            {
+                "description": "Product 2",
+                "quantity": 1,
+                "unitPrice": 150.00
+            }
+        ],
+        "subtotal": 250.00,
+        "tax": 20.00,
+        "total": 270.00,
+        "footerNote": "Thank you for your business!"
+    };
+    
     return (
         <AppLayout title="HRM Dashboard">
             <div className="h-screen overflow-hidden">
@@ -74,6 +109,11 @@ export default function Index() {
                     </div>
                 </div>
 
+                <div>
+        <PDFDownloadLink document={<InvoiceDocument invoiceData={invoiceData} />} fileName="invoice.pdf">
+            {({ loading }) => (loading ? 'Loading document...' : 'Download Invoice')}
+        </PDFDownloadLink>
+    </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 mt-8 gap-4">
                 <div className="">
@@ -90,6 +130,9 @@ export default function Index() {
                     </div>
                 </div>
                 </div>
+
+
+      
             </div>
         </AppLayout>
     );

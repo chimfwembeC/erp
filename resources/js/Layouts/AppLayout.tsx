@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, router, usePage } from '@inertiajs/react'; // Added `usePage`
-import { Home, User, FileText, Settings, Bell, Menu, X, ChevronDown, ChevronUp, User2, DollarSign, ShoppingCart, HelpCircle, Clipboard, CheckCircle } from 'lucide-react';
+import { Home, User, FileText, Settings, Bell, Menu, X, ChevronDown, ChevronUp, User2, DollarSign, ShoppingCart, HelpCircle, Clipboard, CheckCircle, Dot } from 'lucide-react';
 import { useRoute } from 'ziggy-js';
 
 interface LayoutProps {
@@ -29,7 +29,6 @@ const sidebarLinks: SidebarLink[] = [
   {
     label: 'Accounting',
     icon: <DollarSign size={20} />,
-    href: '#',
     children: [
       { label: 'Invoices', href: '/accounting/invoices' },
       { label: 'Expenses', href: '/accounting/expenses' },
@@ -39,44 +38,18 @@ const sidebarLinks: SidebarLink[] = [
   {
     label: 'HRM System',
     icon: <User2 size={20} />,
-    href: '#',
     children: [
+      { label: 'Overview', href: '/hrm' , icon: <Dot  size={20}/>},
+      { label: 'Departments', href: '/hrm/departments', icon: <Dot  size={20}/> },
+      { label: 'Branches', href: '/hrm/branches', icon: <Dot  size={20}/> },
+      { label: 'Attendance Management', href: '/hrm/attendances', icon: <Dot  size={20}/> },
+      { label: 'Employee Management', href: '/hrm/employees', icon: <Dot  size={20}/> },
+      { label: 'Leave Management', href: '/hrm/leaves', icon: <Dot  size={20}/> },
+      { label: 'User Management', href: '/hrm/users', icon: <Dot  size={20}/> },
+      { label: 'Job Applications', href: '/hrm/job-applications', icon: <Dot  size={20}/>},
       {
-        label: 'Dashboard',
-        href: '/hrm',
-        icon: <User2 size={20} />,
-      },
-      {
-        label: 'Attendance',
-        href: '/hrm/attendance',
-        icon: <User size={20} />,
-      },
-      {
-        label: 'Employee',
-        href: '/hrm/employees',
-        icon: <User size={20} />,
-
-      },
-      {
-        label: 'Employee List',
-        href: '/hrm/payroll',
-        icon: <User size={20} />,
-
-      },
-
-      // {
-      //   label: 'Employees',
-      //   icon: <User size={20} />,
-      //   href: '#',
-      //   children: [
-      //     { label: 'Employee List', href: '/employees/list' },
-      //     { label: 'Attendance', href: '/employees/attendance' },
-      //   ],
-      // },
-      {
-        label: 'Payroll',
+        label: 'Payroll Management',
         icon: <FileText size={20} />,
-        href: '#',
         children: [
           { label: 'Salary', href: '/payroll/salary' },
           { label: 'Payroll Reports', href: '/payroll/reports' },
@@ -87,7 +60,6 @@ const sidebarLinks: SidebarLink[] = [
   {
     label: 'CRM',
     icon: <User size={20} />,
-    href: '#',
     children: [
       { label: 'Leads', href: '/crm/leads' },
       { label: 'Opportunities', href: '/crm/opportunities' },
@@ -97,7 +69,6 @@ const sidebarLinks: SidebarLink[] = [
   {
     label: 'POS',
     icon: <ShoppingCart size={20} />,
-    href: '#',
     children: [
       { label: 'Sales', href: '/pos/sales' },
       { label: 'Inventory', href: '/pos/inventory' },
@@ -105,43 +76,11 @@ const sidebarLinks: SidebarLink[] = [
     ],
   },
   {
-    label: 'SRM',
-    icon: <User2 size={20} />,
-    href: '#',
-    children: [
-      { label: 'Suppliers', href: '/srm/suppliers' },
-      { label: 'Orders', href: '/srm/orders' },
-      { label: 'Contracts', href: '/srm/contracts' },
-    ],
-  },
-  {
     label: 'Support',
     icon: <HelpCircle size={20} />,
-    href: '#',
     children: [
       { label: 'Tickets', href: '/support/tickets' },
       { label: 'Knowledge Base', href: '/support/knowledge-base' },
-      { label: 'Feedback', href: '/support/feedback' },
-    ],
-  },
-  {
-    label: 'Testing',
-    icon: <Clipboard size={20} />,
-    href: '#',
-    children: [
-      { label: 'Test Cases', href: '/testing/test-cases' },
-      { label: 'Bug Tracking', href: '/testing/bug-tracking' },
-      { label: 'Reports', href: '/testing/reports' },
-    ],
-  },
-  {
-    label: 'Settings',
-    icon: <Settings size={20} />,
-    href: '#',
-    children: [
-      { label: 'User Management', href: '/settings/user-management' },
-      { label: 'System Settings', href: '/settings/system' },
-      { label: 'Backup', href: '/settings/backup' },
     ],
   },
 ];
@@ -181,17 +120,16 @@ export default function Layout({ title, children }: LayoutProps) {
                 <ChevronDown size={20} />
               )}
             </div>
-            {/* Nested Links */}
             {activeDropdown === link.label && (
               <ul className="pl-6 space-y-2">
                 {link.children.map((child) => (
                   <li key={child.label}>
                     <Link
-                      href={child.href!} // Use non-null assertion as `href` is defined for non-dropdown links
+                      href={child.href!}
                       className={`flex items-center p-2 space-x-2 rounded-md mt-2 ${isActiveLink(child.href) ? 'bg-indigo-200 font-bold' : 'hover:bg-indigo-100'
                         }`}
                     >
-                      {child.icon}
+                      <span>{child.icon}</span>
                       <span>{child.label}</span>
                     </Link>
                   </li>
@@ -201,7 +139,7 @@ export default function Layout({ title, children }: LayoutProps) {
           </div>
         ) : (
           <Link
-            href={link.href!} // Use non-null assertion as `href` is defined for non-dropdown links
+            href={link.href!}
             className={`flex items-center p-2 space-x-2 rounded-md ${isActiveLink(link.href) ? 'bg-indigo-200 font-bold' : 'hover:bg-indigo-100'
               }`}
           >
@@ -212,7 +150,6 @@ export default function Layout({ title, children }: LayoutProps) {
       </li>
     ));
   };
-
 
 
   return (
