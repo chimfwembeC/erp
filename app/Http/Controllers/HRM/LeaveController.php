@@ -4,6 +4,7 @@ namespace App\Http\Controllers\HRM;
 
 use App\Http\Controllers\Controller;
 use App\Models\LeaveRequest;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -53,7 +54,18 @@ class LeaveController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the incoming request
+        $validated = $request->validate([
+            // 'user_id' => 'required|exists:users,id',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
+            'status' => 'required|string|in:pending,approved,rejected',
+        ]);
+
+        // Create a new leave request
+        $leaveRequest = LeaveRequest::create(array_merge($validated,['user_id' => auth()->user()->id]));
+
+        return response()->json($leaveRequest, Response::HTTP_CREATED);
     }
 
     /**
@@ -61,7 +73,7 @@ class LeaveController extends Controller
      */
     public function show(LeaveRequest $leaveRequest)
     {
-        //
+        return response()->json($leaveRequest);
     }
 
     /**
@@ -77,14 +89,25 @@ class LeaveController extends Controller
      */
     public function update(Request $request, LeaveRequest $leaveRequest)
     {
-        //
-    }
+        // Validate the incoming request
+        $validated = $request->validate([
+            'user_id' => 'sometimes|required|exists:users,id',
+            'start_date' => 'sometimes|required|date',
+            'end_date' => 'sometimes|required|date|after:start_date',
+            'status' => 'sometimes|required|string|in:pending,approved,rejected',
+        ]);
 
+        // Update the leave request
+        $leaveRequest->update($validated);
+
+        return response()->json($leaveRequest);
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(LeaveRequest $leaveRequest)
     {
-        //
+        $leaveRequest->delete();
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

@@ -34,12 +34,12 @@ const Index = ({employees}) => {
                 <tbody>
                     {employees.map((employee) => (
                         <tr key={employee.id}>
-                            <td className="px-4 py-2 border-b">{employee.username}</td>
+                            <td className="px-4 py-2 border-b">{employee.name}</td>
                             <td className="px-4 py-2 border-b">{employee.role}</td>
                             <td className="px-4 py-2 border-b">{employee.departments?.name}</td>
                             {/* <td className="px-4 py-2 border-b">{employee.status}</td> */}
                             <td className="px-4 py-2 border-b">
-                                <button
+                                {/* <button
                                     className="bg-green-500 text-white px-2 py-1 rounded mr-2"
                                     onClick={() => handleApproval(employee.id, 'approved')}
                                 >
@@ -50,7 +50,7 @@ const Index = ({employees}) => {
                                     onClick={() => handleApproval(employee.id, 'rejected')}
                                 >
                                     Reject
-                                </button>
+                                </button> */}
                             </td>
                         </tr>
                     ))}
