@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\HRM;
 
+use App\Http\Controllers\Controller;
 use App\Models\Branch;
-use App\Models\Department;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class BranchController extends Controller
 {
-    /**
+      /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //
-        $departments = Department::all();
+        $branches = Branch::with(['manager'])->get();
 
-        return Inertia::render("Branches/Index", [
-            'branches' => $departments
+        return Inertia::render("HRM/Departments/Branches/Index", [
+            'branches' => $branches
         ]);
     }
 

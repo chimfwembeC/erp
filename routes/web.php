@@ -4,6 +4,7 @@
 use App\Http\Controllers\HRM\HRMController;
 use App\Http\Controllers\HRM\EmployeeController;
 use App\Http\Controllers\HRM\AttendanceController;
+use App\Http\Controllers\HRM\BranchController;
 use App\Http\Controllers\HRM\DepartmentController;
 use App\Http\Controllers\HRM\PayrollController;
 use App\Http\Controllers\HRM\LeaveController;
@@ -42,12 +43,21 @@ Route::prefix('hrm')->group(function () {
     Route::put('/employees/{id}', [EmployeeController::class, 'update'])->name('hrm.employees.update');
     Route::delete('/employees/{id}', [EmployeeController::class, 'destroy'])->name('hrm.employees.destroy');
 
-       // Department Management Routes
-       Route::get('/departments', [DepartmentController::class, 'index'])->name('hrm.departments.index');
-       Route::post('/departments', [DepartmentController::class, 'store'])->name('hrm.departments.store');
-       Route::get('/departments/{id}', [DepartmentController::class, 'show'])->name('hrm.departments.show');
-       Route::put('/departments/{id}', [DepartmentController::class, 'update'])->name('hrm.departments.update');
-       Route::delete('/departments/{id}', [DepartmentController::class, 'destroy'])->name('hrm.departments.destroy');
+    // Department Management Routes
+    Route::get('/departments', [DepartmentController::class, 'index'])->name('hrm.departments.index');
+    Route::post('/departments', [DepartmentController::class, 'store'])->name('hrm.departments.store');
+    Route::get('/departments/{id}', [DepartmentController::class, 'show'])->name('hrm.departments.show');
+    Route::put('/departments/{id}', [DepartmentController::class, 'update'])->name('hrm.departments.update');
+    Route::delete('/departments/{id}', [DepartmentController::class, 'destroy'])->name('hrm.departments.destroy');
+
+
+    // Department Management Routes
+    Route::get('/branches', [BranchController::class, 'index'])->name('hrm.branches.index');
+    Route::post('/branches', [BranchController::class, 'store'])->name('hrm.branches.store');
+    Route::get('/branches/{id}', [BranchController::class, 'show'])->name('hrm.branches.show');
+    Route::put('/branches/{id}', [BranchController::class, 'update'])->name('hrm.branches.update');
+    Route::delete('/branches/{id}', [BranchController::class, 'destroy'])->name('hrm.branches.destroy');
+
 
     // Attendance Management Routes
     Route::get('/attendances', [AttendanceController::class, 'index'])->name('hrm.attendance.index');

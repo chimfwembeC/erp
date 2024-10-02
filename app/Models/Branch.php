@@ -22,6 +22,6 @@ class Branch extends Model
 
     public function manager()
     {
-        return $this->belongsTo(User::class, 'manager_id')->where('role', 'employee');
+        return $this->belongsTo(User::class, 'manager_id')->where('role', 'manager');
     }
 }
