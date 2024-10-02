@@ -15,9 +15,9 @@ class PayrollController extends Controller
      */
     public function index()
     {
-        $payrolls = Payroll::latest()->get();
+        $payrolls = Payroll::with(['user'])->latest()->get();
 
-        return Inertia::render("Payrolls/Index",[
+        return Inertia::render("HRM/PayrollManagement/Index",[
             'payrolls' => $payrolls
         ]);
     }

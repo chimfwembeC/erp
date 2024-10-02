@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import AppLayout from '@/Layouts/AppLayout';
 
-const Index = () => {
-    const [payrolls, setPayrolls] = useState([]);
+const Index = ({payrolls}) => {
+    // const [payrolls, setPayrolls] = useState([]);
 
-    useEffect(() => {
-        axios.get('/payroll').then((response) => {
-            setPayrolls(response.data);
-        });
-    }, []);
+    // useEffect(() => {
+    //     axios.get('/payroll').then((response) => {
+    //         setPayrolls(response.data);
+    //     });
+    // }, []);
 
     return (
-        <div className="p-6 bg-white shadow-md rounded-lg">
+     <AppLayout title='Payroll Management'>
+           <div className="p-6 bg-white shadow-md rounded-lg">
             <h1 className="text-2xl font-bold mb-6">Payroll Management</h1>
             <table className="min-w-full bg-white">
                 <thead>
@@ -24,14 +26,15 @@ const Index = () => {
                 <tbody>
                     {payrolls.map((payroll) => (
                         <tr key={payroll.id}>
-                            <td className="px-4 py-2 border-b">{payroll.employee.name}</td>
+                            <td className="px-4 py-2 border-b">{payroll.user.name}</td>
                             <td className="px-4 py-2 border-b">{payroll.pay_date}</td>
-                            <td className="px-4 py-2 border-b">{payroll.salary}</td>
+                            <td className="px-4 py-2 border-b">{payroll.amount}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
         </div>
+     </AppLayout>
     );
 };
 

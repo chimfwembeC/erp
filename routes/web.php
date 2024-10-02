@@ -6,8 +6,11 @@ use App\Http\Controllers\HRM\EmployeeController;
 use App\Http\Controllers\HRM\AttendanceController;
 use App\Http\Controllers\HRM\BranchController;
 use App\Http\Controllers\HRM\DepartmentController;
+use App\Http\Controllers\HRM\JobApplicationController;
+use App\Http\Controllers\HRM\JobController;
 use App\Http\Controllers\HRM\PayrollController;
 use App\Http\Controllers\HRM\LeaveController;
+use App\Http\Controllers\HRM\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -51,12 +54,33 @@ Route::prefix('hrm')->group(function () {
     Route::delete('/departments/{id}', [DepartmentController::class, 'destroy'])->name('hrm.departments.destroy');
 
 
-    // Department Management Routes
+    // Branch Management Routes
     Route::get('/branches', [BranchController::class, 'index'])->name('hrm.branches.index');
     Route::post('/branches', [BranchController::class, 'store'])->name('hrm.branches.store');
     Route::get('/branches/{id}', [BranchController::class, 'show'])->name('hrm.branches.show');
     Route::put('/branches/{id}', [BranchController::class, 'update'])->name('hrm.branches.update');
     Route::delete('/branches/{id}', [BranchController::class, 'destroy'])->name('hrm.branches.destroy');
+
+    // User Management Routes
+    Route::get('/users', [UserController::class, 'index'])->name('hrm.users.index');
+    Route::post('/users', [UserController::class, 'store'])->name('hrm.users.store');
+    Route::get('/users/{id}', [UserController::class, 'show'])->name('hrm.users.show');
+    Route::put('/users/{id}', [UserController::class, 'update'])->name('hrm.users.update');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('hrm.users.destroy');
+
+    // Job Management Routes
+    Route::get('/jobs', [JobController::class, 'index'])->name('hrm.jobs.index');
+    Route::post('/jobs', [JobController::class, 'store'])->name('hrm.jobs.store');
+    Route::get('/jobs/{id}', [JobController::class, 'show'])->name('hrm.jobs.show');
+    Route::put('/jobs/{id}', [JobController::class, 'update'])->name('hrm.jobs.update');
+    Route::delete('/jobs/{id}', [JobController::class, 'destroy'])->name('hrm.jobs.destroy');
+
+    // Job Management Routes
+    Route::get('/job-applications', [JobApplicationController::class, 'index'])->name('hrm.job-applications.index');
+    Route::post('/job-applications', [JobApplicationController::class, 'store'])->name('hrm.job-applications.store');
+    Route::get('/job-applications/{id}', [JobApplicationController::class, 'show'])->name('hrm.job-applications.show');
+    Route::put('/job-applications/{id}', [JobApplicationController::class, 'update'])->name('hrm.job-applications.update');
+    Route::delete('/job-applications/{id}', [JobApplicationController::class, 'destroy'])->name('hrm.job-applications.destroy');
 
 
     // Attendance Management Routes

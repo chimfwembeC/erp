@@ -11,6 +11,7 @@ class Payroll extends Model
     use HasFactory;
 
     protected $fillable = ['user_id','amount',	'pay_date' ,'status'];
+    protected $table = 'payroll';
 
     public function user(): BelongsTo
     {

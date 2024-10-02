@@ -46,15 +46,18 @@ const sidebarLinks: SidebarLink[] = [
       { label: 'Employee Management', href: '/hrm/employees', icon: <Dot  size={20}/> },
       { label: 'Leave Management', href: '/hrm/leaves', icon: <Dot  size={20}/> },
       { label: 'User Management', href: '/hrm/users', icon: <Dot  size={20}/> },
+      { label: 'Payroll Management', href: '/hrm/payrolls', icon: <Dot  size={20}/>},
+      { label: 'Jobs', href: '/hrm/jobs', icon: <Dot  size={20}/>},
       { label: 'Job Applications', href: '/hrm/job-applications', icon: <Dot  size={20}/>},
-      {
-        label: 'Payroll Management',
-        icon: <FileText size={20} />,
-        children: [
-          { label: 'Salary', href: '/payroll/salary' },
-          { label: 'Payroll Reports', href: '/payroll/reports' },
-        ],
-      },
+
+      // {
+      //   label: 'Payroll Management',
+      //   icon: <FileText size={20} />,
+      //   children: [
+      //     { label: 'Salary', href: '/payroll/salary' },
+      //     { label: 'Payroll Reports', href: '/payroll/reports' },
+      //   ],
+      // },
     ],
   },
   {

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AppLayout from '@/Layouts/AppLayout';
     
-const Index = ({users}) => {
-    // const [users, setUsers] = useState([]);
+const Index = ({jobApplications}) => {
+    // const [jobApplications, setUsers] = useState([]);
 
     // useEffect(() => {
     //     axios.get('/users').then((response) => {
@@ -14,7 +14,7 @@ const Index = ({users}) => {
     return (
     <AppLayout title='User Managements'>
             <div className="p-6 bg-white shadow-md rounded-lg">
-            <h1 className="text-2xl font-bold mb-6">Users Management</h1>
+            <h1 className="text-2xl font-bold mb-6">jobApplications Management</h1>
             <button className="bg-blue-500 text-white px-4 py-2 rounded mb-4">Add User</button>
             <table className="min-w-full bg-white">
                 <thead>
@@ -26,7 +26,7 @@ const Index = ({users}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map((user) => (
+                    {jobApplications.map((user) => (
                         <tr key={user.id}>
                             <td className="px-4 py-2 border-b">{user.name}</td>
                             <td className="px-4 py-2 border-b">{user.email}</td>
