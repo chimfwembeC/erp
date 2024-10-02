@@ -12,7 +12,7 @@ const Index = ({leaveRequests}) => {
     // }, []);
 
     const handleApproval = (id, status) => {
-        axios.post(`/leave_requests/${id}/approve`, { status }).then(() => {
+        axios.post(`/hrm/leave-requests/${id}/approve`, { status }).then(() => {
             // Refresh the leave request list
         });
     };
@@ -34,7 +34,7 @@ const Index = ({leaveRequests}) => {
                 <tbody>
                     {leaveRequests.map((request) => (
                         <tr key={request.id}>
-                            <td className="px-4 py-2 border-b">{request.employee.name}</td>
+                            <td className="px-4 py-2 border-b">{request.user.name}</td>
                             <td className="px-4 py-2 border-b">{request.start_date}</td>
                             <td className="px-4 py-2 border-b">{request.end_date}</td>
                             <td className="px-4 py-2 border-b">{request.status}</td>

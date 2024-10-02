@@ -14,10 +14,30 @@ class LeaveController extends Controller
      */
     public function index()
     {
-        $leaveRequests = LeaveRequest::latest()->get();
+        $leaveRequests = LeaveRequest::with(['user'])->latest()->get();
         return Inertia::render("HRM/LeaveManagement/Index",[
             'leaveRequests' => $leaveRequests,
         ]);
+    }
+
+    public function approve($id)
+    {
+        $leave = LeaveRequest::findOrFail($id);
+
+        $leave->status = 'approved';
+        $leave->save();
+
+        return redirect()->back();
+    }
+
+    public function deny($id)
+    {
+        $leave = LeaveRequest::findOrFail($id);
+
+        $leave->status = 'denied';
+        $leave->save();
+
+        return redirect()->back();
     }
 
     /**

@@ -4,6 +4,7 @@
 use App\Http\Controllers\HRM\HRMController;
 use App\Http\Controllers\HRM\EmployeeController;
 use App\Http\Controllers\HRM\AttendanceController;
+use App\Http\Controllers\HRM\DepartmentController;
 use App\Http\Controllers\HRM\PayrollController;
 use App\Http\Controllers\HRM\LeaveController;
 use Illuminate\Foundation\Application;
@@ -40,6 +41,13 @@ Route::prefix('hrm')->group(function () {
     Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('hrm.employees.show');
     Route::put('/employees/{id}', [EmployeeController::class, 'update'])->name('hrm.employees.update');
     Route::delete('/employees/{id}', [EmployeeController::class, 'destroy'])->name('hrm.employees.destroy');
+
+       // Department Management Routes
+       Route::get('/departments', [DepartmentController::class, 'index'])->name('hrm.departments.index');
+       Route::post('/departments', [DepartmentController::class, 'store'])->name('hrm.departments.store');
+       Route::get('/departments/{id}', [DepartmentController::class, 'show'])->name('hrm.departments.show');
+       Route::put('/departments/{id}', [DepartmentController::class, 'update'])->name('hrm.departments.update');
+       Route::delete('/departments/{id}', [DepartmentController::class, 'destroy'])->name('hrm.departments.destroy');
 
     // Attendance Management Routes
     Route::get('/attendances', [AttendanceController::class, 'index'])->name('hrm.attendance.index');

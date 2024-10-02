@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\HRM;
 
+use App\Http\Controllers\Controller;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class DepartmentController extends Controller
 {
-    /**
+   /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //
-        $departments = Department::all();
-        return Inertia::render("Departments/Index",[
+        $departments = Department::with(['manager','branch','departmentGroup'])->latest()->get();
+        return Inertia::render("HRM/Departments/Index",[
             'departments' => $departments
         ]); 
     }
