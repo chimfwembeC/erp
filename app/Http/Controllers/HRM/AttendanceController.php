@@ -17,8 +17,11 @@ class AttendanceController extends Controller
 
     public function index()
     {
-        return Inertia::render("HRM/Attendance",[
-            'attendances' => Auth::user()->attendances,
+        $attendances = Attendance::with(['user'])
+        ->latest()->get();
+
+        return Inertia::render("HRM/AttendanceManagement/Index",[
+            'attendances' => $attendances,
         ]);
     }
     

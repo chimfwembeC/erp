@@ -1,7 +1,7 @@
 import AppLayout from '@/Layouts/AppLayout';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Employees from './EmployeeManagement/Index';
-import Attendance from './AttendanceManagement/Attendance';
+import Attendance from './AttendanceManagement/Index';
 import Payroll from './PayrollManagement/Index';
 import Sidebar from './Components/Sidebar';
 import { BreadCrumb } from 'primereact/breadcrumb';
