@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Section from './Section';
+import { Head } from '@inertiajs/react';
 
 const LandingPage = ({ slug }) => {
   const [landingPage, setLandingPage] = useState(null);
@@ -33,17 +34,14 @@ const LandingPage = ({ slug }) => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">{landingPage.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: landingPage.custom_data }} className="mb-8" />
+    <div className="">
+      <Head title={landingPage.title} />
 
-      {sections.map((section) => (
-        // <div key={section.id} className="border-b border-gray-300 py-4">
-        //   <h2 className="text-xl font-semibold">{section.name}</h2>
-        //   <div dangerouslySetInnerHTML={{ __html: section.custom_data }} />
-        // </div>
-        <Section key={section.id} section={section} />
-      ))}
+      {/* Render the full custom HTML content */}
+      <div 
+        dangerouslySetInnerHTML={{ __html: landingPage.html }} 
+        className="mb-8" 
+      />         
     </div>
   );
 };

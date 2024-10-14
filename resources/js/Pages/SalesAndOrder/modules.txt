@@ -1,0 +1,5 @@
+ Sales & Order Management Module
+
+    orders (2024_09_13_164619_create_orders_table)
+    order_items (2024_09_13_164647_create_order_items_table)
+    quotes (2024_09_13_164739_create_quotes_table)

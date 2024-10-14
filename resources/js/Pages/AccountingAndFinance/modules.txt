@@ -1,0 +1,13 @@
+
+2. Accounting & Finance Module
+
+    invoices (2024_09_13_164350_create_invoices_table)
+    payments (2024_09_13_164434_create_payments_table)
+    accounts (2024_09_13_164523_create_accounts_table)
+    general_ledgers (2024_09_13_164524_create_general_ledgers_table)
+    journal_entries (2024_09_16_122529_create_journal_entries_table)
+    sales_invoices (2024_09_16_122636_create_sales_invoices_table)
+    purchase_orders (2024_09_16_122710_create_purchase_orders_table)
+    budgets (2024_09_16_122811_create_budgets_table)
+    taxes (2024_09_16_122840_create_taxes_table)
+    bank_accounts (2024_09_16_123121_create_bank_accounts_table)

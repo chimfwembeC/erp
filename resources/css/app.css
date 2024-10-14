@@ -5,3 +5,8 @@
 [x-cloak] {
     display: none;
 }
+
+.panel__switcher {
+    position: initial;
+  }
+  

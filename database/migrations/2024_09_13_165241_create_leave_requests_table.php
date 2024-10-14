@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->date('start_date');
             $table->date('end_date');
-            $table->enum('status', ['pending', 'paid', 'overdue'])->default('pending');
+            $table->enum('status', ['pending', 'approved', 'denied'])->default('pending');
             $table->softDeletes();  // Soft deletes added
             $table->timestamps();
         });        

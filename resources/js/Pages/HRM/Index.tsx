@@ -4,7 +4,6 @@ import Employees from './EmployeeManagement/Index';
 import Attendance from './AttendanceManagement/Index';
 import Payroll from './PayrollManagement/Index';
 import Sidebar from './Components/Sidebar';
-import { BreadCrumb } from 'primereact/breadcrumb';
 import { useState } from 'react';
 import { User } from 'lucide-react';
 import { CheckCircle } from 'lucide-react';
@@ -14,11 +13,12 @@ import AttendanceChart from './Components/Charts/AttendanceChart';
 import PayrollChart from './Components/Charts/PayrollChart';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import InvoiceDocument from './Components/Receipts/InvoiceDocument';
+import Breadcrumb from '@/Components/Breadcrumb';
 
 export default function Index() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const items = [{ label: 'HRM' }];
-    const home = { icon: 'pi pi-home', url: 'HRM' };
+    // const items = [{ label: 'HRM' }];
+    // const home = { icon: 'pi pi-home', url: 'HRM' };
 
     const toggleSidebar = () => {
         setSidebarOpen((prev) => !prev);
@@ -57,15 +57,17 @@ export default function Index() {
         "footerNote": "Thank you for your business!"
     };
     
+    const items = [
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Hrm', href: '/hrm' },
+        // { label: 'Job Details' }, // No href for the current page
+      ];
+    
+
     return (
         <AppLayout title="HRM Dashboard">
             <div className="h-screen overflow-hidden">
-                <nav className="bg-white shadow p-4 lg:p-6">
-                    <div className="container mx-auto">
-                        {/* Hamburger menu for mobile */}
-                        <BreadCrumb model={items} home={home} className="w-full lg:w-auto rounded-lg" />
-                    </div>
-                </nav>
+            <Breadcrumb items={items} />
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
                     {/* Users Card */}

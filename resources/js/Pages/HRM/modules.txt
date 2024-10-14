@@ -1,0 +1,12 @@
+5. Human Resources (HR) & Payroll Module
+
+    payrolls (2024_09_13_165159_create_payrolls_table)
+    leave_requests (2024_09_13_165241_create_leave_requests_table)
+    attendances (2024_09_27_102634_create_attendances_table)
+    departments (2024_09_15_172248_create_departments_table)
+    department_user (2024_09_15_172332_create_department_user_table)
+    department_groups (2024_09_15_213952_create_department_groups_table)
+    posted_jobs (2024_10_02_162446_create_posted_jobs_table)
+    job_applications (2024_10_02_162537_create_job_applications_table)
+branches (2024_09_15_172422_create_branches_table)
+branch_department (2024_09_15_172515_create_branch_department_table)

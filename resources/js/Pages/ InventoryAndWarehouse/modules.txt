@@ -1,0 +1,6 @@
+4. Inventory & Warehouse Management Module
+
+    products (2024_09_13_164645_create_products_table)
+    warehouses (2024_09_13_164903_create_warehouses_table)
+    inventory_movements (2024_09_13_165048_create_inventory_movements_table)
+    product_warehouse (2024_09_15_173409_create_product_warehouse_table)

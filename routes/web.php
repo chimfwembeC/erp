@@ -18,7 +18,13 @@ use App\Http\Controllers\LandingPagesController;
 use App\Http\Controllers\PageController;
 
 Route::get('/', function () {
-    return view('landing-page', [
+    // return view('landing-page', [
+    //     'canLogin' => Route::has('login'),
+    //     'canRegister' => Route::has('register'),
+    //     'laravelVersion' => Application::VERSION,
+    //     'phpVersion' => PHP_VERSION,
+    // ]);
+    return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -38,7 +44,7 @@ Route::middleware([
 
 Route::prefix('hrm')->group(function () {
     // hrm dashboard
-    Route::get('/', [HRMController::class, 'index'])->name('hrm.employees.index');
+    Route::get('/', [HRMController::class, 'index'])->name('hrm.index');
     // Employee Management Routes
     Route::get('/employees', [EmployeeController::class, 'index'])->name('hrm.employees.index');
     Route::post('/employees', [EmployeeController::class, 'store'])->name('hrm.employees.store');
@@ -71,11 +77,12 @@ Route::prefix('hrm')->group(function () {
     // Job Management Routes
     Route::get('/jobs', [JobController::class, 'index'])->name('hrm.jobs.index');
     Route::post('/jobs', [JobController::class, 'store'])->name('hrm.jobs.store');
-    Route::get('/jobs/{id}', [JobController::class, 'show'])->name('hrm.jobs.show');
-    Route::put('/jobs/{id}', [JobController::class, 'update'])->name('hrm.jobs.update');
+    Route::get('/jobs/{id}', [JobController::class, 'show'])->name('hrm.jobs.show');    
+    Route::get('/jobs/{id}/edit', [JobController::class, 'edit'])->name('hrm.jobs.edit');
+    Route::put('/jobs/{id}/update', [JobController::class, 'update'])->name('hrm.jobs.update');
     Route::delete('/jobs/{id}', [JobController::class, 'destroy'])->name('hrm.jobs.destroy');
-
-    // Job Management Routes
+    // Route::resource('jobs', JobController::class);
+    // Job Applications Management Routes
     Route::get('/job-applications', [JobApplicationController::class, 'index'])->name('hrm.job-applications.index');
     Route::post('/job-applications', [JobApplicationController::class, 'store'])->name('hrm.job-applications.store');
     Route::get('/job-applications/{id}', [JobApplicationController::class, 'show'])->name('hrm.job-applications.show');
@@ -102,19 +109,11 @@ Route::prefix('hrm')->group(function () {
     Route::put('/leaves/{id}/deny', [LeaveController::class, 'deny'])->name('hrm.leaves.deny');
 });
 
-// { label: 'Overview', href: '/hrm' },
-// { label: 'Departments', href: '/hrm/department' },
-// { label: 'Branches', href: '/hrm/branches' },
-// { label: 'Attendance Management', href: '/hrm/attendance' },
-// { label: 'Employee Management', href: '/hrm/payroll' },
-// { label: 'Leave Management', href: '/hrm/leave' },
-// { label: 'User Management', href: '/hrm/user' },
-// { label: 'Job Applications', href: '/hrm/job-applications' },
-
 Route::get('/attendance', [AttendanceController::class, 'index']);
 Route::post('/attendance/check-in', [AttendanceController::class, 'checkIn']);
 Route::post('/attendance/check-out/{id}', [AttendanceController::class, 'checkOut']);
 
+Route::resource('/landing-pages', LandingPagesController::class);
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
 
 Route::post('/save-page', [PageController::class, 'savePage']);

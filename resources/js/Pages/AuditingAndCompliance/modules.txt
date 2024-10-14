@@ -1,0 +1,3 @@
+9. Auditing & Compliance Module
+
+    audit_trails (2024_09_16_123000_create_audit_trails_table)

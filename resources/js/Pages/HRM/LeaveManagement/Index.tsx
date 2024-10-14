@@ -12,10 +12,15 @@ const Index = ({leaveRequests}) => {
     // }, []);
 
     const handleApproval = (id, status) => {
-        axios.post(`/hrm/leave-requests/${id}/approve`, { status }).then(() => {
-            // Refresh the leave request list
+        const endpoint = status === 'approved' 
+            ? `/hrm/leaves/${id}/approve` 
+            : `/hrm/leaves/${id}/deny`;
+        
+        axios.put(endpoint).then(() => {
+            // Refresh the leave request list or show a success message
         });
     };
+    
 
     return (
         <AppLayout title='Leave Management'>

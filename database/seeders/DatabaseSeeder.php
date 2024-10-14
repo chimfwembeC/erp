@@ -32,10 +32,12 @@ class DatabaseSeeder extends Seeder
             // SectionsTableSeeder::class,
             // ContentBlocksTableSeeder::class,
             // MediaTableSeeder::class,
-            MediaTemplateSeeder::class,
-            TemplateVariablesTableSeeder::class,
+            // MediaTemplateSeeder::class,
+            // TemplateVariablesTableSeeder::class,
             LandingPagesTableSeeder::class,
-            LandingPageSectionsTableSeeder::class
+            LandingPageSectionsTableSeeder::class,
+            // PostedJobsSeeder::class,
+            // JobApplicationsSeeder::class,
         ]);
     }
 }
