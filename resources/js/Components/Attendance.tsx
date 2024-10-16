@@ -117,7 +117,7 @@ const Attendance = () => {
           </h2>
           <div className="space-y-4">
             {attendanceRecords.map((record) => (
-              <div key={record.id} className="bg-white p-4 rounded-lg shadow-md flex justify-between items-center">
+              <div key={record.id} className="bg-white w-1/2 p-4 rounded-lg shadow-md flex justify-between items-center">
                 <div>
                   <p className="text-sm text-gray-600">
                     <span className="font-medium text-blue-600">Check-in:</span> {moment(record.check_in).format('MMMM Do YYYY, h:mm:ss a')}
