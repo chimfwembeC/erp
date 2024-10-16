@@ -38,6 +38,11 @@ const LandingPage = ({ slug }) => {
       <Head title={landingPage.title} />
 
       {/* Render the full custom HTML content */}
+      {error && (
+        <div className="h-screen">
+          Error Occured or page not found
+        </div>
+      )}
       <div 
         dangerouslySetInnerHTML={{ __html: landingPage.html }} 
         className="mb-8" 

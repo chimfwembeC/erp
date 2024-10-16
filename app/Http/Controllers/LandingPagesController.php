@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LandingPages;
 use App\Models\LandingPageSection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class LandingPagesController extends Controller
 {
@@ -13,7 +14,9 @@ class LandingPagesController extends Controller
      */
     public function index()
     {
-        //
+        // Retrieve all landing pages
+        $landingPages = LandingPages::all();
+        return response()->json($landingPages);
     }
 
     /**
@@ -21,7 +24,8 @@ class LandingPagesController extends Controller
      */
     public function create()
     {
-        //
+        // Typically, you would return a view for creating a new landing page
+        // This could be a Blade view in a web application
     }
 
     /**
@@ -29,30 +33,31 @@ class LandingPagesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'template_id' => 'required|string',
+            'title' => 'required|string|max:255',
+            'is_published' => 'boolean',
+            'html' => 'required|string',
+            'css' => 'nullable|string',
+        ]);
+
+        // Create a new landing page
+        $landingPage = LandingPages::create([
+            'template_id' => $request->template_id,
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'is_published' => $request->is_published,
+            'html' => $request->html,
+            'css' => $request->css,
+        ]);
+
+        return response()->json($landingPage, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    // public function show($slug)
-    // {
-    //     $landingPage = LandingPages::where('slug', $slug)->first();
-    
-    //     if (!$landingPage) {
-    //         return response()->json(['error' => 'Landing page not found.'], 404);
-    //     }
-    
-    //     // Retrieve the landing page sections with the correct foreign key
-    //     $sections = LandingPageSection::where('landing_page_id', $landingPage->id)->get();
-    
-    //     return response()->json([
-    //         'landing_page' => $landingPage,
-    //         'sections' => $sections,
-    //     ]);
-    // }
-
-     public function show($slug)
+    public function show($slug)
     {
         $landingPage = LandingPages::where('slug', $slug)->first();
 
@@ -60,13 +65,8 @@ class LandingPagesController extends Controller
             return response()->json(['error' => 'Landing page not found.'], 404);
         }
 
-        $sections = LandingPageSection::with('section.contentBlocks')
-            ->where('landing_page_id', $landingPage->id)
-            ->get();
-
         return response()->json([
-            'landing_page' => $landingPage,
-            'sections' => $sections,
+            'landing_page' => $landingPage,            
         ]);
     }
 
@@ -75,7 +75,8 @@ class LandingPagesController extends Controller
      */
     public function edit(LandingPages $landingPages)
     {
-        //
+        // Typically, you would return a view for editing the landing page
+        // This could be a Blade view in a web application
     }
 
     /**
@@ -83,7 +84,25 @@ class LandingPagesController extends Controller
      */
     public function update(Request $request, LandingPages $landingPages)
     {
-        //
+        $request->validate([
+            // 'template_id' => 'required|string',
+            'title' => 'required|string|max:255',
+            'is_published' => 'boolean',
+            'content' => 'required|string',
+            'css' => 'nullable|string',
+        ]);
+
+        // Update the landing page with the request data
+        $landingPages->update([
+            'template_id' => $request->template_id,
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'is_published' => $request->is_published,
+            'html' => $request->content,
+            'css' => $request->css,
+        ]);
+
+        return response()->json($landingPages);
     }
 
     /**
@@ -91,6 +110,8 @@ class LandingPagesController extends Controller
      */
     public function destroy(LandingPages $landingPages)
     {
-        //
+        // Delete the landing page
+        $landingPages->delete();
+        return response()->json(['message' => 'Landing page deleted successfully.'], 204);
     }
 }

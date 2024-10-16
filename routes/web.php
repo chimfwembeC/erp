@@ -113,8 +113,9 @@ Route::get('/attendance', [AttendanceController::class, 'index']);
 Route::post('/attendance/check-in', [AttendanceController::class, 'checkIn']);
 Route::post('/attendance/check-out/{id}', [AttendanceController::class, 'checkOut']);
 
-Route::resource('/landing-pages', LandingPagesController::class);
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
+Route::resource('/landing-pages', LandingPagesController::class);
+
 
 Route::post('/save-page', [PageController::class, 'savePage']);
 Route::get('/page/{id}', [PageController::class, 'getPage']);

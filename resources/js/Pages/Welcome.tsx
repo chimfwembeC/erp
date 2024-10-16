@@ -6,6 +6,7 @@ import { Head } from '@inertiajs/react';
 import LandingPage from '@/Components/LandingPage';
 import MyPage from '@/Components/MyPage';
 import LandingPageCreator from '@/Components/LandingPageCreator';
+import EditLandingPage from '@/Components/EditLandingPage';
 
 interface Props {
   canLogin: boolean;
@@ -27,8 +28,9 @@ export default function Welcome({
     <>
       <Head title="Welcome" />  
       <div className="">        
-          {/* <LandingPage slug='erp-landing' />           */}
-          <LandingPageCreator />
+          <LandingPage slug='erp-landing' />          
+          {/* <LandingPageCreator /> */}
+          <EditLandingPage slug='erp-landing'  />
         </div>
     </>
   );

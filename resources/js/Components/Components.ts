@@ -2,46 +2,12 @@
 import grapesjs from 'grapesjs';
 
 export const CustomComponents = (editor: grapesjs.Editor) => {
-  // Hero Section
-  editor.BlockManager.add('hero-section', {
-    label: 'Hero Section',
-    content: `
-      <section class="bg-blue-500 text-white p-10">
-        <div class="max-w-7xl mx-auto text-center">
-          <h2 class="text-4xl font-bold mb-4">Welcome to Our ERP Solution</h2>
-          <p class="text-lg mb-6">Revolutionize your business with our integrated platform.</p>
-          <a href="#" class="bg-white text-blue-500 py-2 px-4 rounded">Get Started</a>
-        </div>
-      </section>
-    `,
-  });
 
-  // Button Component
-  editor.BlockManager.add('button', {
-    label: 'Button',
-    content: `
-      <a href="#" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Button</a>
-    `,
-  });
 
-  // Full Landing Page Component
-  editor.BlockManager.add('full-landing-page', {
-    label: 'Full Landing Page',
-    content: `
-      <div class="min-h-screen bg-gray-100 flex flex-col">
-        <header class="bg-white shadow">
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold text-gray-900">ERP Solution</h1>
-          </div>
-        </header>
-        <main class="flex-grow flex flex-col justify-center items-center bg-white py-20">
-          <h2 class="text-5xl font-extrabold text-gray-800 mb-4">Revolutionize Your Business</h2>
-          <p class="text-lg text-gray-600 mb-6">Integrate all your processes into one powerful platform.</p>
-          <a href="#" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Get Started</a>
-        </main>
-      </div>
-    `,
-  });
+ 
+ 
+
+
 
   // Responsive Layout Component
   editor.BlockManager.add('responsive-layout', {
