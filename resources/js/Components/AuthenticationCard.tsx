@@ -5,12 +5,23 @@ export default function AuthenticationCard({
   children,
 }: PropsWithChildren<Record<string, unknown>>) {
   return (
-    <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-      <div>
-        <AuthenticationCardLogo />
+    <div className="min-h-screen flex flex-col gap-4 bg-primary sm:flex-row sm:justify-center items-center pt-6 sm:pt-0 bg-background">
+      {/* Image Section */}
+      <div className="hidden sm:block sm:w-1/2">
+        <img 
+          src="/assets/svgs/undraw_login_re_4vu2.svg" // Replace with your desired dimensions
+          alt="Placeholder Image"
+          className="object-cover w-full rounded-l-lg" // Ensures the image covers the section properly
+        />
       </div>
 
-      <div className="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+      {/* Authentication Card Section */}
+      <div className="w-full sm:max-w-md mt-6 sm:mt-0 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+        <div className="text-center">
+          <div className="flex justify-center m-4">
+          <AuthenticationCardLogo />          
+            </div>
+        </div>
         {children}
       </div>
     </div>

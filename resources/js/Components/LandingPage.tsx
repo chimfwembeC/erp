@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Section from './Section';
 import { Head } from '@inertiajs/react';
+import ErrorPage from './ErrorPage';
+import LoadingPage from './LoadingPage';
 
 const LandingPage = ({ slug }) => {
   const [landingPage, setLandingPage] = useState(null);
@@ -26,11 +28,17 @@ const LandingPage = ({ slug }) => {
   }, [slug]);
 
   if (loading) {
-    return <div className="text-center">Loading...</div>;
+    return (
+      <LoadingPage />
+    );
   }
 
   if (error) {
-    return <div className="text-center text-red-500">{error}</div>;
+    return (
+    <div>
+      <ErrorPage error={error} />
+    </div>
+    );
   }
 
   return (

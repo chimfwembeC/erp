@@ -93,5 +93,7 @@ class LandingPagesTableSeeder extends Seeder
         ',
             'is_published' => true,
         ]);
+
+        // Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit illum, perferendis impedit non rerum ipsam nisi mollitia ut tempora voluptate ipsa laudantium accusantium quo quibusdam adipisci. Eveniet accusantium est ratione.
     }
 }

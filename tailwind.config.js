@@ -17,6 +17,20 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                primary: '#1cbc9c',          // Light Sea Green
+                'primary-dark': '#169e83',   // Dark Sea Green
+                accent: '#f39c12',           // Golden Yellow
+                warning: '#e74c3c',          // Soft Coral
+                header: '#2c3e50',           // Deep Slate Blue
+                background: '#ecf0f1',       // Soft Gray
+                'text-dark': '#34495e',      // Dark Gray
+                'sky-blue': '#3498db',       // Cool Sky Blue
+                violet: '#9b59b6',           // Muted Violet
+              },
+              height: {
+                'screen-70': '70vh',
+              },
         },
     },
 
