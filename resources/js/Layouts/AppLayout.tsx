@@ -83,6 +83,7 @@ const sidebarLinks: SidebarLink[] = [
       { label: 'Overview', href: '/hrm' },
       { label: 'Departments', href: '/hrm/departments' },
       { label: 'Branches', href: '/hrm/branches' },
+      // { label: 'Branch Link Departments', href: '/hrm/branches' },
       { label: 'Attendance Management', href: '/hrm/attendances' },
       { label: 'Employee Management', href: '/hrm/employees' },
       { label: 'Leave Management', href: '/hrm/leaves' },
