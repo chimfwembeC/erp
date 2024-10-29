@@ -73,24 +73,39 @@ export default function Welcome({
             {/* Features Section */}
             <section className="flex flex-col md:flex-row items-center gap-4 space-y-8 md:space-y-0 md:space-x-12  h-screen-70">
               <div className="grid grid-cols-2 gap-4">
-              <img
-                src="assets/svgs/undraw_features_overview_re_2w78.svg"
-                alt="Feature illustration"
-                className="w-full md:w-1/3 rounded-lg"
-              />
-                <img
-                src="assets/svgs/undraw_features_overview_re_2w78.svg"
-                alt="Feature illustration"
-                className="w-full md:w-1/3 rounded-lg"
-              />
+                <div className="border-2 p-2 rounded-lg hover:border-primary hover:scale-105 transition-transform duration-200 ease-out">
+                  <img
+                    src="assets/svgs/undraw_features_overview_re_2w78.svg"
+                    alt="Feature illustration"
+                    className="w-48 h-48 rounded-lg"
+                  />
+                </div>
 
-<img
-                src="assets/svgs/undraw_features_overview_re_2w78.svg"
-                alt="Feature illustration"
-                className="w-full md:w-1/3 rounded-lg"
-              />
+                <div className="border-2 p-2 rounded-lg hover:border-primary hover:scale-105 transition-transform duration-200 ease-out">
+                  <img
+                    src="assets/svgs/undraw_features_overview_re_2w78.svg"
+                    alt="Feature illustration"
+                    className="w-48 h-48 rounded-lg"
+                  />
+                </div>
+
+                <div className="border-2 p-2 rounded-lg hover:border-primary hover:scale-105 transition-transform duration-200 ease-out">
+                  <img
+                    src="assets/svgs/undraw_features_overview_re_2w78.svg"
+                    alt="Feature illustration"
+                    className="w-48 h-48 rounded-lg"
+                  />
+                </div>
+
+                <div className="border-2 p-2 rounded-lg hover:border-primary hover:scale-105 transition-transform duration-200 ease-out">
+                  <img
+                    src="assets/svgs/undraw_features_overview_re_2w78.svg"
+                    alt="Feature illustration"
+                    className="w-48 h-48 rounded-lg"
+                  />
+                </div>
               </div>
-            
+
               <div className="flex-1">
                 <h2 className="text-2xl font-bold text-primary">
                   Our Features
@@ -115,39 +130,45 @@ export default function Welcome({
               </h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div className="flex items-start space-x-4">
-                  <span className="text-primary-dark text-3xl">✓</span>
-                  <div>
-                    <h4 className="text-lg font-semibold">
-                      Comprehensive Analytics
-                    </h4>
-                    <p className="text-gray-700">
-                      Track and analyze key business metrics in real-time.
-                    </p>
+                  <div className="border-2 p-2 rounded-lg hover:border-primary hover:scale-105 transition-transform duration-200 ease-out">
+                    <span className="text-primary-dark text-3xl">✓</span>
+                    <div>
+                      <h4 className="text-lg font-semibold">
+                        Comprehensive Analytics
+                      </h4>
+                      <p className="text-gray-700">
+                        Track and analyze key business metrics in real-time.
+                      </p>
+                    </div>
                   </div>
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <span className="text-primary-dark text-3xl">✓</span>
-                  <div>
-                    <h4 className="text-lg font-semibold">
-                      24/7 Customer Support
-                    </h4>
-                    <p className="text-gray-700">
-                      Our team is here to support you around the clock.
-                    </p>
+                  <div className="border-2 p-2 rounded-lg hover:border-primary hover:scale-105 transition-transform duration-200 ease-out">
+                    <span className="text-primary-dark text-3xl">✓</span>
+                    <div>
+                      <h4 className="text-lg font-semibold">
+                        24/7 Customer Support
+                      </h4>
+                      <p className="text-gray-700">
+                        Our team is here to support you around the clock.
+                      </p>
+                    </div>
                   </div>
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <span className="text-primary-dark text-3xl">✓</span>
-                  <div>
-                    <h4 className="text-lg font-semibold">
-                      Secure Data Storage
-                    </h4>
-                    <p className="text-gray-700">
-                      Your data is protected with industry-standard security
-                      measures.
-                    </p>
+                  <div className="border-2 p-2 rounded-lg hover:border-primary hover:scale-105 transition-transform duration-200 ease-out">
+                    <span className="text-primary-dark text-3xl">✓</span>
+                    <div>
+                      <h4 className="text-lg font-semibold">
+                        Secure Data Storage
+                      </h4>
+                      <p className="text-gray-700">
+                        Your data is protected with industry-standard security
+                        measures.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -247,11 +268,14 @@ export default function Welcome({
 
             {/* Benefits Section */}
             <section className="flex flex-col md:flex-row-reverse items-center space-y-8 gap-4 md:space-y-0 md:space-x-12  h-screen-70">
-              <img
+              <div className="border-2 p-2 rounded-lg hover:border-primary hover:scale-105 transition-transform duration-200 ease-out">
+                              <img
                 src="assets/svgs/undraw_selection_re_ycpo.svg"
                 alt="Benefits illustration"
-                className="w-full md:w-1/3 rounded-lg"
+                className="w-64 h-64 rounded-lg"
               />
+              </div>
+
               <div className="flex-1">
                 <h2 className="text-2xl font-bold text-primary">
                   Why Choose Us?

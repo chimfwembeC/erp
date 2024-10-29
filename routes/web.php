@@ -53,11 +53,14 @@ Route::prefix('hrm')->group(function () {
     Route::delete('/employees/{id}', [EmployeeController::class, 'destroy'])->name('hrm.employees.destroy');
 
     // Department Management Routes
-    Route::get('/departments', [DepartmentController::class, 'index'])->name('hrm.departments.index');
-    Route::post('/departments', [DepartmentController::class, 'store'])->name('hrm.departments.store');
-    Route::get('/departments/{id}', [DepartmentController::class, 'show'])->name('hrm.departments.show');
-    Route::put('/departments/{id}', [DepartmentController::class, 'update'])->name('hrm.departments.update');
-    Route::delete('/departments/{id}', [DepartmentController::class, 'destroy'])->name('hrm.departments.destroy');
+
+ Route::get('/departments', [DepartmentController::class, 'index'])->name('hrm.departments.index');
+ Route::get('/departments/create', [DepartmentController::class, 'create'])->name('hrm.departments.create');
+ Route::post('/departments', [DepartmentController::class, 'store'])->name('hrm.departments.store');
+ Route::get('/departments/{id}', [DepartmentController::class, 'show'])->name('hrm.departments.show');
+ Route::get('/departments/{id}/edit', [DepartmentController::class, 'edit'])->name('hrm.departments.edit'); // Fixed route
+ Route::put('/departments/{id}', [DepartmentController::class, 'update'])->name('hrm.departments.update');
+ Route::delete('/departments/{id}', [DepartmentController::class, 'destroy'])->name('hrm.departments.destroy');
 
 
     // Branch Management Routes

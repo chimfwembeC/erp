@@ -353,7 +353,7 @@ export default function Layout({ title, children }: LayoutProps) {
           <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2">
             <Menu size={24} />
           </button>
-          <h1 className="text-xl font-semibold">{title}</h1>
+          <h1 className="text-xs md:text-md lg:text-xl font-semibold">{title}</h1>
           <nav className="flex items-center space-x-4">
             {/* Notifications Button */}
             <div className="relative">
@@ -362,7 +362,7 @@ export default function Layout({ title, children }: LayoutProps) {
                 onClick={() => toggleDropdown('notifications')}
               >
                 <Bell size={24} />
-                <span className="absolute -top-2 -right-1 w-4 h-4 bg-red-500 text-white text-xs flex items-center justify-center rounded-full">
+                <span className="absolute -top-2 -right-1 w-4 h-4 bg-primary text-white text-xs flex items-center justify-center rounded-full">
                   5
                 </span>
               </button>
@@ -428,7 +428,7 @@ export default function Layout({ title, children }: LayoutProps) {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto mt-16 p-6 bg-gray-100">
+        <main className="flex-1 overflow-auto mt-16  md:p-6 bg-gray-100">
           {children}
         </main>
       </div>
