@@ -6,7 +6,7 @@ export default function GuestLayout({ children }) {
   return (
     <div className="relative min-h-screen bg-background">
       {/* Floating Navbar */}
-      <header className="fixed top-0 left-0 w-full bg-primary text-white shadow-lg">
+      <header className="fixed top-0 left-0 w-full bg-primary text-white shadow-lg z-50">
         <div className="container mx-auto flex items-center justify-between px-6 py-4">
           {/* Logo */}
           <a href="#" className="text-2xl font-bold text-white hover:text-accent">

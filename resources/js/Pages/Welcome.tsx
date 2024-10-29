@@ -72,11 +72,25 @@ export default function Welcome({
           <div className="container mx-auto px-6 py-10 space-y-16">
             {/* Features Section */}
             <section className="flex flex-col md:flex-row items-center gap-4 space-y-8 md:space-y-0 md:space-x-12  h-screen-70">
+              <div className="grid grid-cols-2 gap-4">
               <img
                 src="assets/svgs/undraw_features_overview_re_2w78.svg"
                 alt="Feature illustration"
                 className="w-full md:w-1/3 rounded-lg"
               />
+                <img
+                src="assets/svgs/undraw_features_overview_re_2w78.svg"
+                alt="Feature illustration"
+                className="w-full md:w-1/3 rounded-lg"
+              />
+
+<img
+                src="assets/svgs/undraw_features_overview_re_2w78.svg"
+                alt="Feature illustration"
+                className="w-full md:w-1/3 rounded-lg"
+              />
+              </div>
+            
               <div className="flex-1">
                 <h2 className="text-2xl font-bold text-primary">
                   Our Features
