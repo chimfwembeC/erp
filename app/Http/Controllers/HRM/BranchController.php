@@ -4,20 +4,20 @@ namespace App\Http\Controllers\HRM;
 
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
+use App\Models\User; // Assuming you have an Employee model for managers
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class BranchController extends Controller
 {
-      /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
         $branches = Branch::with(['manager'])->get();
 
-        return Inertia::render("HRM/Departments/Branches/Index", [
+        return Inertia::render("HRM/Branches/Index", [
             'branches' => $branches
         ]);
     }
@@ -27,7 +27,10 @@ class BranchController extends Controller
      */
     public function create()
     {
-        //
+        $employees = User::where('role','employee')->get(['id', 'name']);
+        return Inertia::render("HRM/Branches/Create", [
+            'employees' => $employees,
+        ]);
     }
 
     /**
@@ -39,28 +42,39 @@ class BranchController extends Controller
             'name' => 'required|string|max:100',
             'location' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
-            'manager_id' => 'nullable',
+            'manager_id' => 'nullable|exists:users,id',
         ]);
 
         Branch::create($validatedData);
 
-        return redirect()->route('branches.index')->with('success', 'Branch updated successfully.');
+        return redirect()->route('hrm.branches.index')->with('success', 'Branch created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Branch $branch)
+    public function show($id)
     {
-        //
+        $branch = Branch::find($id);
+
+        $branch->load('manager');
+        return Inertia::render("HRM/Branches/Show", [
+            'branch' => $branch
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Branch $branch)
+    public function edit($id)
     {
-        //
+        $branch = Branch::find($id);
+
+        $employees = User::where('role','employee')->get(['id', 'name']);
+        return Inertia::render("HRM/Branches/Edit", [
+            'branch' => $branch,
+            'employees' => $employees,
+        ]);
     }
 
     /**
@@ -68,17 +82,16 @@ class BranchController extends Controller
      */
     public function update(Request $request, Branch $branch)
     {
-        //
         $validatedData = $request->validate([
             'name' => 'required|string|max:100',
             'location' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
-            'manager_id' => 'nullable',
+            'manager_id' => 'nullable|exists:users,id',
         ]);
 
         $branch->update($validatedData);
 
-        return redirect()->route('branches.index')->with('success', 'Branch updated successfully.');
+        return redirect()->route('hrm.branches.index')->with('success', 'Branch updated successfully.');
     }
 
     /**
@@ -86,9 +99,8 @@ class BranchController extends Controller
      */
     public function destroy(Branch $branch)
     {
-        //
         $branch->delete();
 
-        return response()->json($branch);
+        return redirect()->route('hrm.branches.index')->with('success', 'Branch deleted successfully.');
     }
 }

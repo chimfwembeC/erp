@@ -65,8 +65,10 @@ Route::prefix('hrm')->group(function () {
 
     // Branch Management Routes
     Route::get('/branches', [BranchController::class, 'index'])->name('hrm.branches.index');
+    Route::get('/branches/create', [BranchController::class, 'create'])->name('hrm.branches.create');
     Route::post('/branches', [BranchController::class, 'store'])->name('hrm.branches.store');
     Route::get('/branches/{id}', [BranchController::class, 'show'])->name('hrm.branches.show');
+    Route::get('/branches/{id}/edit', [BranchController::class, 'edit'])->name('hrm.branches.edit');
     Route::put('/branches/{id}', [BranchController::class, 'update'])->name('hrm.branches.update');
     Route::delete('/branches/{id}', [BranchController::class, 'destroy'])->name('hrm.branches.destroy');
 
