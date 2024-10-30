@@ -76,8 +76,10 @@ Route::prefix('hrm')->group(function () {
 
     // User Management Routes
     Route::get('/users', [UserController::class, 'index'])->name('hrm.users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('hrm.users.create');
     Route::post('/users', [UserController::class, 'store'])->name('hrm.users.store');
     Route::get('/users/{id}', [UserController::class, 'show'])->name('hrm.users.show');
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('hrm.users.edit');
     Route::put('/users/{id}', [UserController::class, 'update'])->name('hrm.users.update');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('hrm.users.destroy');
 
