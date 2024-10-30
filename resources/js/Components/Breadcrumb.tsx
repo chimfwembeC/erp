@@ -10,7 +10,7 @@ const Breadcrumb = ({ items }) => {
           <li key={index} className="flex items-center">
             {item.href ? (
               <>
-                <Link href={item.href} className="text-gray-700 hover:text-blue-600">
+                <Link href={item.href} className="text-gray-700 hover:text-primary">
                   {item.label}
                 </Link>
                 {index < items.length - 1 && (

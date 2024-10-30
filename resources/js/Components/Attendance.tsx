@@ -45,7 +45,7 @@ const Attendance = () => {
       cancelButtonText: 'No, Cancel'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.post('/attendance/check-in')
+        axios.post('/hrm/attendance/check-in')
           .then(response => {
             toast.current.show({ severity: 'success', summary: 'Check-In Successful', detail: 'You have successfully checked in!', life: 3000 });
             setAttendanceRecords([...attendanceRecords, response.data]);
@@ -74,7 +74,7 @@ const Attendance = () => {
       cancelButtonText: 'No, Cancel'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.post(`/attendance/check-out/${attendanceId}`)
+        axios.post(`/hrm/attendance/check-out/${attendanceId}`)
           .then(response => {
             toast.current.show({ severity: 'success', summary: 'Check-Out Successful', detail: 'You have successfully checked out!', life: 3000 });
             setAttendanceRecords(attendanceRecords.map(record =>

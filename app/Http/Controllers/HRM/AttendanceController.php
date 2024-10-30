@@ -4,6 +4,8 @@ namespace App\Http\Controllers\HRM;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -18,13 +20,96 @@ class AttendanceController extends Controller
     public function index()
     {
         $attendances = Attendance::with(['user'])
-        ->latest()->get();
+            ->latest()->get();
 
-        return Inertia::render("HRM/AttendanceManagement/Index",[
+        return Inertia::render("HRM/AttendanceManagement/Index", [
             'attendances' => $attendances,
         ]);
     }
+
+    public function create()
+    {
+        return Inertia::render("HRM/AttendanceManagement/Create", [
+            'users' => User::all(),
+            'statuses' => [
+                ['name' => 'Check In', 'value' => 'check_in'],
+                ['name' => 'Check Out', 'value' => 'check_out']
+            ],
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'user_id' => 'required|numeric',
+            'status' => 'nullable',
+            'check_in' => 'required|date',
+            'check_out' => 'required|date',
+        ]);
     
+        // Convert ISO date strings to MySQL format
+        $checkIn = Carbon::parse($validatedData['check_in'])->format('Y-m-d H:i:s');
+        $checkOut = Carbon::parse($validatedData['check_out'])->format('Y-m-d H:i:s');
+    
+        $attendance = new Attendance();
+        $attendance->user_id = $validatedData['user_id'];
+        $attendance->check_in = $checkIn;
+        $attendance->check_out = $checkOut;
+        $attendance->status = $validatedData['status'] ? $validatedData['status'] : 'checked_in';
+        $attendance->save();
+    
+        return redirect()->route('hrm.attendances.index');
+    }
+
+    public function edit($id)
+    {
+        $attendance = Attendance::find($id);
+
+        return Inertia::render("HRM/AttendanceManagement/Edit", [
+            'users' => User::all(),
+            'statuses' => [
+                ['name' => 'Check In', 'value' => 'check_in'],
+                ['name' => 'Check Out', 'value' => 'check_out']
+            ],
+
+            'attendance' => $attendance
+        ]);
+    }
+
+    public function show($id)
+    {
+        $attendance = Attendance::find($id);
+
+        return Inertia::render("HRM/AttendanceManagement/Show", [
+            'attendance' => $attendance->load('user'),
+        ]);
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'user_id' => 'required|numeric',
+            'status' => 'nullable',
+            'check_in' => 'required|date',
+            'check_out' => 'required|date',
+        ]);
+    
+        // Convert ISO strings to MySQL datetime format using Carbon
+        $validatedData['check_in'] = Carbon::parse($validatedData['check_in'])->format('Y-m-d H:i:s');
+        $validatedData['check_out'] = Carbon::parse($validatedData['check_out'])->format('Y-m-d H:i:s');
+    
+        $attendance = Attendance::find($id);
+        $attendance->user_id = $validatedData['user_id'];
+        $attendance->check_in = $validatedData['check_in'];
+        $attendance->check_out = $validatedData['check_out'];
+        $attendance->status = $validatedData['status'] ? $validatedData['status'] : 'checked_in';
+        $attendance->save();
+    
+        return redirect()->route('hrm.attendances.index');
+    }
+
+
     public function checkIn()
     {
         // Get the current date without time (to compare only the date)

@@ -54,13 +54,13 @@ Route::prefix('hrm')->group(function () {
 
     // Department Management Routes
 
- Route::get('/departments', [DepartmentController::class, 'index'])->name('hrm.departments.index');
- Route::get('/departments/create', [DepartmentController::class, 'create'])->name('hrm.departments.create');
- Route::post('/departments', [DepartmentController::class, 'store'])->name('hrm.departments.store');
- Route::get('/departments/{id}', [DepartmentController::class, 'show'])->name('hrm.departments.show');
- Route::get('/departments/{id}/edit', [DepartmentController::class, 'edit'])->name('hrm.departments.edit'); // Fixed route
- Route::put('/departments/{id}', [DepartmentController::class, 'update'])->name('hrm.departments.update');
- Route::delete('/departments/{id}', [DepartmentController::class, 'destroy'])->name('hrm.departments.destroy');
+    Route::get('/departments', [DepartmentController::class, 'index'])->name('hrm.departments.index');
+    Route::get('/departments/create', [DepartmentController::class, 'create'])->name('hrm.departments.create');
+    Route::post('/departments', [DepartmentController::class, 'store'])->name('hrm.departments.store');
+    Route::get('/departments/{id}', [DepartmentController::class, 'show'])->name('hrm.departments.show');
+    Route::get('/departments/{id}/edit', [DepartmentController::class, 'edit'])->name('hrm.departments.edit'); // Fixed route
+    Route::put('/departments/{id}', [DepartmentController::class, 'update'])->name('hrm.departments.update');
+    Route::delete('/departments/{id}', [DepartmentController::class, 'destroy'])->name('hrm.departments.destroy');
 
 
     // Branch Management Routes
@@ -82,7 +82,7 @@ Route::prefix('hrm')->group(function () {
     // Job Management Routes
     Route::get('/jobs', [JobController::class, 'index'])->name('hrm.jobs.index');
     Route::post('/jobs', [JobController::class, 'store'])->name('hrm.jobs.store');
-    Route::get('/jobs/{id}', [JobController::class, 'show'])->name('hrm.jobs.show');    
+    Route::get('/jobs/{id}', [JobController::class, 'show'])->name('hrm.jobs.show');
     Route::get('/jobs/{id}/edit', [JobController::class, 'edit'])->name('hrm.jobs.edit');
     Route::put('/jobs/{id}/update', [JobController::class, 'update'])->name('hrm.jobs.update');
     Route::delete('/jobs/{id}', [JobController::class, 'destroy'])->name('hrm.jobs.destroy');
@@ -96,11 +96,18 @@ Route::prefix('hrm')->group(function () {
 
 
     // Attendance Management Routes
-    Route::get('/attendances', [AttendanceController::class, 'index'])->name('hrm.attendance.index');
-    Route::get('/get-attendance', [AttendanceController::class, 'getAttendance'])->name('hrm.attendance.getAttendance');
+    Route::get('/attendances', [AttendanceController::class, 'index'])->name('hrm.attendances.index');    
+    Route::get('/attendances/create', [AttendanceController::class, 'create'])->name('hrm.attendances.create');
+    Route::post('/attendances', [AttendanceController::class, 'store'])->name('hrm.attendances.store');
+    Route::get('/attendances/{id}', [AttendanceController::class, 'show'])->name('hrm.attendances.show');
+    Route::get('/attendances/{id}/edit', [AttendanceController::class, 'edit'])->name('hrm.attendances.edit');
+    Route::put('/attendances/{id}', [AttendanceController::class, 'update'])->name('hrm.attendances.update');
+    Route::delete('/attendances/{id}', [AttendanceController::class, 'destroy'])->name('hrm.attendances.destroy');
 
-    Route::post('/attendance/check-in', [AttendanceController::class, 'checkIn'])->name('hrm.attendance.checkIn');
-    Route::post('/attendance/check-out', [AttendanceController::class, 'checkOut'])->name('hrm.attendance.checkOut');
+    // Extra route for user check, checkout and getting a list of all attandances
+    Route::get('/get-attendance', [AttendanceController::class, 'getAttendance'])->name('hrm.attendance.getAttendance');
+    Route::post('/attendance/check-in', [AttendanceController::class, 'checkIn']);
+    Route::post('/attendance/check-out/{id}', [AttendanceController::class, 'checkOut']);
 
     // Payroll Management Routes
     Route::get('/payrolls', [PayrollController::class, 'index'])->name('hrm.payrolls.index');
@@ -114,9 +121,6 @@ Route::prefix('hrm')->group(function () {
     Route::put('/leaves/{id}/deny', [LeaveController::class, 'deny'])->name('hrm.leaves.deny');
 });
 
-Route::get('/attendance', [AttendanceController::class, 'index']);
-Route::post('/attendance/check-in', [AttendanceController::class, 'checkIn']);
-Route::post('/attendance/check-out/{id}', [AttendanceController::class, 'checkOut']);
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
 Route::resource('/landing-pages', LandingPagesController::class);
