@@ -47,8 +47,10 @@ Route::prefix('hrm')->group(function () {
     Route::get('/', [HRMController::class, 'index'])->name('hrm.index');
     // Employee Management Routes
     Route::get('/employees', [EmployeeController::class, 'index'])->name('hrm.employees.index');
+    Route::get('/employees/create', [EmployeeController::class, 'create'])->name('hrm.employees.create');
     Route::post('/employees', [EmployeeController::class, 'store'])->name('hrm.employees.store');
     Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('hrm.employees.show');
+    Route::get('/employees/{id}/edit', [EmployeeController::class, 'edit'])->name('hrm.employees.edit');
     Route::put('/employees/{id}', [EmployeeController::class, 'update'])->name('hrm.employees.update');
     Route::delete('/employees/{id}', [EmployeeController::class, 'destroy'])->name('hrm.employees.destroy');
 
