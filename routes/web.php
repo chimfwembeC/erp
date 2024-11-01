@@ -93,8 +93,10 @@ Route::prefix('hrm')->group(function () {
     // Route::resource('jobs', JobController::class);
     // Job Applications Management Routes
     Route::get('/job-applications', [JobApplicationController::class, 'index'])->name('hrm.job-applications.index');
+    Route::get('/job-applications/create', [JobApplicationController::class, 'create'])->name('hrm.job-applications.create');
     Route::post('/job-applications', [JobApplicationController::class, 'store'])->name('hrm.job-applications.store');
     Route::get('/job-applications/{id}', [JobApplicationController::class, 'show'])->name('hrm.job-applications.show');
+    Route::get('/job-applications/{id}/edit', [JobApplicationController::class, 'edit'])->name('hrm.job-applications.edit');
     Route::put('/job-applications/{id}', [JobApplicationController::class, 'update'])->name('hrm.job-applications.update');
     Route::delete('/job-applications/{id}', [JobApplicationController::class, 'destroy'])->name('hrm.job-applications.destroy');
 
@@ -120,7 +122,10 @@ Route::prefix('hrm')->group(function () {
 
     // Leave Management Routes
     Route::get('/leaves', [LeaveController::class, 'index'])->name('hrm.leaves.index');
+    Route::get('/leaves/create', [LeaveController::class, 'create'])->name('hrm.leaves.create');
     Route::post('/leaves', [LeaveController::class, 'store'])->name('hrm.leaves.store');
+    Route::put('/leaves/{id}', [LeaveController::class, 'show'])->name('hrm.leaves.show');
+    Route::put('/leaves/{id}/edit', [LeaveController::class, 'edit'])->name('hrm.leaves.edit');
     Route::put('/leaves/{id}/approve', [LeaveController::class, 'approve'])->name('hrm.leaves.approve');
     Route::put('/leaves/{id}/deny', [LeaveController::class, 'deny'])->name('hrm.leaves.deny');
 });

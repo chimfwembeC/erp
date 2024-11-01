@@ -7,11 +7,11 @@ export default function AuthenticationCard({
   return (
     <div className="min-h-screen flex flex-col gap-4 bg-primary sm:flex-row sm:justify-center items-center pt-6 sm:pt-0 bg-background">
       {/* Image Section */}
-      <div className="hidden sm:block sm:w-1/2">
+      <div className="hidden sm:block sm:w-1/2 lg:flex justify-center">
         <img 
           src="/assets/svgs/undraw_login_re_4vu2.svg" // Replace with your desired dimensions
           alt="Placeholder Image"
-          className="object-cover w-full rounded-l-lg" // Ensures the image covers the section properly
+          className="object-cover h-64 w-64 rounded-l-lg" // Ensures the image covers the section properly
         />
       </div>
 

@@ -87,20 +87,14 @@ const sidebarLinks: SidebarLink[] = [
       { label: 'Attendance Management', href: '/hrm/attendances' },
       { label: 'Employee Management', href: '/hrm/employees' },
       { label: 'Leave Management', href: '/hrm/leaves' },
-      { label: 'User Management', href: '/hrm/users' },
+      { label: 'User Management', href: '/hrm/users' },      
       {
         label: 'Payroll Management',
         icon: <FileText size={20} />,
         children: [
+          { label: 'Payrolls', href: '/payroll' },
           { label: 'Salary', href: '/payroll/salary' },
-          { label: 'Payroll Reports', href: '/payroll/reports' },
-          {
-            label: 'Payroll Setup',
-            icon: <Settings size={20} />,
-            children: [
-              { label: 'Net Pay', href: '/payroll/net-pay' },
-            ],
-          },
+          { label: 'Payroll Reports', href: '/payroll/reports' },         
         ],
       },
       {
@@ -109,6 +103,9 @@ const sidebarLinks: SidebarLink[] = [
         children: [
           { label: 'Positions', href: '/hrm/positions' },
           { label: 'Leave Types', href: '/hrm/leave-types' },
+          { label: 'Department Groups', href: '/hrm/department-groups' },
+          { label: 'Net Pay', href: '/payroll/net-pay' },
+          { label: 'HRM Setup', href: '/hrm/setup' },
         ],
       },
     ],
@@ -260,7 +257,7 @@ export default function Layout({ title, children }: LayoutProps) {
         ) : (
           <Link
             href={link.href!}
-            className={`flex items-center p-2 space-x-2 rounded-md ${
+            className={`flex items-center p-2 space-x-2 rounded-md mt-2 ${
               isActiveLink(link.href) ? 'bg-indigo-200 font-bold' : 'hover:bg-indigo-100'
             }`}
           >

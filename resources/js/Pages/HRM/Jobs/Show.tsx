@@ -79,7 +79,7 @@ export default function Show() {
 
           <div className="flex justify-end mt-6">
             <a
-              href={`/job-applications/create/${job.id}`}
+              href={`/hrm/job-applications/create/${job.id}`}
               className="bg-blue-600 text-white py-2 px-6 rounded-lg shadow hover:bg-blue-500 transition duration-300"
             >
               Apply Now

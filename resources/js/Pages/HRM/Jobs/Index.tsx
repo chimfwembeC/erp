@@ -7,7 +7,8 @@ import moment from 'moment';
 const Index = ({ jobs }) => {
     const navigate = useNavigate();
     const items = [
-        { label: 'Home', href: '/hrm' },
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: 'HRM', href: '/hrm' },
         { label: 'Jobs' },
     ];
 
