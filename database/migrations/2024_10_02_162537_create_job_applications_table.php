@@ -21,10 +21,10 @@ return new class extends Migration
             $table->string('linkedin_profile')->nullable(); // LinkedIn profile (optional)
             $table->string('portfolio_url')->nullable(); // Portfolio URL (optional)
             $table->date('availability_date')->nullable(); // Availability date (optional)
-            $table->text('skills')->nullable(); // Skills (optional, could use JSON if needed)
-            $table->text('references')->nullable(); // References (optional)
+            $table->json('skills')->nullable(); // Skills (optional, could use JSON if needed)
+            $table->json('references')->nullable(); // References (optional)
             $table->string('source')->nullable(); // How the applicant heard about the job (optional)
-            $table->text('cover_letter')->nullable();
+            $table->json('cover_letter')->nullable();
             $table->string('resume_path')->nullable();
             $table->enum('status', ['pending', 'interviewed', 'accepted', 'rejected'])->default('pending');
             $table->timestamps();

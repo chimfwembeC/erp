@@ -95,10 +95,10 @@ Route::prefix('hrm')->group(function () {
     Route::get('/job-applications', [JobApplicationController::class, 'index'])->name('hrm.job-applications.index');
     Route::get('/job-applications/create', [JobApplicationController::class, 'create'])->name('hrm.job-applications.create');
     Route::post('/job-applications', [JobApplicationController::class, 'store'])->name('hrm.job-applications.store');
-    Route::get('/job-applications/{id}', [JobApplicationController::class, 'show'])->name('hrm.job-applications.show');
-    Route::get('/job-applications/{id}/edit', [JobApplicationController::class, 'edit'])->name('hrm.job-applications.edit');
-    Route::put('/job-applications/{id}', [JobApplicationController::class, 'update'])->name('hrm.job-applications.update');
-    Route::delete('/job-applications/{id}', [JobApplicationController::class, 'destroy'])->name('hrm.job-applications.destroy');
+    Route::get('/job-applications/{jobApplication}', [JobApplicationController::class, 'show'])->name('hrm.job-applications.show');
+    Route::get('/job-applications/{jobApplication}/edit', [JobApplicationController::class, 'edit'])->name('hrm.job-applications.edit');
+    Route::put('/job-applications/{jobApplication}', [JobApplicationController::class, 'update'])->name('hrm.job-applications.update');
+    Route::delete('/job-applications/{jobApplication}', [JobApplicationController::class, 'destroy'])->name('hrm.job-applications.destroy');
 
 
     // Attendance Management Routes

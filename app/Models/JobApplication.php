@@ -11,17 +11,26 @@ class JobApplication extends Model
 
     // Specify the fillable properties to allow mass assignment
     protected $fillable = [
-        'posted_job_id', // The job the application is for
-        'user_id',       // The user applying for the job
-        'resume',        // URL or path to the applicant's resume
-        'cover_letter',  // Optional cover letter
-        'status',        // Application status (e.g., pending, accepted, rejected)
+        'job_id',
+        'user_id',
+        'applicant_name',
+        'applicant_email',
+        'phone_number',
+        'linkedin_profile',
+        'portfolio_url',
+        'availability_date',
+        'skills',
+        'references',
+        'source',
+        'cover_letter',
+        'resume_path',
+        'status',
     ];
 
     // Define the relationship with the PostedJob model
     public function postedJob()
     {
-        return $this->belongsTo(PostedJob::class, 'posted_job_id');
+        return $this->belongsTo(PostedJob::class, 'job_id');
     }
 
     // Define the relationship with the User model

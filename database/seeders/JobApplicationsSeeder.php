@@ -22,10 +22,10 @@ class JobApplicationsSeeder extends Seeder
                 'linkedin_profile' => 'https://www.linkedin.com/in/johndoe',
                 'portfolio_url' => 'https://johndoe.com',
                 'availability_date' => now()->addDays(15),
-                'skills' => 'JavaScript, PHP, React',
-                'references' => 'Jane Smith - 555-0456',
+                'skills' => json_encode(['JavaScript', 'PHP', 'React']), // Encode skills as JSON
+                'references' => json_encode(['Jane Smith - 555-0456']), // Encode references as JSON
                 'source' => 'LinkedIn',
-                'cover_letter' => 'I am excited to apply for the Software Engineer position...',
+                'cover_letter' => json_encode('I am excited to apply for the Software Engineer position...'), // Encode cover letter as JSON
                 'resume_path' => 'resumes/johndoe_resume.pdf', // Assuming you handle file uploads
                 'status' => 'pending',
                 'created_at' => now(),
@@ -33,5 +33,6 @@ class JobApplicationsSeeder extends Seeder
             ],
             // Add more sample applications as needed
         ]);
+        
     }
 }

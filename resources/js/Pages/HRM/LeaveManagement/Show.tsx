@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { router } from '@inertiajs/react';
 import useRoute from '@/Hooks/useRoute';
 import SectionTitle from '@/Components/SectionTitle';
+import moment from 'moment'; // Import moment.js
 
 const Show = ({ leave }) => {
   const route = useRoute();
@@ -56,10 +57,10 @@ const Show = ({ leave }) => {
             <strong>Employee:</strong> {leave.user.name} {/* Assuming leave.user contains the employee's name */}
           </div>
           <div className="mb-4">
-            <strong>Start Date:</strong> {new Date(leave.start_date).toLocaleDateString()}
+            <strong>Start Date:</strong> {moment(leave.start_date).format('MMMM D, YYYY')}
           </div>
           <div className="mb-4">
-            <strong>End Date:</strong> {new Date(leave.end_date).toLocaleDateString()}
+            <strong>End Date:</strong> {moment(leave.end_date).format('MMMM D, YYYY')}
           </div>
           <div className="mb-4">
             <strong>Status:</strong> {leave.status}
