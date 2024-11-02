@@ -4,6 +4,8 @@ namespace App\Http\Controllers\HRM;
 
 use App\Http\Controllers\Controller;
 use App\Models\LeaveRequest;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -16,7 +18,7 @@ class LeaveController extends Controller
     public function index()
     {
         $leaveRequests = LeaveRequest::with(['user'])->latest()->get();
-        return Inertia::render("HRM/LeaveManagement/Index",[
+        return Inertia::render("HRM/LeaveManagement/Index", [
             'leaveRequests' => $leaveRequests,
         ]);
     }
@@ -46,7 +48,10 @@ class LeaveController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::where('role', 'employee')->get();
+        return Inertia::render("HRM/LeaveManagement/Create", [
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -56,24 +61,47 @@ class LeaveController extends Controller
     {
         // Validate the incoming request
         $validated = $request->validate([
-            // 'user_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
             'status' => 'required|string|in:pending,approved,rejected',
         ]);
 
-        // Create a new leave request
-        $leaveRequest = LeaveRequest::create(array_merge($validated,['user_id' => auth()->user()->id]));
+        // Check if the user already has a pending leave request
+        $pendingLeave = LeaveRequest::where('user_id', $validated['user_id'])
+            ->where('status', 'pending')
+            ->exists();
 
-        return response()->json($leaveRequest, Response::HTTP_CREATED);
+        if ($pendingLeave) {
+            return redirect()->back()->withErrors([
+                'error' => 'You already have a pending leave application. Please contact Human Resources for further assistance.',
+            ]);
+        }
+
+        // Parse the date strings to the correct format
+        $validated['start_date'] = Carbon::parse($validated['start_date'])->format('Y-m-d H:i:s');
+        $validated['end_date'] = Carbon::parse($validated['end_date'])->format('Y-m-d H:i:s');
+
+        // Create a new leave request
+        LeaveRequest::create([
+            'user_id' => $validated['user_id'],
+            'start_date' => $validated['start_date'],
+            'end_date' => $validated['end_date'],
+            'status' => $validated['status'],
+        ]);
+
+        return redirect()->route('hrm.leaves.index')->with('success', 'Leave request submitted successfully.');
     }
+
 
     /**
      * Display the specified resource.
      */
     public function show(LeaveRequest $leaveRequest)
     {
-        return response()->json($leaveRequest);
+        return Inertia::render("HRM/LeaveManagement/Show", [
+            'leave' => $leaveRequest->load('user'),
+        ]);
     }
 
     /**
@@ -81,7 +109,12 @@ class LeaveController extends Controller
      */
     public function edit(LeaveRequest $leaveRequest)
     {
-        //
+        $users = User::where('role', 'employee')->get();
+
+        return Inertia::render("HRM/LeaveManagement/Edit", [
+            'leave' => $leaveRequest,
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -94,13 +127,17 @@ class LeaveController extends Controller
             'user_id' => 'sometimes|required|exists:users,id',
             'start_date' => 'sometimes|required|date',
             'end_date' => 'sometimes|required|date|after:start_date',
-            'status' => 'sometimes|required|string|in:pending,approved,rejected',
+            'status' => 'sometimes|required|string|in:pending,approved,denied',
         ]);
+
+        // Parse the date strings to the correct format
+        $validated['start_date'] = Carbon::parse($validated['start_date'])->format('Y-m-d H:i:s');
+        $validated['end_date'] = Carbon::parse($validated['end_date'])->format('Y-m-d H:i:s');
 
         // Update the leave request
         $leaveRequest->update($validated);
 
-        return response()->json($leaveRequest);
+        return redirect()->route('hrm.leaves.index');
     }
     /**
      * Remove the specified resource from storage.
@@ -108,6 +145,7 @@ class LeaveController extends Controller
     public function destroy(LeaveRequest $leaveRequest)
     {
         $leaveRequest->delete();
-        return response()->json(null, Response::HTTP_NO_CONTENT);
+
+        return redirect()->route('hrm.leaves.index');
     }
 }

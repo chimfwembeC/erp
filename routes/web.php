@@ -124,10 +124,12 @@ Route::prefix('hrm')->group(function () {
     Route::get('/leaves', [LeaveController::class, 'index'])->name('hrm.leaves.index');
     Route::get('/leaves/create', [LeaveController::class, 'create'])->name('hrm.leaves.create');
     Route::post('/leaves', [LeaveController::class, 'store'])->name('hrm.leaves.store');
-    Route::put('/leaves/{id}', [LeaveController::class, 'show'])->name('hrm.leaves.show');
-    Route::put('/leaves/{id}/edit', [LeaveController::class, 'edit'])->name('hrm.leaves.edit');
-    Route::put('/leaves/{id}/approve', [LeaveController::class, 'approve'])->name('hrm.leaves.approve');
-    Route::put('/leaves/{id}/deny', [LeaveController::class, 'deny'])->name('hrm.leaves.deny');
+    Route::get('/leaves/{leaveRequest}', [LeaveController::class, 'show'])->name('hrm.leaves.show');
+    Route::put('/leaves/{leaveRequest}', [LeaveController::class, 'update'])->name('hrm.leaves.update');
+    Route::get('/leaves/{leaveRequest}/edit', [LeaveController::class, 'edit'])->name('hrm.leaves.edit');
+    Route::delete('/leaves/{leaveRequest}', [LeaveController::class, 'destroy'])->name('hrm.leaves.destroy');
+    Route::put('/leaves/{leaveRequest}/approve', [LeaveController::class, 'approve'])->name('hrm.leaves.approve');
+    Route::put('/leaves/{leaveRequest}/deny', [LeaveController::class, 'deny'])->name('hrm.leaves.deny');
 });
 
 
