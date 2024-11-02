@@ -33,7 +33,9 @@ const sidebarLinks: SidebarLink[] = [
     label: 'Accounting',
     icon: <DollarSign size={20} />,
     children: [
+      { label: 'Overview',icon: <DotIcon size={20} />, href: '/accounting' },
       { label: 'Invoices',icon: <DotIcon size={20} />, href: '/accounting/invoices' },
+
       {
         label: 'Payments',
         href: '/accounting/payments',

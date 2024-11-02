@@ -1,6 +1,8 @@
 <?php
 
 // use App\Http\Controllers\AttendanceController;
+
+use App\Http\Controllers\Accounting\AccountingController;
 use App\Http\Controllers\HRM\HRMController;
 use App\Http\Controllers\HRM\EmployeeController;
 use App\Http\Controllers\HRM\AttendanceController;
@@ -42,9 +44,12 @@ Route::middleware([
     })->name('dashboard');
 });
 
+
+// Human resource management routes
 Route::prefix('hrm')->group(function () {
     // hrm dashboard
     Route::get('/', [HRMController::class, 'index'])->name('hrm.index');
+
     // Employee Management Routes
     Route::get('/employees', [EmployeeController::class, 'index'])->name('hrm.employees.index');
     Route::get('/employees/create', [EmployeeController::class, 'create'])->name('hrm.employees.create');
@@ -139,6 +144,23 @@ Route::prefix('hrm')->group(function () {
     Route::put('/leaves/{leaveRequest}/deny', [LeaveController::class, 'deny'])->name('hrm.leaves.deny');
 });
 
+
+// accounting management module routes
+Route::prefix('accounting')->group(function () {
+
+    Route::get('/', [AccountingController::class, 'index'])->name('accounting.index');
+
+     // Leave Management Routes
+     Route::get('/leaves', [LeaveController::class, 'index'])->name('hrm.leaves.index');
+     Route::get('/leaves/create', [LeaveController::class, 'create'])->name('hrm.leaves.create');
+     Route::post('/leaves', [LeaveController::class, 'store'])->name('hrm.leaves.store');
+     Route::get('/leaves/{leaveRequest}', [LeaveController::class, 'show'])->name('hrm.leaves.show');
+     Route::put('/leaves/{leaveRequest}', [LeaveController::class, 'update'])->name('hrm.leaves.update');
+     Route::get('/leaves/{leaveRequest}/edit', [LeaveController::class, 'edit'])->name('hrm.leaves.edit');
+     Route::delete('/leaves/{leaveRequest}', [LeaveController::class, 'destroy'])->name('hrm.leaves.destroy');
+     Route::put('/leaves/{leaveRequest}/approve', [LeaveController::class, 'approve'])->name('hrm.leaves.approve');
+     Route::put('/leaves/{leaveRequest}/deny', [LeaveController::class, 'deny'])->name('hrm.leaves.deny');
+});
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
 Route::resource('/landing-pages', LandingPagesController::class);
