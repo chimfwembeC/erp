@@ -1,6 +1,7 @@
 import AppLayout from '@/Layouts/AppLayout';
 import Breadcrumb from '@/Components/Breadcrumb';
 import { DollarSign, FileText, User, CheckCircle } from 'lucide-react';
+import { Link } from '@inertiajs/react';
 
 interface AccountingModule {
   label: string;
@@ -70,8 +71,8 @@ const Index: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {accountingModules.map((module, index) => (
               <div key={index} className="p-4 bg-white shadow rounded-lg flex items-center">
-                {module.icon}
-                <a href={module.href} className="text-blue-600 hover:underline">{module.label}</a>
+                {module.icon}                
+                <Link href={module.href} className="text-blue-600 hover:underline">{module.label}</Link>
               </div>
             ))}
           </div>

@@ -3,6 +3,7 @@
 // use App\Http\Controllers\AttendanceController;
 
 use App\Http\Controllers\Accounting\AccountingController;
+use App\Http\Controllers\Accounting\InvoiceController;
 use App\Http\Controllers\HRM\HRMController;
 use App\Http\Controllers\HRM\EmployeeController;
 use App\Http\Controllers\HRM\AttendanceController;
@@ -150,16 +151,14 @@ Route::prefix('accounting')->group(function () {
 
     Route::get('/', [AccountingController::class, 'index'])->name('accounting.index');
 
-     // Leave Management Routes
-     Route::get('/leaves', [LeaveController::class, 'index'])->name('hrm.leaves.index');
-     Route::get('/leaves/create', [LeaveController::class, 'create'])->name('hrm.leaves.create');
-     Route::post('/leaves', [LeaveController::class, 'store'])->name('hrm.leaves.store');
-     Route::get('/leaves/{leaveRequest}', [LeaveController::class, 'show'])->name('hrm.leaves.show');
-     Route::put('/leaves/{leaveRequest}', [LeaveController::class, 'update'])->name('hrm.leaves.update');
-     Route::get('/leaves/{leaveRequest}/edit', [LeaveController::class, 'edit'])->name('hrm.leaves.edit');
-     Route::delete('/leaves/{leaveRequest}', [LeaveController::class, 'destroy'])->name('hrm.leaves.destroy');
-     Route::put('/leaves/{leaveRequest}/approve', [LeaveController::class, 'approve'])->name('hrm.leaves.approve');
-     Route::put('/leaves/{leaveRequest}/deny', [LeaveController::class, 'deny'])->name('hrm.leaves.deny');
+     // Invoices Routes
+     Route::get('/invoices', [InvoiceController::class, 'index'])->name('accounting.invoices.index');
+     Route::get('/invoices/create', [InvoiceController::class, 'create'])->name('accounting.invoices.create');
+     Route::post('/invoices', [InvoiceController::class, 'store'])->name('accounting.invoices.store');
+     Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->name('accounting.invoices.show');
+     Route::put('/invoices/{invoice}', [InvoiceController::class, 'update'])->name('accounting.invoices.update');
+     Route::get('/invoices/{invoice}/edit', [InvoiceController::class, 'edit'])->name('accounting.invoices.edit');
+     Route::delete('/invoices/{invoice}', [InvoiceController::class, 'destroy'])->name('accounting.invoices.destroy');     
 });
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
