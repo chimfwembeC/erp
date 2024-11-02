@@ -118,8 +118,14 @@ Route::prefix('hrm')->group(function () {
 
     // Payroll Management Routes
     Route::get('/payrolls', [PayrollController::class, 'index'])->name('hrm.payrolls.index');
-    Route::post('/payrolls', [PayrollController::class, 'generate'])->name('hrm.payrolls.generate');
-    Route::get('/payrolls/{id}', [PayrollController::class, 'show'])->name('hrm.payrolls.show');
+    Route::get('/payrolls/create', [PayrollController::class, 'create'])->name('hrm.payrolls.create');
+    Route::post('/payrolls', [PayrollController::class, 'store'])->name('hrm.payrolls.store');
+    Route::post('/payrolls/generate', [PayrollController::class, 'generate'])->name('hrm.payrolls.generate');
+    Route::get('/payrolls/{payroll}', [PayrollController::class, 'show'])->name('hrm.payrolls.show');
+    Route::get('/payrolls/{payroll}/edit', [PayrollController::class, 'edit'])->name('hrm.payrolls.edit');
+    Route::put('/payrolls/{payroll}', [PayrollController::class, 'update'])->name('hrm.payrolls.update');
+    Route::delete('/payrolls/{payroll}', [PayrollController::class, 'destroy'])->name('hrm.payrolls.destroy');
+
 
     // Leave Management Routes
     Route::get('/leaves', [LeaveController::class, 'index'])->name('hrm.leaves.index');

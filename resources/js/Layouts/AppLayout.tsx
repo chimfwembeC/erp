@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Head, Link, router, usePage } from '@inertiajs/react'; // Added `usePage`
-import { Home, User, FileText, Settings, Bell, Menu, X, ChevronDown, ChevronUp, User2, DollarSign, ShoppingCart, HelpCircle, Clipboard, CheckCircle, Dot, Folder } from 'lucide-react';
+import { Home, User, FileText, Settings, Bell, Menu, X, ChevronDown, ChevronUp, User2, DollarSign, ShoppingCart, HelpCircle, Clipboard, CheckCircle, Dot, Folder, DotIcon, Warehouse, ListOrdered, PiggyBankIcon } from 'lucide-react';
 import { useRoute } from 'ziggy-js';
+import { FaFileInvoice, FaMoneyCheckAlt, FaProductHunt } from 'react-icons/fa';
 
 interface LayoutProps {
   title: string;
@@ -32,45 +33,49 @@ const sidebarLinks: SidebarLink[] = [
     label: 'Accounting',
     icon: <DollarSign size={20} />,
     children: [
-      { label: 'Invoices', href: '/accounting/invoices' },
+      { label: 'Invoices',icon: <DotIcon size={20} />, href: '/accounting/invoices' },
       {
         label: 'Payments',
         href: '/accounting/payments',
+        icon: <FaMoneyCheckAlt size={20} />,
         children: [
-          { label: 'Make Payment', href: '/accounting/payments/make' },
-          { label: 'Payment History', href: '/accounting/payments/history' },
+          { label: 'Make Payment',icon: <DotIcon size={20} />, href: '/accounting/payments/make' },
+          { label: 'Payment History',icon: <DotIcon size={20} />, href: '/accounting/payments/history' },
         ],
       },
       {
         label: 'Accounts',
         href: '/accounting/accounts',
+        icon: <PiggyBankIcon size={20} />,
         children: [
-          { label: 'Account Settings', href: '/accounting/accounts/settings' },
-          { label: 'Account Balances', href: '/accounting/accounts/balances' },
-          { label: 'Transaction History', href: '/accounting/accounts/transaction-history' },
+          { label: 'Account Settings',icon: <DotIcon size={20} />, href: '/accounting/accounts/settings' },
+          { label: 'Account Balances',icon: <DotIcon size={20} />, href: '/accounting/accounts/balances' },
+          { label: 'Transaction History',icon: <DotIcon size={20} />, href: '/accounting/accounts/transaction-history' },
         ],
       },
-      { label: 'General Ledgers', href: '/accounting/general-ledgers' },
-      { label: 'Journal Entries', href: '/accounting/journal-entries' },
+      { label: 'General Ledgers',icon: <DotIcon size={20} />, href: '/accounting/general-ledgers' },
+      { label: 'Journal Entries',icon: <DotIcon size={20} />, href: '/accounting/journal-entries' },
       {
         label: 'Sales Invoices',
         href: '/accounting/sales-invoices',
+        icon: <FaFileInvoice size={20} />,
         children: [
-          { label: 'Create Sales Invoice', href: '/accounting/sales-invoices/create' },
-          { label: 'Sales Invoice History', href: '/accounting/sales-invoices/history' },
+          { label: 'Create Sales Invoice',icon: <DotIcon size={20} />, href: '/accounting/sales-invoices/create' },
+          { label: 'Sales Invoice History',icon: <DotIcon size={20} />, href: '/accounting/sales-invoices/history' },
         ],
       },
       {
         label: 'Purchase Orders',
         href: '/accounting/purchase-orders',
+        icon: <ListOrdered size={20} />,
         children: [
-          { label: 'Create Purchase Order', href: '/accounting/purchase-orders/create' },
-          { label: 'Purchase Order History', href: '/accounting/purchase-orders/history' },
+          { label: 'Create Purchase Order',icon: <DotIcon size={20} />, href: '/accounting/purchase-orders/create' },
+          { label: 'Purchase Order History',icon: <DotIcon size={20} />, href: '/accounting/purchase-orders/history' },
         ],
       },
-      { label: 'Budgets', href: '/accounting/budgets' },
-      { label: 'Taxes', href: '/accounting/taxes' },
-      { label: 'Bank Accounts', href: '/accounting/bank-accounts' },
+      { label: 'Budgets',icon: <DotIcon size={20} />, href: '/accounting/budgets' },
+      { label: 'Taxes',icon: <DotIcon size={20} />, href: '/accounting/taxes' },
+      { label: 'Bank Accounts',icon: <DotIcon size={20} />, href: '/accounting/bank-accounts' },
     ],
   },
 
@@ -79,34 +84,34 @@ const sidebarLinks: SidebarLink[] = [
   {
     label: 'HRM System',
     icon: <User2 size={20} />,
-    children: [
-      { label: 'Overview', href: '/hrm' },
-      { label: 'Departments', href: '/hrm/departments' },
-      { label: 'Branches', href: '/hrm/branches' },
-      { label: 'Jobs', href: '/hrm/jobs' },
-      { label: 'Jobs Applications', href: '/hrm/job-applications' },
-      { label: 'Attendance Management', href: '/hrm/attendances' },
-      { label: 'Employee Management', href: '/hrm/employees' },
-      { label: 'Leave Management', href: '/hrm/leaves' },
-      { label: 'User Management', href: '/hrm/users' },      
+    children: [   
+    { label: 'Overview', icon: <DotIcon size={20} />, href: '/hrm' },
+      { label: 'Departments', icon: <DotIcon size={20} />, href: '/hrm/departments' },
+      { label: 'Branches',icon: <DotIcon size={20} />, href: '/hrm/branches' },
+      { label: 'Jobs',icon: <DotIcon size={20} />, href: '/hrm/jobs' },
+      { label: 'Applications',icon: <DotIcon size={20} />, href: '/hrm/job-applications' },
+      { label: 'Attendances',icon: <DotIcon size={20} />, href: '/hrm/attendances' },
+      { label: 'Employees',icon: <DotIcon size={20} />, href: '/hrm/employees' },
+      { label: 'Leaves',icon: <DotIcon size={20} />, href: '/hrm/leaves' },
+      { label: 'Users',icon: <DotIcon size={20} />, href: '/hrm/users' },      
       {
         label: 'Payroll Management',
         icon: <FileText size={20} />,
         children: [
-          { label: 'Payrolls', href: '/payroll' },
-          { label: 'Salary', href: '/payroll/salary' },
-          { label: 'Payroll Reports', href: '/payroll/reports' },         
+          { label: 'Payrolls',icon: <DotIcon size={20} />, href: '/hrm/payrolls' },
+          // { label: 'Salary', href: '/payroll/salary' },
+          { label: 'Payroll Reports',icon: <DotIcon size={20} />, href: '/hrm/payroll/reports' },         
         ],
       },
       {
         label: 'HRM Setup',
         icon: <Settings size={20} />,
         children: [
-          { label: 'Positions', href: '/hrm/positions' },
-          { label: 'Leave Types', href: '/hrm/leave-types' },
-          { label: 'Department Groups', href: '/hrm/department-groups' },
-          { label: 'Net Pay', href: '/payroll/net-pay' },
-          { label: 'HRM Setup', href: '/hrm/setup' },
+          { label: 'Positions',icon: <DotIcon size={20} />, href: '/hrm/positions' },
+          { label: 'Leave Types',icon: <DotIcon size={20} />, href: '/hrm/leave-types' },
+          { label: 'Department Groups',icon: <DotIcon size={20} />, href: '/hrm/department-groups' },
+          { label: 'Net Pay',icon: <DotIcon size={20} />, href: '/payroll/net-pay' },
+          { label: 'HRM Setup',icon: <DotIcon size={20} />, href: '/hrm/setup' },
         ],
       },
     ],
@@ -120,23 +125,25 @@ const sidebarLinks: SidebarLink[] = [
       {
         label: 'Products',
         href: '/inventory/products',
+        icon: <FaProductHunt size={20} />,
         children: [
-          { label: 'Add New Product', href: '/inventory/products/add' },
-          { label: 'Product Categories', href: '/inventory/products/categories' },
-          { label: 'Product Suppliers', href: '/inventory/products/suppliers' },
-          { label: 'Product Inventory', href: '/inventory/products/inventory' },
+          { label: 'Add New Product', icon: <DotIcon size={20} /> , href: '/inventory/products/add' },
+          { label: 'Product Categories', icon: <DotIcon size={20} /> , href: '/inventory/products/categories' },
+          { label: 'Product Suppliers', icon: <DotIcon size={20} /> , href: '/inventory/products/suppliers' },
+          { label: 'Product Inventory', icon: <DotIcon size={20} /> , href: '/inventory/products/inventory' },
         ],
       },
       {
         label: 'Warehouses',
         href: '/inventory/warehouses',
+        icon: <Warehouse size={20} />,
         children: [
-          { label: 'Add New Warehouse', href: '/inventory/warehouses/add' },
-          { label: 'Warehouse Locations', href: '/inventory/warehouses/locations' },
+          { label: 'Add New Warehouse', icon: <DotIcon size={20} />, href: '/inventory/warehouses/add' },
+          { label: 'Warehouse Locations',icon: <DotIcon size={20} />, href: '/inventory/warehouses/locations' },
         ],
       },
-      { label: 'Inventory Movements', href: '/inventory/inventory-movements' },
-      { label: 'Product Warehouse', href: '/inventory/product-warehouse' },
+      { label: 'Inventory Movements',icon: <DotIcon size={20} />, href: '/inventory/inventory-movements' },
+      { label: 'Product Warehouse',icon: <DotIcon size={20} />, href: '/inventory/product-warehouse' },
     ],
   },
 
@@ -145,7 +152,7 @@ const sidebarLinks: SidebarLink[] = [
     label: 'Auditing',
     icon: <FileText size={20} />,
     children: [
-      { label: 'Audit Trails', href: '/auditing/audit-trails' },
+      { label: 'Audit Trails',icon: <DotIcon size={20} />, href: '/audit-trails' },
     ],
   },
 
@@ -155,9 +162,9 @@ const sidebarLinks: SidebarLink[] = [
     label: 'Sales',
     icon: <User size={20} />,
     children: [
-      { label: 'Orders', href: '/sales/orders' },
-      { label: 'Order Items', href: '/sales/order-items' },
-      { label: 'Quotes', href: '/sales/quotes' },
+      { label: 'Orders',icon: <DotIcon size={20} />, href: '/sales/orders' },
+      { label: 'Order Items',icon: <DotIcon size={20} />, href: '/sales/order-items' },
+      { label: 'Quotes',icon: <DotIcon size={20} />, href: '/sales/quotes' },
     ],
   },
 
@@ -166,9 +173,9 @@ const sidebarLinks: SidebarLink[] = [
     label: 'Projects',
     icon: <Folder size={20} />, // Assuming you have a folder icon
     children: [
-      { label: 'Active Projects', href: '/projects/active' },
-      { label: 'Completed Projects', href: '/projects/completed' },
-      { label: 'Project Templates', href: '/projects/templates' },
+      { label: 'Active Projects',icon: <DotIcon size={20} />, href: '/projects/active' },
+      { label: 'Completed Projects',icon: <DotIcon size={20} />, href: '/projects/completed' },
+      { label: 'Project Templates',icon: <DotIcon size={20} />, href: '/projects/templates' },
     ],
   },
 
@@ -177,9 +184,9 @@ const sidebarLinks: SidebarLink[] = [
     label: 'CRM',
     icon: <User size={20} />,
     children: [
-      { label: 'Leads', href: '/crm/leads' },
-      { label: 'Opportunities', href: '/crm/opportunities' },
-      { label: 'Customers', href: '/crm/customers' },
+      { label: 'Leads',icon: <DotIcon size={20} />, href: '/crm/leads' },
+      { label: 'Opportunities',icon: <DotIcon size={20} />, href: '/crm/opportunities' },
+      { label: 'Customers',icon: <DotIcon size={20} />, href: '/crm/customers' },
     ],
   },
 
@@ -188,9 +195,9 @@ const sidebarLinks: SidebarLink[] = [
     label: 'POS',
     icon: <ShoppingCart size={20} />,
     children: [
-      { label: 'Sales', href: '/pos/sales' },
-      { label: 'Inventory', href: '/pos/inventory' },
-      { label: 'Reports', href: '/pos/reports' },
+      { label: 'Sales',icon: <DotIcon size={20} />, href: '/pos/sales' },
+      { label: 'Inventory',icon: <DotIcon size={20} />, href: '/pos/inventory' },
+      { label: 'Reports',icon: <DotIcon size={20} />, href: '/pos/reports' },
     ],
   },
 
@@ -199,8 +206,8 @@ const sidebarLinks: SidebarLink[] = [
     label: 'Support',
     icon: <HelpCircle size={20} />,
     children: [
-      { label: 'Tickets', href: '/support/tickets' },
-      { label: 'Knowledge Base', href: '/support/knowledge-base' },
+      { label: 'Tickets',icon: <DotIcon size={20} />, href: '/support/tickets' },
+      { label: 'Knowledge Base',icon: <DotIcon size={20} />, href: '/support/knowledge-base' },
     ],
   },
 ];
@@ -242,7 +249,8 @@ export default function AppLayout({ title, children }: LayoutProps) {
               <div className="flex items-center space-x-2">
                 {link.icon}
                 <span>{link.label}</span>
-              </div>
+              </div>                            
+
               {activeDropdowns.includes(link.label) ? (
                 <ChevronUp size={20} />
               ) : (
@@ -250,13 +258,19 @@ export default function AppLayout({ title, children }: LayoutProps) {
               )}
             </div>
             {activeDropdowns.includes(link.label) && (
-              <ul className="pl-6 space-y-2">
+              <ul className="space-y-2">
+                <div className="">
                 {renderLinks(link.children)}
+                </div>                
               </ul>
             )}
+
+              <div className="border-1 my-2 border-b bg-primary"></div>
+
           </div>
         ) : (
-          <Link
+          <>
+             <Link
             href={link.href!}
             className={`flex items-center p-2 space-x-2 rounded-md mt-2 ${
               isActiveLink(link.href) ? 'bg-indigo-200 font-bold' : 'hover:bg-indigo-100'
@@ -265,6 +279,11 @@ export default function AppLayout({ title, children }: LayoutProps) {
             {link.icon}
             <span>{link.label}</span>
           </Link>
+          </>
+       
+
+
+
         )}
       </li>
     ));
@@ -325,7 +344,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
                 <ul className="pl-4 mt-1 space-y-2 text-sm text-gray-600">
                   <li>
                     <Link href="/profile" className="hover:text-indigo-600">
-                      Profile
+                      Profilepencil
                     </Link>
                   </li>
                   <li>
@@ -375,15 +394,24 @@ export default function AppLayout({ title, children }: LayoutProps) {
                       <p className="text-sm text-gray-700">New message from Jane</p>
                       <p className="text-xs text-gray-500">5 mins ago</p>
                     </li>
+
+                    <div className="border-1 border-b bg-primary"></div>
+
                     <li className="px-4 py-3 hover:bg-indigo-50">
                       <p className="text-sm text-gray-700">Payroll update available</p>
                       <p className="text-xs text-gray-500">10 mins ago</p>
                     </li>
+
+                    <div className="border-1 border-b bg-primary"></div>
+
                     <li className="px-4 py-3 hover:bg-indigo-50">
                       <p className="text-sm text-gray-700">Attendance alert</p>
                       <p className="text-xs text-gray-500">1 hour ago</p>
                     </li>
                   </ul>
+
+                  <div className="border-1 border-b bg-primary"></div>
+
                   <div className="text-center p-2">
                     <Link href="/notifications" className="text-xs text-indigo-600">View all notifications</Link>
                   </div>
@@ -409,14 +437,18 @@ export default function AppLayout({ title, children }: LayoutProps) {
                         Profile
                       </Link>
                     </li>
+
+                    <div className="border-1 border-b bg-primary"></div>
+
                     <li>
                       <Link href="/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50">
                         Settings
                       </Link>
                     </li>
                   </ul>
-                  <div className="m-2">
-                    <span onClick={logout} className="block cursor-pointer text-gray-800 py-2 p-2 rounded-lg hover:text-red-500">
+                  <div className="border-1 border-b bg-primary"></div>
+                  <div className="block px-4 py-2 text-sm text-gray-700 hover:bg-red-50">
+                    <span onClick={logout} className="cursor-pointer">
                       Logout
                     </span>
                   </div>

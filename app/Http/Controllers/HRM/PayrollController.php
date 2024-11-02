@@ -5,6 +5,7 @@ namespace App\Http\Controllers\HRM;
 use App\Http\Controllers\Controller;
 use App\Models\Payroll;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -17,7 +18,7 @@ class PayrollController extends Controller
     {
         $payrolls = Payroll::with(['user'])->latest()->get();
 
-        return Inertia::render("HRM/PayrollManagement/Index",[
+        return Inertia::render("HRM/Payrolls/Index", [
             'payrolls' => $payrolls
         ]);
     }
@@ -28,7 +29,7 @@ class PayrollController extends Controller
     public function create()
     {
         $users = User::all();
-        return Inertia::render("Payrolls/Create",[
+        return Inertia::render("HRM/Payrolls/Create", [
             'users' => $users
         ]);
     }
@@ -41,19 +42,30 @@ class PayrollController extends Controller
         $validatedData = $request->validate([
             'user_id' => 'required|numeric',
             'amount' => 'required|numeric',
-            'pay_date' => 'required|date',  	
+            'pay_date' => 'required|date',
             'status' => 'required|string'
         ]);
+        // Convert the pay_date from ISO 8601 format to MySQL DATETIME format
+        $payDate = Carbon::parse($validatedData['pay_date'])->format('Y-m-d H:i:s');
+        // Check if the payroll already exists for the user on the given pay date
+        $existingPayroll = Payroll::where('user_id', $validatedData['user_id'])            
+            ->first();
 
+        if ($existingPayroll) {
+            // Return an error response if a payroll record already exists
+            return redirect()->back()->withErrors([
+                'pay_date' => 'A payroll entry already exists for this user.'
+            ]);
+        }
         Payroll::create([
             'user_id' => $validatedData['user_id'],
             'amount' => $validatedData['amount'],
-            'pay_date' => $validatedData['pay_date'],
+            'pay_date' => $payDate,
             'status' => $validatedData['status'],
 
         ]);
 
-        return redirect()->route('payrolls.index')->with('success', 'payroll added successfully.');
+        return redirect()->route('hrm.payrolls.index')->with('success', 'payroll added successfully.');
     }
 
     /**
@@ -61,8 +73,8 @@ class PayrollController extends Controller
      */
     public function show(Payroll $payroll)
     {
-        return Inertia::render("Payrolls/Show",[
-            'payroll' => $payroll
+        return Inertia::render("HRM/Payrolls/Show", [
+            'payroll' => $payroll->load('user')
         ]);
     }
 
@@ -72,7 +84,7 @@ class PayrollController extends Controller
     public function edit(Payroll $payroll)
     {
         $users = User::all();
-        return Inertia::render("Payrolls/Edit",[
+        return Inertia::render("HRM/Payrolls/Edit", [
             'payroll' => $payroll,
             'users' => $users
         ]);
@@ -83,22 +95,25 @@ class PayrollController extends Controller
      */
     public function update(Request $request, Payroll $payroll)
     {
-       $validatedData = $request->validate([
+        $validatedData = $request->validate([
             'user_id' => 'numeric',
             'amount' => 'required|numeric',
-            'pay_date' => 'required|date',  	
+            'pay_date' => 'required|date',
             'status' => 'required|string'
         ]);
+
+        $payDate = Carbon::parse($validatedData['pay_date'])->format('Y-m-d H:i:s');
+
 
         Payroll::create([
             'user_id' => $validatedData['user_id'],
             'amount' => $validatedData['amount'],
-            'pay_date' => $validatedData['pay_date'],
+            'pay_date' => $payDate,
             'status' => $validatedData['status'],
 
         ]);
-        
-        return redirect()->route('payrolls.index')->with('success', 'payroll updated successfully.');
+
+        return redirect()->route('hrm.payrolls.index')->with('success', 'payroll updated successfully.');
     }
 
     /**
@@ -109,6 +124,6 @@ class PayrollController extends Controller
         //
         $payroll->delete();
 
-        return redirect()->route('payrolls.index')->with('success', 'payroll deleted successfully.');
+        return redirect()->route('hrm.payrolls.index')->with('success', 'payroll deleted successfully.');
     }
 }
