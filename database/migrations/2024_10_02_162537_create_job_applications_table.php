@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('availability_date')->nullable(); // Availability date (optional)
             $table->json('skills')->nullable(); // Skills (optional, could use JSON if needed)
             $table->json('references')->nullable(); // References (optional)
-            $table->string('source')->nullable(); // How the applicant heard about the job (optional)
+            $table->json('source')->nullable(); // How the applicant heard about the job (optional)
             $table->json('cover_letter')->nullable();
             $table->string('resume_path')->nullable();
             $table->enum('status', ['pending', 'interviewed', 'accepted', 'rejected'])->default('pending');

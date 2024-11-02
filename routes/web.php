@@ -97,7 +97,7 @@ Route::prefix('hrm')->group(function () {
     Route::post('/job-applications', [JobApplicationController::class, 'store'])->name('hrm.job-applications.store');
     Route::get('/job-applications/{jobApplication}', [JobApplicationController::class, 'show'])->name('hrm.job-applications.show');
     Route::get('/job-applications/{jobApplication}/edit', [JobApplicationController::class, 'edit'])->name('hrm.job-applications.edit');
-    Route::put('/job-applications/{jobApplication}', [JobApplicationController::class, 'update'])->name('hrm.job-applications.update');
+    Route::patch('/job-applications/{jobApplication}', [JobApplicationController::class, 'update'])->name('hrm.job-applications.update');
     Route::delete('/job-applications/{jobApplication}', [JobApplicationController::class, 'destroy'])->name('hrm.job-applications.destroy');
 
 

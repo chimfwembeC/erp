@@ -48,7 +48,7 @@ class JobApplicationController extends Controller
             'availability_date' => 'nullable|date',
             'skills' => 'nullable|string',
             'references' => 'nullable|string',
-            'source' => 'nullable|string|max:255',
+            'sources' => 'nullable|string|max:255',
             'cover_letter' => 'nullable|string',
             'resume' => 'required|file|mimes:pdf,doc,docx|max:2048', // Adjust based on your requirements
         ]);
@@ -56,9 +56,11 @@ class JobApplicationController extends Controller
         // Handle file upload for the resume
         $resumePath = $request->file('resume')->store('resumes', 'public');
         $validatedData['resume_path'] = '/'.$resumePath;
-        $validatedData['skills'] = json_encode($validatedData['skills']);
-        $validatedData['references'] = json_encode($validatedData['references']);
-        $validatedData['source'] = json_encode($validatedData['source']);
+        // $validatedData['skills'] = json_encode($validatedData['skills']);
+        // $validatedData['references'] = json_encode($validatedData['references']);
+        // $validatedData['sources'] = json_encode($validatedData['sources']);
+        // $validatedData['cover_letter'] = json_encode($validatedData['cover_letter']);
+
         // Create a new job application
         JobApplication::create(array_merge($validatedData, [
             'resume_path' => '/'.$resumePath,
@@ -91,37 +93,40 @@ class JobApplicationController extends Controller
     // Update the specified job application in storage
     public function update(Request $request, JobApplication $jobApplication)
     {
-        // return response()->json($request->all());
         // Validate the incoming request data
         $validatedData = $request->validate([
-            'status' => 'required',
+            'status' => 'nullable|string|in:pending,interviewed,accepted,rejected',
+            'job_id' => 'sometimes|required|exists:jobs,id',
+            'user_id' => 'sometimes|required|exists:users,id',
             'applicant_name' => 'sometimes|required|string|max:255',
             'applicant_email' => 'sometimes|required|email|max:255',
             'phone_number' => 'sometimes|nullable|string|max:20',
             'linkedin_profile' => 'sometimes|nullable|string|max:255',
             'portfolio_url' => 'sometimes|nullable|string|max:255',
             'availability_date' => 'sometimes|nullable|date',
-            'skills' => 'sometimes|nullable|string',
-            'references' => 'sometimes|nullable|string',
-            'source' => 'sometimes|nullable|string|max:255',
+            'skills' => 'sometimes|nullable|json',
+            'references' => 'sometimes|nullable|json',
+            'source' => 'sometimes|nullable|json|max:255',
             'cover_letter' => 'sometimes|nullable|string',
             'resume' => 'sometimes|file|mimes:pdf,doc,docx|max:2048',
         ]);
-
+    
         // Handle file upload for the resume if it's provided
         if ($request->hasFile('resume')) {
-            $resumePath = $request->file('resume')->store('resumes', 'public');
-            $validatedData['resume_path'] = '/'.$resumePath;
-            $validatedData['skills'] = json_encode($validatedData['skills']);
-            $validatedData['references'] = json_encode($validatedData['references']);
-            $validatedData['source'] = json_encode($validatedData['source']);
+            // Delete the old resume if it exists
+            if ($jobApplication->resume && Storage::exists($jobApplication->resume)) {
+                Storage::delete($jobApplication->resume);
+            }
+            // Store the new resume file
+            $validatedData['resume'] = $request->file('resume')->store('resumes');
         }
-        
-        // Update the job application
+    
+        // Update job application with validated data
         $jobApplication->update($validatedData);
-
-        return redirect()->route('hrm.job-applications.index')->with('success', 'Application updated successfully.');
+    
+        return redirect()->route('hrm.job-applications.index')->with('success', 'Application submitted successfully.');        
     }
+    
 
 
 

@@ -206,7 +206,7 @@ const sidebarLinks: SidebarLink[] = [
 ];
 
 
-export default function Layout({ title, children }: LayoutProps) {
+export default function AppLayout({ title, children }: LayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [activeDropdowns, setActiveDropdowns] = useState<string[]>([]);

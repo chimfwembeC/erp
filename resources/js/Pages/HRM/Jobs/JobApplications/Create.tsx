@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { router } from '@inertiajs/react';
 import SectionTitle from '@/Components/SectionTitle';
 import { Dropdown } from 'primereact/dropdown';
+import { Editor } from 'primereact/editor';
 
 const Create = ({ jobs, users }) => {
   const [formData, setFormData] = useState({
@@ -35,20 +36,20 @@ const Create = ({ jobs, users }) => {
     { label: 'Create Job Application' },
   ];
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setFormData(prevData => ({ ...prevData, [name]: value }));
   };
 
-  const onDrop = (acceptedFiles) => {
-    setFormData((prevData) => ({ ...prevData, resume: acceptedFiles[0] }));
+  const onDrop = acceptedFiles => {
+    setFormData(prevData => ({ ...prevData, resume: acceptedFiles[0] }));
   };
 
-  const handleMultiSelectChange = (name) => (value) => {
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  const handleMultiSelectChange = name => value => {
+    setFormData(prevData => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
 
     Swal.fire({
@@ -59,7 +60,7 @@ const Create = ({ jobs, users }) => {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, create it!',
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed) {
         const data = new FormData();
         data.append('job_id', formData.job_id);
@@ -74,7 +75,7 @@ const Create = ({ jobs, users }) => {
         data.append('sources', JSON.stringify(formData.sources));
         data.append('references', JSON.stringify(formData.references));
         data.append('resume', formData.resume);
-        data.append('cover_letter', formData.cover_letter);
+        data.append('cover_letter', JSON.stringify(formData.cover_letter));
         data.append('status', formData.status);
 
         router.post('/hrm/job-applications', data, {
@@ -83,7 +84,7 @@ const Create = ({ jobs, users }) => {
               router.get('/hrm/job-applications');
             });
           },
-          onError: (errors) => {
+          onError: errors => {
             Swal.fire('Error', 'There was an issue creating the job application. Please try again.', 'error');
           },
         });
@@ -100,43 +101,19 @@ const Create = ({ jobs, users }) => {
     <AppLayout title="Create Job Application">
       <Breadcrumb items={breadcrumbItems} />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <SectionTitle
-          title="Create New Job Application"
-          description="Fill out the details to add a job application."
-        />
+        <SectionTitle title="Create New Job Application" description="Fill out the details to add a job application." />
         <div className="p-6 bg-white shadow-md rounded-lg col-span-2">
           <form onSubmit={handleSubmit} className="grid gap-4">
-            {/* Other form fields... */}
+            {/* Other form fields */}
             <div>
               <label htmlFor="job_id" className="block font-medium mb-2">Job</label>
-              <Dropdown
-                id="job_id"
-                name="job_id"
-                value={formData.job_id}
-                options={jobs}
-                optionLabel='title'
-                optionValue='id'
-                onChange={handleChange}
-                required
-                placeholder="Select a job"
-                className="w-full border-2"
-              />
+              <Dropdown id="job_id" name="job_id" value={formData.job_id} options={jobs} optionLabel="title" optionValue="id" onChange={handleChange} required placeholder="Select a job" className="w-full border-2" />
             </div>
             <div>
               <label htmlFor="user_id" className="block font-medium mb-2">User</label>
-              <Dropdown
-                id="user_id"
-                name="user_id"
-                value={formData.user_id}
-                options={users}
-                optionLabel='name'
-                optionValue='id'
-                onChange={handleChange}
-                required
-                placeholder="Select a user"
-                className="w-full border-2"
-              />
+              <Dropdown id="user_id" name="user_id" value={formData.user_id} options={users} optionLabel="name" optionValue="id" onChange={handleChange} required placeholder="Select a user" className="w-full border-2" />
             </div>
+            {/* Other input fields here */}
             <div>
               <label htmlFor="applicant_name" className="block font-medium mb-2">Applicant Name</label>
               <InputText
@@ -235,36 +212,21 @@ const Create = ({ jobs, users }) => {
                 rows={3}
                 placeholder="Enter references separated by commas"
               />
-            </div>
-            <div {...getRootProps()} className="border-2 border-dashed p-4 flex flex-col justify-center items-center mb-4">
+            </div>            <div {...getRootProps()} className="border-2 border-dashed p-4 flex flex-col justify-center items-center mb-4">
               <input {...getInputProps()} />
-              {isDragActive ? (
-                <p className="text-gray-500">Drop the files here ...</p>
-              ) : (
-                <p className="text-gray-500">Drag 'n' drop your resume here, or click to select files</p>
-              )}
+              {isDragActive ? <p className="text-gray-500">Drop the files here ...</p> : <p className="text-gray-500">Drag 'n' drop your resume here, or click to select files</p>}
             </div>
             {formData.resume && (
               <div className="border p-4 rounded mb-4">
                 <h4 className="font-medium mb-2">Uploaded Resume:</h4>
                 <p>{formData.resume.name}</p>
                 <p>{(formData.resume.size / 1024).toFixed(2)} KB</p>
-                <a href={URL.createObjectURL(formData.resume)} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-                  View Resume
-                </a>
+                <a href={URL.createObjectURL(formData.resume)} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">View Resume</a>
               </div>
             )}
-
             <div>
               <label htmlFor="cover_letter" className="block font-medium mb-2">Cover Letter</label>
-              <InputTextarea
-                id="cover_letter"
-                name="cover_letter"
-                value={formData.cover_letter}
-                onChange={handleChange}
-                rows={4}
-                className="w-full border-2"
-              />
+              <Editor id="cover_letter" value={formData.cover_letter} onTextChange={e => setFormData(prevData => ({ ...prevData, cover_letter: e.htmlValue }))} style={{ height: '320px' }} />
             </div>
             <Button type="submit" label="Submit" className="mt-4" />
           </form>
