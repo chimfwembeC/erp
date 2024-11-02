@@ -17,7 +17,7 @@ class JobController extends Controller
     {
         $jobs = PostedJob::latest()->get();
 
-        return Inertia::render("HRM/Jobs/App", [
+        return Inertia::render("HRM/Jobs/Index", [
             'jobs' => $jobs,
         ]);
     }
@@ -54,7 +54,9 @@ class JobController extends Controller
     {
         $postedJob = PostedJob::with(['employer'])->find($id);
 
-        return response()->json($postedJob);
+        return Inertia::render('HRM/Jobs/Show',[
+            'job' => $postedJob
+        ]);
     }
 
     // Show the form for editing the specified job
@@ -83,7 +85,7 @@ class JobController extends Controller
         // Update the posted job
         $postedJob->update($validatedData);
 
-        return redirect()->route('hrm.index')->with('success', 'Job updated successfully.');
+        return redirect()->route('hrm.jobs.index')->with('success', 'Job updated successfully.');
     }
 
     // Remove the specified job from storage
@@ -91,6 +93,6 @@ class JobController extends Controller
     {
         $postedJob->delete();
 
-        return redirect()->route('jobs.index')->with('success', 'Job deleted successfully.');
+        return redirect()->route('hrm.jobs.index')->with('success', 'Job deleted successfully.');
     }
 }

@@ -4,27 +4,19 @@ import Breadcrumb from '@/Components/Breadcrumb';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-export default function Show() {
-  const [job, setJob] = useState(null);
-  const { id } = useParams(); // Assuming you're using React Router for job URLs
+export default function Show({job}) {
+  // const [job, setJob] = useState(null);
+  // const { id } = useParams(); // Assuming you're using React Router for job URLs
 
-  console.log('jobId',id);
+  // console.log('jobId',id);
   const items = [
     { label: 'Home', href: '/hrm' },
+    { label: 'HRM', href: '/hrm' },
     { label: 'Jobs', href: '/hrm/jobs' },
     { label: 'Job Details' },
   ];
 
-  useEffect(() => {
-    // Fetch job details based on jobId
-    axios.get(`/api/jobs/${id}`)
-      .then((response) => {
-        setJob(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching job details:', error);
-      });
-  }, [id]);
+ 
 
   if (!job) {
     return <div>Loading...</div>; // Render a loading state while data is being fetched

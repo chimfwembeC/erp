@@ -86,11 +86,12 @@ Route::prefix('hrm')->group(function () {
     // Job Management Routes
     Route::get('/jobs', [JobController::class, 'index'])->name('hrm.jobs.index');
     Route::post('/jobs', [JobController::class, 'store'])->name('hrm.jobs.store');
+    Route::post('/jobs/create', [JobController::class, 'create'])->name('hrm.jobs.create');
     Route::get('/jobs/{id}', [JobController::class, 'show'])->name('hrm.jobs.show');
     Route::get('/jobs/{id}/edit', [JobController::class, 'edit'])->name('hrm.jobs.edit');
-    Route::put('/jobs/{id}/update', [JobController::class, 'update'])->name('hrm.jobs.update');
+    Route::put('/jobs/{postedJob}/update', [JobController::class, 'update'])->name('hrm.jobs.update');
     Route::delete('/jobs/{id}', [JobController::class, 'destroy'])->name('hrm.jobs.destroy');
-    // Route::resource('jobs', JobController::class);
+    
     // Job Applications Management Routes
     Route::get('/job-applications', [JobApplicationController::class, 'index'])->name('hrm.job-applications.index');
     Route::get('/job-applications/create', [JobApplicationController::class, 'create'])->name('hrm.job-applications.create');

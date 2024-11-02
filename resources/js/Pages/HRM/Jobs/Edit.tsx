@@ -5,43 +5,23 @@ import Swal from 'sweetalert2';
 import { useParams } from 'react-router-dom';
 import { useRoute } from 'ziggy-js';
 import Breadcrumb from '@/Components/Breadcrumb';
+import { router } from '@inertiajs/react';
 
-export default function Edit() {
-  const { id } = useParams(); // Get the job ID from the URL
+export default function Edit({job}) {
+  // const { id } = useParams(); // Get the job ID from the URL
   const route = useRoute();
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    location: '',
-    salary: '',
-    job_type: 'full-time',
-    deadline: '',
+  const [formData, setFormData] = useState({    
+    title: job.title,
+    description: job.description,
+    location: job.location,
+    salary: job.salary,
+    job_type: job.job_type || 'full-time',
+    deadline: job.deadline,
   });
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Fetch the job details using the jobId
-    axios.get(`/api/jobs/${id}`)
-      .then((response) => {
-        const job = response.data;
-        setFormData({
-          title: job.title,
-          description: job.description,
-          location: job.location,
-          salary: job.salary,
-          job_type: job.job_type,
-          deadline: job.deadline,
-        });
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching job details:', error);
-        Swal.fire('Error!', 'Unable to fetch job details.', 'error');
-        setLoading(false);
-      });
-  }, [id]);
+ 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -88,17 +68,14 @@ export default function Edit() {
 
     if (result.isConfirmed) {
       try {
-        await axios.put(route(`hrm.jobs.update`, id), formData);
+        router.put(route(`hrm.jobs.update`, job.id), formData);
         Swal.fire('Updated!', 'The job has been updated successfully.', 'success');
       } catch (error) {
         Swal.fire('Error!', 'There was an error updating the job.', 'error');
       }
     }
   };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  
 
   const items = [
     { label: 'Home', href: '/dashboard' },
