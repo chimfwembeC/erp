@@ -9,6 +9,7 @@ use App\Http\Controllers\Accounting\BudgetController;
 use App\Http\Controllers\Accounting\InvoiceController;
 use App\Http\Controllers\Accounting\PaymentController;
 use App\Http\Controllers\Accounting\SaleInvoiceController;
+use App\Http\Controllers\Accounting\TaxController;
 use App\Http\Controllers\HRM\HRMController;
 use App\Http\Controllers\HRM\EmployeeController;
 use App\Http\Controllers\HRM\AttendanceController;
@@ -210,6 +211,16 @@ Route::prefix('accounting')->group(function () {
           Route::put('/budgets/{budget}', [BudgetController::class, 'update'])->name('accounting.budgets.update');
           Route::get('/budgets/{budget}/edit', [BudgetController::class, 'edit'])->name('accounting.budgets.edit');
           Route::delete('/budgets/{budget}', [BudgetController::class, 'destroy'])->name('accounting.budgets.destroy');  
+
+
+            // taxs Routes
+            Route::get('/taxes', [TaxController::class, 'index'])->name('accounting.taxes.index');
+            Route::get('/taxes/create', [TaxController::class, 'create'])->name('accounting.taxes.create');
+            Route::post('/taxes', [TaxController::class, 'store'])->name('accounting.taxes.store');
+            Route::get('/taxes/{tax}', [TaxController::class, 'show'])->name('accounting.taxes.show');
+            Route::put('/taxes/{tax}', [TaxController::class, 'update'])->name('accounting.taxes.update');
+            Route::get('/taxes/{tax}/edit', [TaxController::class, 'edit'])->name('accounting.taxes.edit');
+            Route::delete('/taxes/{tax}', [TaxController::class, 'destroy'])->name('accounting.taxes.destroy');  
 });
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
