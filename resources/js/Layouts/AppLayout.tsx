@@ -64,6 +64,7 @@ const sidebarLinks: SidebarLink[] = [
         href: '/accounting/sales-invoices',
         icon: <FaFileInvoice size={20} />,
         children: [
+          { label: 'Overview',icon: <DotIcon size={20} />, href: '/accounting/sales-invoices' },
           { label: 'Create Sales Invoice',icon: <DotIcon size={20} />, href: '/accounting/sales-invoices/create' },
           { label: 'Sales Invoice History',icon: <DotIcon size={20} />, href: '/accounting/sales-invoices/history' },
         ],
@@ -269,7 +270,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
               </ul>
             )}
 
-              <div className="border-1 my-2 border-b bg-primary"></div>
+              <div className="border-1 my-2 border-b border-primary"></div>
 
           </div>
         ) : (
@@ -299,7 +300,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
       <Head title={title} />
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 z-30 h-full w-72 bg-white shadow-lg transition-transform duration-300 ease-in-out lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed top-0 left-0 z-30 h-full w-64 bg-white shadow-lg transition-transform duration-300 ease-in-out lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <nav className="h-full flex flex-col border-r">
           {/* Mobile Sidebar Toggle */}
@@ -369,9 +370,9 @@ export default function AppLayout({ title, children }: LayoutProps) {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col lg:ml-72">
+      <div className="flex-1 flex flex-col lg:ml-64">
         {/* MenuBar */}
-        <header className="fixed top-0 left-0 lg:left-72 right-0 z-40 bg-white shadow-md p-4 flex items-center justify-between">
+        <header className="fixed top-0 left-0 lg:left-64 right-0 z-40 bg-white shadow-md p-4 flex items-center justify-between">
           <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2">
             <Menu size={24} />
           </button>

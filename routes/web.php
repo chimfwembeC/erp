@@ -6,6 +6,7 @@ use App\Http\Controllers\Accounting\AccountController;
 use App\Http\Controllers\Accounting\AccountingController;
 use App\Http\Controllers\Accounting\InvoiceController;
 use App\Http\Controllers\Accounting\PaymentController;
+use App\Http\Controllers\Accounting\SaleInvoiceController;
 use App\Http\Controllers\HRM\HRMController;
 use App\Http\Controllers\HRM\EmployeeController;
 use App\Http\Controllers\HRM\AttendanceController;
@@ -178,7 +179,16 @@ Route::prefix('accounting')->group(function () {
        Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('accounting.payments.show');
        Route::put('/payments/{payment}', [PaymentController::class, 'update'])->name('accounting.payments.update');
        Route::get('/payments/{payment}/edit', [PaymentController::class, 'edit'])->name('accounting.payments.edit');
-       Route::delete('/payments/{payment}', [PaymentController::class, 'destroy'])->name('accounting.payments.destroy');     
+       Route::delete('/payments/{payment}', [PaymentController::class, 'destroy'])->name('accounting.payments.destroy');  
+       
+       // Sale Invoices Routes
+       Route::get('/sales-invoices', [SaleInvoiceController::class, 'index'])->name('accounting.sales-invoices.index');
+       Route::get('/sales-invoices/create', [SaleInvoiceController::class, 'create'])->name('accounting.sales-invoices.create');
+       Route::post('/sales-invoices', [SaleInvoiceController::class, 'store'])->name('accounting.sales-invoices.store');
+       Route::get('/sales-invoices/{saleInvoice}', [SaleInvoiceController::class, 'show'])->name('accounting.sales-invoices.show');
+       Route::put('/sales-invoices/{saleInvoice}', [SaleInvoiceController::class, 'update'])->name('accounting.sales-invoices.update');
+       Route::get('/sales-invoices/{saleInvoice}/edit', [SaleInvoiceController::class, 'edit'])->name('accounting.sales-invoices.edit');
+       Route::delete('/sale-invoices/{saleInvoice}', [SaleInvoiceController::class, 'destroy'])->name('accounting.sales-invoices.destroy');  
 });
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
