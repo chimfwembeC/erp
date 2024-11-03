@@ -4,6 +4,7 @@
 
 use App\Http\Controllers\Accounting\AccountController;
 use App\Http\Controllers\Accounting\AccountingController;
+use App\Http\Controllers\Accounting\BankAccountController;
 use App\Http\Controllers\Accounting\InvoiceController;
 use App\Http\Controllers\Accounting\PaymentController;
 use App\Http\Controllers\Accounting\SaleInvoiceController;
@@ -189,6 +190,15 @@ Route::prefix('accounting')->group(function () {
        Route::put('/sales-invoices/{saleInvoice}', [SaleInvoiceController::class, 'update'])->name('accounting.sales-invoices.update');
        Route::get('/sales-invoices/{saleInvoice}/edit', [SaleInvoiceController::class, 'edit'])->name('accounting.sales-invoices.edit');
        Route::delete('/sale-invoices/{saleInvoice}', [SaleInvoiceController::class, 'destroy'])->name('accounting.sales-invoices.destroy');  
+
+        // Bank accounts Invoices Routes
+        Route::get('/bank-accounts', [BankAccountController::class, 'index'])->name('accounting.bank-accounts.index');
+        Route::get('/bank-accounts/create', [BankAccountController::class, 'create'])->name('accounting.bank-accounts.create');
+        Route::post('/bank-accounts', [BankAccountController::class, 'store'])->name('accounting.bank-accounts.store');
+        Route::get('/bank-accounts/{bankAccount}', [BankAccountController::class, 'show'])->name('accounting.sbank-accounts.show');
+        Route::put('/bank-accounts/{bankAccount}', [BankAccountController::class, 'update'])->name('accounting.bank-accounts.update');
+        Route::get('/bank-accounts/{bankAccount}/edit', [BankAccountController::class, 'edit'])->name('accounting.bank-accounts.edit');
+        Route::delete('/bank-accounts/{bankAccount}', [BankAccountController::class, 'destroy'])->name('accounting.bank-accounts.destroy');  
 });
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
