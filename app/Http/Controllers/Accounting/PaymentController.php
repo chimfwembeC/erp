@@ -1,21 +1,25 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Accounting;
 
+use App\Http\Controllers\Controller;
+use App\Models\Invoice;
 use App\Models\Payment;
+use App\Models\SalesInvoice;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class PaymentController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $payments = Payment::latest()->get();
+        $payments = Payment::with(['invoice.customer'])->latest()->get();
 
-        return Inertia::render("Payments/Index", [
+        return Inertia::render("AccountingAndFinance/Payments/Index", [
             'payments' => $payments
         ]);
     }
@@ -25,7 +29,9 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        return Inertia::render("Payments/Create");
+        return Inertia::render("AccountingAndFinance/Payments/Create",[
+            'invoices' => SalesInvoice::with(['customer'])->latest()->get(),
+        ]);
     }
 
     /**
@@ -48,7 +54,7 @@ class PaymentController extends Controller
             'payment_date' => now(),
         ]);
         
-        return redirect()->route('orders.index')->with('success', 'payments created successfully.');
+        return redirect()->route('accounting.payments.index')->with('success', 'payment updated successfully.');
     }
 
     /**
@@ -56,7 +62,7 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        return Inertia::render("Payments/Show", [
+        return Inertia::render("AccountingAndFinance/Payments/Show", [
             'payment' => $payment
         ]);
     }
@@ -66,8 +72,9 @@ class PaymentController extends Controller
      */
     public function edit(Payment $payment)
     {
-        return Inertia::render("Payments/Edit", [
-            'payment' => $payment
+        return Inertia::render("AccountingAndFinance/Payments/Edit", [
+            'payment' => $payment,
+            'invoices' => SalesInvoice::with(['customer'])->latest()->get(),
         ]);
     }
 
@@ -87,10 +94,10 @@ class PaymentController extends Controller
             'invoice_id' => $validateData['invoice_id'],
             'amount' => $validateData['amount'],
             'payment_method' => $validateData['payment_method'],
-            'payment_date' => now(),
+            // 'payment_date' => Carbon::parse($validateData['payment_date']),
         ]);
 
-        return redirect()->route('orders.index')->with('success', 'payment updated successfully.');
+        return redirect()->route('accounting.payments.index')->with('success', 'payment updated successfully.');
     }
 
     /**
@@ -100,6 +107,6 @@ class PaymentController extends Controller
     {
         $payment->delete();
         
-        return redirect()->route('orders.index')->with('success', 'payment deleted successfully.');
+        return redirect()->route('accounting.payments.index')->with('success', 'payment updated successfully.');
     }
 }

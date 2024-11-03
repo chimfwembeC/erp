@@ -5,6 +5,7 @@
 use App\Http\Controllers\Accounting\AccountController;
 use App\Http\Controllers\Accounting\AccountingController;
 use App\Http\Controllers\Accounting\InvoiceController;
+use App\Http\Controllers\Accounting\PaymentController;
 use App\Http\Controllers\HRM\HRMController;
 use App\Http\Controllers\HRM\EmployeeController;
 use App\Http\Controllers\HRM\AttendanceController;
@@ -169,6 +170,15 @@ Route::prefix('accounting')->group(function () {
      Route::put('/invoices/{invoice}', [InvoiceController::class, 'update'])->name('accounting.invoices.update');
      Route::get('/invoices/{invoice}/edit', [InvoiceController::class, 'edit'])->name('accounting.invoices.edit');
      Route::delete('/invoices/{invoice}', [InvoiceController::class, 'destroy'])->name('accounting.invoices.destroy');     
+
+       // Invoices Routes
+       Route::get('/payments', [PaymentController::class, 'index'])->name('accounting.payments.index');
+       Route::get('/payments/create', [PaymentController::class, 'create'])->name('accounting.payments.create');
+       Route::post('/payments', [PaymentController::class, 'store'])->name('accounting.payments.store');
+       Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('accounting.payments.show');
+       Route::put('/payments/{payment}', [PaymentController::class, 'update'])->name('accounting.payments.update');
+       Route::get('/payments/{payment}/edit', [PaymentController::class, 'edit'])->name('accounting.payments.edit');
+       Route::delete('/payments/{payment}', [PaymentController::class, 'destroy'])->name('accounting.payments.destroy');     
 });
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);

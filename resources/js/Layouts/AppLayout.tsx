@@ -41,7 +41,8 @@ const sidebarLinks: SidebarLink[] = [
         href: '/accounting/payments',
         icon: <FaMoneyCheckAlt size={20} />,
         children: [
-          { label: 'Make Payment',icon: <DotIcon size={20} />, href: '/accounting/payments/make' },
+          { label: 'Overview',icon: <DotIcon size={20} />, href: '/accounting/payments' },
+          { label: 'Make Payment',icon: <DotIcon size={20} />, href: '/accounting/payments/create' },
           { label: 'Payment History',icon: <DotIcon size={20} />, href: '/accounting/payments/history' },
         ],
       },

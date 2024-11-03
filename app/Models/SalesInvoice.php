@@ -14,4 +14,9 @@ class SalesInvoice extends Model
     {
         return $this->belongsTo(User::class, 'customer_id');
     }
+
+    public function payments()
+    {
+        return $this->hasMany(User::class, 'customer_id');
+    }
 }
