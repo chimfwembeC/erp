@@ -6,6 +6,7 @@ use App\Http\Controllers\Accounting\AccountController;
 use App\Http\Controllers\Accounting\AccountingController;
 use App\Http\Controllers\Accounting\BankAccountController;
 use App\Http\Controllers\Accounting\BudgetController;
+use App\Http\Controllers\Accounting\GeneralLedgerController;
 use App\Http\Controllers\Accounting\InvoiceController;
 use App\Http\Controllers\Accounting\PaymentController;
 use App\Http\Controllers\Accounting\SaleInvoiceController;
@@ -103,7 +104,7 @@ Route::prefix('hrm')->group(function () {
     Route::get('/jobs/{id}/edit', [JobController::class, 'edit'])->name('hrm.jobs.edit');
     Route::put('/jobs/{postedJob}/update', [JobController::class, 'update'])->name('hrm.jobs.update');
     Route::delete('/jobs/{id}', [JobController::class, 'destroy'])->name('hrm.jobs.destroy');
-    
+
     // Job Applications Management Routes
     Route::get('/job-applications', [JobApplicationController::class, 'index'])->name('hrm.job-applications.index');
     Route::get('/job-applications/create', [JobApplicationController::class, 'create'])->name('hrm.job-applications.create');
@@ -115,7 +116,7 @@ Route::prefix('hrm')->group(function () {
 
 
     // Attendance Management Routes
-    Route::get('/attendances', [AttendanceController::class, 'index'])->name('hrm.attendances.index');    
+    Route::get('/attendances', [AttendanceController::class, 'index'])->name('hrm.attendances.index');
     Route::get('/attendances/create', [AttendanceController::class, 'create'])->name('hrm.attendances.create');
     Route::post('/attendances', [AttendanceController::class, 'store'])->name('hrm.attendances.store');
     Route::get('/attendances/{id}', [AttendanceController::class, 'show'])->name('hrm.attendances.show');
@@ -157,70 +158,79 @@ Route::prefix('accounting')->group(function () {
 
     Route::get('/', [AccountingController::class, 'index'])->name('accounting.index');
 
-      // accounts Routes
-      Route::get('/accounts', [AccountController::class, 'index'])->name('accounting.accounts.index');
-      Route::get('/accounts/create', [AccountController::class, 'create'])->name('accounting.accounts.create');
-      Route::post('/accounts', [AccountController::class, 'store'])->name('accounting.accounts.store');
-      Route::get('/accounts/{account}', [AccountController::class, 'show'])->name('accounting.accounts.show');
-      Route::put('/accounts/{account}', [AccountController::class, 'update'])->name('accounting.accounts.update');
-      Route::get('/accounts/{account}/edit', [AccountController::class, 'edit'])->name('accounting.accounts.edit');
-      Route::delete('/accounts/{account}', [AccountController::class, 'destroy'])->name('accounting.accounts.destroy');     
+    // accounts Routes
+    Route::get('/accounts', [AccountController::class, 'index'])->name('accounting.accounts.index');
+    Route::get('/accounts/create', [AccountController::class, 'create'])->name('accounting.accounts.create');
+    Route::post('/accounts', [AccountController::class, 'store'])->name('accounting.accounts.store');
+    Route::get('/accounts/{account}', [AccountController::class, 'show'])->name('accounting.accounts.show');
+    Route::put('/accounts/{account}', [AccountController::class, 'update'])->name('accounting.accounts.update');
+    Route::get('/accounts/{account}/edit', [AccountController::class, 'edit'])->name('accounting.accounts.edit');
+    Route::delete('/accounts/{account}', [AccountController::class, 'destroy'])->name('accounting.accounts.destroy');
 
-     // Invoices Routes
-     Route::get('/invoices', [InvoiceController::class, 'index'])->name('accounting.invoices.index');
-     Route::get('/invoices/create', [InvoiceController::class, 'create'])->name('accounting.invoices.create');
-     Route::post('/invoices', [InvoiceController::class, 'store'])->name('accounting.invoices.store');
-     Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->name('accounting.invoices.show');
-     Route::put('/invoices/{invoice}', [InvoiceController::class, 'update'])->name('accounting.invoices.update');
-     Route::get('/invoices/{invoice}/edit', [InvoiceController::class, 'edit'])->name('accounting.invoices.edit');
-     Route::delete('/invoices/{invoice}', [InvoiceController::class, 'destroy'])->name('accounting.invoices.destroy');     
+    // Invoices Routes
+    Route::get('/invoices', [InvoiceController::class, 'index'])->name('accounting.invoices.index');
+    Route::get('/invoices/create', [InvoiceController::class, 'create'])->name('accounting.invoices.create');
+    Route::post('/invoices', [InvoiceController::class, 'store'])->name('accounting.invoices.store');
+    Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->name('accounting.invoices.show');
+    Route::put('/invoices/{invoice}', [InvoiceController::class, 'update'])->name('accounting.invoices.update');
+    Route::get('/invoices/{invoice}/edit', [InvoiceController::class, 'edit'])->name('accounting.invoices.edit');
+    Route::delete('/invoices/{invoice}', [InvoiceController::class, 'destroy'])->name('accounting.invoices.destroy');
 
-       // Invoices Routes
-       Route::get('/payments', [PaymentController::class, 'index'])->name('accounting.payments.index');
-       Route::get('/payments/create', [PaymentController::class, 'create'])->name('accounting.payments.create');
-       Route::post('/payments', [PaymentController::class, 'store'])->name('accounting.payments.store');
-       Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('accounting.payments.show');
-       Route::put('/payments/{payment}', [PaymentController::class, 'update'])->name('accounting.payments.update');
-       Route::get('/payments/{payment}/edit', [PaymentController::class, 'edit'])->name('accounting.payments.edit');
-       Route::delete('/payments/{payment}', [PaymentController::class, 'destroy'])->name('accounting.payments.destroy');  
-       
-       // Sale Invoices Routes
-       Route::get('/sales-invoices', [SaleInvoiceController::class, 'index'])->name('accounting.sales-invoices.index');
-       Route::get('/sales-invoices/create', [SaleInvoiceController::class, 'create'])->name('accounting.sales-invoices.create');
-       Route::post('/sales-invoices', [SaleInvoiceController::class, 'store'])->name('accounting.sales-invoices.store');
-       Route::get('/sales-invoices/{saleInvoice}', [SaleInvoiceController::class, 'show'])->name('accounting.sales-invoices.show');
-       Route::put('/sales-invoices/{saleInvoice}', [SaleInvoiceController::class, 'update'])->name('accounting.sales-invoices.update');
-       Route::get('/sales-invoices/{saleInvoice}/edit', [SaleInvoiceController::class, 'edit'])->name('accounting.sales-invoices.edit');
-       Route::delete('/sale-invoices/{saleInvoice}', [SaleInvoiceController::class, 'destroy'])->name('accounting.sales-invoices.destroy');  
+    // Invoices Routes
+    Route::get('/payments', [PaymentController::class, 'index'])->name('accounting.payments.index');
+    Route::get('/payments/create', [PaymentController::class, 'create'])->name('accounting.payments.create');
+    Route::post('/payments', [PaymentController::class, 'store'])->name('accounting.payments.store');
+    Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('accounting.payments.show');
+    Route::put('/payments/{payment}', [PaymentController::class, 'update'])->name('accounting.payments.update');
+    Route::get('/payments/{payment}/edit', [PaymentController::class, 'edit'])->name('accounting.payments.edit');
+    Route::delete('/payments/{payment}', [PaymentController::class, 'destroy'])->name('accounting.payments.destroy');
 
-        // Bank accounts Invoices Routes
-        Route::get('/bank-accounts', [BankAccountController::class, 'index'])->name('accounting.bank-accounts.index');
-        Route::get('/bank-accounts/create', [BankAccountController::class, 'create'])->name('accounting.bank-accounts.create');
-        Route::post('/bank-accounts', [BankAccountController::class, 'store'])->name('accounting.bank-accounts.store');
-        Route::get('/bank-accounts/{bankAccount}', [BankAccountController::class, 'show'])->name('accounting.sbank-accounts.show');
-        Route::put('/bank-accounts/{bankAccount}', [BankAccountController::class, 'update'])->name('accounting.bank-accounts.update');
-        Route::get('/bank-accounts/{bankAccount}/edit', [BankAccountController::class, 'edit'])->name('accounting.bank-accounts.edit');
-        Route::delete('/bank-accounts/{bankAccount}', [BankAccountController::class, 'destroy'])->name('accounting.bank-accounts.destroy');  
+    // Sale Invoices Routes
+    Route::get('/sales-invoices', [SaleInvoiceController::class, 'index'])->name('accounting.sales-invoices.index');
+    Route::get('/sales-invoices/create', [SaleInvoiceController::class, 'create'])->name('accounting.sales-invoices.create');
+    Route::post('/sales-invoices', [SaleInvoiceController::class, 'store'])->name('accounting.sales-invoices.store');
+    Route::get('/sales-invoices/{saleInvoice}', [SaleInvoiceController::class, 'show'])->name('accounting.sales-invoices.show');
+    Route::put('/sales-invoices/{saleInvoice}', [SaleInvoiceController::class, 'update'])->name('accounting.sales-invoices.update');
+    Route::get('/sales-invoices/{saleInvoice}/edit', [SaleInvoiceController::class, 'edit'])->name('accounting.sales-invoices.edit');
+    Route::delete('/sale-invoices/{saleInvoice}', [SaleInvoiceController::class, 'destroy'])->name('accounting.sales-invoices.destroy');
 
-
-          // budget Routes
-          Route::get('/budgets', [BudgetController::class, 'index'])->name('accounting.budgets.index');
-          Route::get('/budgets/create', [BudgetController::class, 'create'])->name('accounting.budgets.create');
-          Route::post('/budgets', [BudgetController::class, 'store'])->name('accounting.budgets.store');
-          Route::get('/budgets/{budget}', [BudgetController::class, 'show'])->name('accounting.budgets.show');
-          Route::put('/budgets/{budget}', [BudgetController::class, 'update'])->name('accounting.budgets.update');
-          Route::get('/budgets/{budget}/edit', [BudgetController::class, 'edit'])->name('accounting.budgets.edit');
-          Route::delete('/budgets/{budget}', [BudgetController::class, 'destroy'])->name('accounting.budgets.destroy');  
+    // Bank accounts Invoices Routes
+    Route::get('/bank-accounts', [BankAccountController::class, 'index'])->name('accounting.bank-accounts.index');
+    Route::get('/bank-accounts/create', [BankAccountController::class, 'create'])->name('accounting.bank-accounts.create');
+    Route::post('/bank-accounts', [BankAccountController::class, 'store'])->name('accounting.bank-accounts.store');
+    Route::get('/bank-accounts/{bankAccount}', [BankAccountController::class, 'show'])->name('accounting.sbank-accounts.show');
+    Route::put('/bank-accounts/{bankAccount}', [BankAccountController::class, 'update'])->name('accounting.bank-accounts.update');
+    Route::get('/bank-accounts/{bankAccount}/edit', [BankAccountController::class, 'edit'])->name('accounting.bank-accounts.edit');
+    Route::delete('/bank-accounts/{bankAccount}', [BankAccountController::class, 'destroy'])->name('accounting.bank-accounts.destroy');
 
 
-            // taxs Routes
-            Route::get('/taxes', [TaxController::class, 'index'])->name('accounting.taxes.index');
-            Route::get('/taxes/create', [TaxController::class, 'create'])->name('accounting.taxes.create');
-            Route::post('/taxes', [TaxController::class, 'store'])->name('accounting.taxes.store');
-            Route::get('/taxes/{tax}', [TaxController::class, 'show'])->name('accounting.taxes.show');
-            Route::put('/taxes/{tax}', [TaxController::class, 'update'])->name('accounting.taxes.update');
-            Route::get('/taxes/{tax}/edit', [TaxController::class, 'edit'])->name('accounting.taxes.edit');
-            Route::delete('/taxes/{tax}', [TaxController::class, 'destroy'])->name('accounting.taxes.destroy');  
+    // budget Routes
+    Route::get('/budgets', [BudgetController::class, 'index'])->name('accounting.budgets.index');
+    Route::get('/budgets/create', [BudgetController::class, 'create'])->name('accounting.budgets.create');
+    Route::post('/budgets', [BudgetController::class, 'store'])->name('accounting.budgets.store');
+    Route::get('/budgets/{budget}', [BudgetController::class, 'show'])->name('accounting.budgets.show');
+    Route::put('/budgets/{budget}', [BudgetController::class, 'update'])->name('accounting.budgets.update');
+    Route::get('/budgets/{budget}/edit', [BudgetController::class, 'edit'])->name('accounting.budgets.edit');
+    Route::delete('/budgets/{budget}', [BudgetController::class, 'destroy'])->name('accounting.budgets.destroy');
+
+
+    // taxs Routes
+    Route::get('/taxes', [TaxController::class, 'index'])->name('accounting.taxes.index');
+    Route::get('/taxes/create', [TaxController::class, 'create'])->name('accounting.taxes.create');
+    Route::post('/taxes', [TaxController::class, 'store'])->name('accounting.taxes.store');
+    Route::get('/taxes/{tax}', [TaxController::class, 'show'])->name('accounting.taxes.show');
+    Route::put('/taxes/{tax}', [TaxController::class, 'update'])->name('accounting.taxes.update');
+    Route::get('/taxes/{tax}/edit', [TaxController::class, 'edit'])->name('accounting.taxes.edit');
+    Route::delete('/taxes/{tax}', [TaxController::class, 'destroy'])->name('accounting.taxes.destroy');
+
+    // general ledgers Routes
+    Route::get('/general-ledgers', [GeneralLedgerController::class, 'index'])->name('accounting.general-ledgers.index');
+    Route::get('/general-ledgers/create', [GeneralLedgerController::class, 'create'])->name('accounting.general-ledgers.create');
+    Route::post('/general-ledgers', [GeneralLedgerController::class, 'store'])->name('accounting.general-ledgers.store');
+    Route::get('/general-ledgers/{generalLedger}', [GeneralLedgerController::class, 'show'])->name('accounting.general-ledgers.show');
+    Route::put('/general-ledgers/{generalLedger}', [GeneralLedgerController::class, 'update'])->name('accounting.general-ledgers.update');
+    Route::get('/general-ledgers/{generalLedger}/edit', [GeneralLedgerController::class, 'edit'])->name('accounting.general-ledgers.edit');
+    Route::delete('/general-ledgers/{generalLedger}', [GeneralLedgerController::class, 'destroy'])->name('accounting.general-ledgers.destroy');
 });
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
