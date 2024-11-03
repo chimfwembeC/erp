@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Accounting;
 use App\Http\Controllers\Controller;
 use App\Models\Account;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class AccountController extends Controller
 {
@@ -12,14 +13,31 @@ class AccountController extends Controller
    public function index()
    {
        $accounts = Account::with('parentAccount', 'childAccounts')->get();
-       return response()->json($accounts);
+       return Inertia::render("AccountingAndFinance/Accounts/Index",[
+        'accounts' => $accounts
+       ]);
+   }
+
+   public function create()
+   {
+    return Inertia::render("AccountingAndFinance/Accounts/Create",[
+        // 'accounts' => $accounts
+       ]);
+   }
+
+   public function edit(Account $account)
+   {
+    return Inertia::render("AccountingAndFinance/Accounts/Edit",[
+        'account' => $account
+       ]);
    }
 
    // Show a single account
-   public function show($id)
-   {
-       $account = Account::with('parentAccount', 'childAccounts')->findOrFail($id);
-       return response()->json($account);
+   public function show(Account $account)
+   {       
+       return Inertia::render("AccountingAndFinance/Accounts/Show",[
+        'account' => $account
+       ]);
    }
 
    // Create a new account
@@ -33,7 +51,7 @@ class AccountController extends Controller
        ]);
 
        $account = Account::create($validated);
-       return response()->json($account, 201);
+       return redirect()->route('accounting.accounts.index');
    }
 
    // Update an existing account
@@ -49,14 +67,13 @@ class AccountController extends Controller
        ]);
 
        $account->update($validated);
-       return response()->json($account);
+       return redirect()->route('accounting.accounts.index');
    }
 
    // Delete an account
-   public function destroy($id)
-   {
-       $account = Account::findOrFail($id);
+   public function destroy(Account $account)
+   {    
        $account->delete();
-       return response()->json(['message' => 'Account deleted successfully']);
+       return redirect()->route('accounting.accounts.index');
    }
 }

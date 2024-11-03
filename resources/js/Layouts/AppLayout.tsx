@@ -50,6 +50,7 @@ const sidebarLinks: SidebarLink[] = [
         href: '/accounting/accounts',
         icon: <PiggyBankIcon size={20} />,
         children: [
+          { label: 'Overview',icon: <DotIcon size={20} />, href: '/accounting/accounts' },
           { label: 'Account Settings',icon: <DotIcon size={20} />, href: '/accounting/accounts/settings' },
           { label: 'Account Balances',icon: <DotIcon size={20} />, href: '/accounting/accounts/balances' },
           { label: 'Transaction History',icon: <DotIcon size={20} />, href: '/accounting/accounts/transaction-history' },

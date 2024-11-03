@@ -2,6 +2,7 @@
 
 // use App\Http\Controllers\AttendanceController;
 
+use App\Http\Controllers\Accounting\AccountController;
 use App\Http\Controllers\Accounting\AccountingController;
 use App\Http\Controllers\Accounting\InvoiceController;
 use App\Http\Controllers\HRM\HRMController;
@@ -150,6 +151,15 @@ Route::prefix('hrm')->group(function () {
 Route::prefix('accounting')->group(function () {
 
     Route::get('/', [AccountingController::class, 'index'])->name('accounting.index');
+
+      // accounts Routes
+      Route::get('/accounts', [AccountController::class, 'index'])->name('accounting.accounts.index');
+      Route::get('/accounts/create', [AccountController::class, 'create'])->name('accounting.accounts.create');
+      Route::post('/accounts', [AccountController::class, 'store'])->name('accounting.accounts.store');
+      Route::get('/accounts/{account}', [AccountController::class, 'show'])->name('accounting.accounts.show');
+      Route::put('/accounts/{account}', [AccountController::class, 'update'])->name('accounting.accounts.update');
+      Route::get('/accounts/{account}/edit', [AccountController::class, 'edit'])->name('accounting.accounts.edit');
+      Route::delete('/accounts/{account}', [AccountController::class, 'destroy'])->name('accounting.accounts.destroy');     
 
      // Invoices Routes
      Route::get('/invoices', [InvoiceController::class, 'index'])->name('accounting.invoices.index');
