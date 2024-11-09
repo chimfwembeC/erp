@@ -231,6 +231,15 @@ Route::prefix('accounting')->group(function () {
     Route::put('/general-ledgers/{generalLedger}', [GeneralLedgerController::class, 'update'])->name('accounting.general-ledgers.update');
     Route::get('/general-ledgers/{generalLedger}/edit', [GeneralLedgerController::class, 'edit'])->name('accounting.general-ledgers.edit');
     Route::delete('/general-ledgers/{generalLedger}', [GeneralLedgerController::class, 'destroy'])->name('accounting.general-ledgers.destroy');
+
+      // general ledgers Routes
+      Route::get('/journal-entries', [GeneralLedgerController::class, 'index'])->name('accounting.journal-entries.index');
+      Route::get('/journal-entries/create', [GeneralLedgerController::class, 'create'])->name('accounting.journal-entries.create');
+      Route::post('/journal-entries', [GeneralLedgerController::class, 'store'])->name('accounting.journal-entries.store');
+      Route::get('/journal-entries/{generalLedger}', [GeneralLedgerController::class, 'show'])->name('accounting.journal-entries.show');
+      Route::put('/journal-entries/{generalLedger}', [GeneralLedgerController::class, 'update'])->name('accounting.journal-entries.update');
+      Route::get('/journal-entries/{generalLedger}/edit', [GeneralLedgerController::class, 'edit'])->name('accounting.journal-entries.edit');
+      Route::delete('/journal-entries/{generalLedger}', [GeneralLedgerController::class, 'destroy'])->name('accounting.journal-entries.destroy');
 });
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
