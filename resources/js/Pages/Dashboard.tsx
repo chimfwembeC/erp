@@ -2,7 +2,7 @@ import React from 'react';
 import Welcome from '@/Components/Welcome';
 import AppLayout from '@/Layouts/AppLayout';
 import Attendance from '@/Components/Attendance';
-import PageBuilder from '@/Components/PageBuilder';
+
 
 export default function Dashboard() {
   return (
@@ -16,7 +16,7 @@ export default function Dashboard() {
           </div>
           
         </div>
-        {/* <PageBuilder onSave={true} /> */}
+        
 
       </div>
     </AppLayout>
