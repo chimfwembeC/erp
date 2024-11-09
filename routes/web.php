@@ -10,6 +10,7 @@ use App\Http\Controllers\Accounting\GeneralLedgerController;
 use App\Http\Controllers\Accounting\InvoiceController;
 use App\Http\Controllers\Accounting\JournalEntryController;
 use App\Http\Controllers\Accounting\PaymentController;
+use App\Http\Controllers\Accounting\PurchaseOrderController;
 use App\Http\Controllers\Accounting\SaleInvoiceController;
 use App\Http\Controllers\Accounting\TaxController;
 use App\Http\Controllers\HRM\HRMController;
@@ -241,6 +242,16 @@ Route::prefix('accounting')->group(function () {
     Route::put('/journal-entries/{journalEntry}', [JournalEntryController::class, 'update'])->name('accounting.journal-entries.update');
     Route::get('/journal-entries/{journalEntry}/edit', [JournalEntryController::class, 'edit'])->name('accounting.journal-entries.edit');
     Route::delete('/journal-entries/{journalEntry}', [JournalEntryController::class, 'destroy'])->name('accounting.journal-entries.destroy');
+
+
+    // purchase orders Routes
+    Route::get('/purchase-orders', [PurchaseOrderController::class, 'index'])->name('accounting.purchase-orders.index');
+    Route::get('/purchase-orders/create', [PurchaseOrderController::class, 'create'])->name('accounting.purchase-orders.create');
+    Route::post('/purchase-orders', [PurchaseOrderController::class, 'store'])->name('accounting.purchase-orders.store');
+    Route::get('/purchase-orders/{purchaseOrder}', [PurchaseOrderController::class, 'show'])->name('accounting.purchase-orders.show');
+    Route::put('/purchase-orders/{purchaseOrder}', [PurchaseOrderController::class, 'update'])->name('accounting.purchase-orders.update');
+    Route::get('/purchase-orders/{purchaseOrder}/edit', [PurchaseOrderController::class, 'edit'])->name('accounting.purchase-orders.edit');
+    Route::delete('/purchase-orders/{purchaseOrder}', [PurchaseOrderController::class, 'destroy'])->name('accounting.purchase-orders.destroy');
 });
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);

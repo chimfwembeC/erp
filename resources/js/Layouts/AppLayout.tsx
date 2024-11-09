@@ -149,6 +149,11 @@ const sidebarLinks: SidebarLink[] = [
         icon: <ListOrdered size={20} />,
         children: [
           {
+            label: 'Overview',
+            icon: <DotIcon size={20} />,
+            href: '/accounting/purchase-orders',
+          },
+          {
             label: 'Create Purchase Order',
             icon: <DotIcon size={20} />,
             href: '/accounting/purchase-orders/create',
