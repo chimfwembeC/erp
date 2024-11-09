@@ -19,4 +19,9 @@ class PurchaseOrder extends Model
         'delivery_date', 
         'status'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'supplier_id');
+    }
 }

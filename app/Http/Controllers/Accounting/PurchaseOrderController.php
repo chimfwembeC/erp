@@ -17,7 +17,7 @@ class PurchaseOrderController extends Controller
     public function index()
     {
         // Get all purchase orders, possibly with pagination
-        $purchaseOrders = PurchaseOrder::all(); // You can use paginate() if needed.
+        $purchaseOrders = PurchaseOrder::with('user')->get(); // You can use paginate() if needed.
         
         return Inertia::render("AccountingAndFinance/PurchaseOrders/Index",[
             'purchaseOrders' => $purchaseOrders
