@@ -8,6 +8,7 @@ use App\Http\Controllers\Accounting\BankAccountController;
 use App\Http\Controllers\Accounting\BudgetController;
 use App\Http\Controllers\Accounting\GeneralLedgerController;
 use App\Http\Controllers\Accounting\InvoiceController;
+use App\Http\Controllers\Accounting\JournalEntryController;
 use App\Http\Controllers\Accounting\PaymentController;
 use App\Http\Controllers\Accounting\SaleInvoiceController;
 use App\Http\Controllers\Accounting\TaxController;
@@ -232,14 +233,14 @@ Route::prefix('accounting')->group(function () {
     Route::get('/general-ledgers/{generalLedger}/edit', [GeneralLedgerController::class, 'edit'])->name('accounting.general-ledgers.edit');
     Route::delete('/general-ledgers/{generalLedger}', [GeneralLedgerController::class, 'destroy'])->name('accounting.general-ledgers.destroy');
 
-      // general ledgers Routes
-      Route::get('/journal-entries', [GeneralLedgerController::class, 'index'])->name('accounting.journal-entries.index');
-      Route::get('/journal-entries/create', [GeneralLedgerController::class, 'create'])->name('accounting.journal-entries.create');
-      Route::post('/journal-entries', [GeneralLedgerController::class, 'store'])->name('accounting.journal-entries.store');
-      Route::get('/journal-entries/{generalLedger}', [GeneralLedgerController::class, 'show'])->name('accounting.journal-entries.show');
-      Route::put('/journal-entries/{generalLedger}', [GeneralLedgerController::class, 'update'])->name('accounting.journal-entries.update');
-      Route::get('/journal-entries/{generalLedger}/edit', [GeneralLedgerController::class, 'edit'])->name('accounting.journal-entries.edit');
-      Route::delete('/journal-entries/{generalLedger}', [GeneralLedgerController::class, 'destroy'])->name('accounting.journal-entries.destroy');
+    // general journal entries Routes
+    Route::get('/journal-entries', [JournalEntryController::class, 'index'])->name('accounting.journal-entries.index');
+    Route::get('/journal-entries/create', [JournalEntryController::class, 'create'])->name('accounting.journal-entries.create');
+    Route::post('/journal-entries', [JournalEntryController::class, 'store'])->name('accounting.journal-entries.store');
+    Route::get('/journal-entries/{journalEntry}', [JournalEntryController::class, 'show'])->name('accounting.journal-entries.show');
+    Route::put('/journal-entries/{journalEntry}', [JournalEntryController::class, 'update'])->name('accounting.journal-entries.update');
+    Route::get('/journal-entries/{journalEntry}/edit', [JournalEntryController::class, 'edit'])->name('accounting.journal-entries.edit');
+    Route::delete('/journal-entries/{journalEntry}', [JournalEntryController::class, 'destroy'])->name('accounting.journal-entries.destroy');
 });
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
