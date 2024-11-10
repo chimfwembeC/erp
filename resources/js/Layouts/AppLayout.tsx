@@ -144,6 +144,28 @@ const sidebarLinks: SidebarLink[] = [
         ],
       },
       {
+        label: 'Bank Reconciliation',
+        href: '/accounting/bank-reconciliations',
+        icon: <ListOrdered size={20} />,
+        children: [
+          {
+            label: 'Overview',
+            icon: <DotIcon size={20} />,
+            href: '/accounting/bank-reconciliations',
+          },
+          {
+            label: 'Create Reconciliation',
+            icon: <DotIcon size={20} />,
+            href: '/accounting/bank-reconciliations/create',
+          },
+          // {
+          //   label: 'Purchase Order History',
+          //   icon: <DotIcon size={20} />,
+          //   href: '/accounting/purchase-orders/history',
+          // },
+        ],
+      },
+      {
         label: 'Purchase Orders',
         href: '/accounting/purchase-orders',
         icon: <ListOrdered size={20} />,
@@ -164,7 +186,7 @@ const sidebarLinks: SidebarLink[] = [
             href: '/accounting/purchase-orders/history',
           },
         ],
-      },
+      },      
       {
         label: 'Budgets',
         icon: <DotIcon size={20} />,

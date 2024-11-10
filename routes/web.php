@@ -5,6 +5,7 @@
 use App\Http\Controllers\Accounting\AccountController;
 use App\Http\Controllers\Accounting\AccountingController;
 use App\Http\Controllers\Accounting\BankAccountController;
+use App\Http\Controllers\Accounting\BankReconciliationController;
 use App\Http\Controllers\Accounting\BudgetController;
 use App\Http\Controllers\Accounting\GeneralLedgerController;
 use App\Http\Controllers\Accounting\InvoiceController;
@@ -252,7 +253,18 @@ Route::prefix('accounting')->group(function () {
     Route::put('/purchase-orders/{purchaseOrder}', [PurchaseOrderController::class, 'update'])->name('accounting.purchase-orders.update');
     Route::get('/purchase-orders/{purchaseOrder}/edit', [PurchaseOrderController::class, 'edit'])->name('accounting.purchase-orders.edit');
     Route::delete('/purchase-orders/{purchaseOrder}', [PurchaseOrderController::class, 'destroy'])->name('accounting.purchase-orders.destroy');
+
+     // bank reconciliations Routes
+     Route::get('/bank-reconciliations', [BankReconciliationController::class, 'index'])->name('accounting.bank-reconciliations.index');
+     Route::get('/bank-reconciliations/create', [BankReconciliationController::class, 'create'])->name('accounting.bank-reconciliations.create');
+     Route::post('/bank-reconciliations', [BankReconciliationController::class, 'store'])->name('accounting.bank-reconciliations.store');
+     Route::get('/bank-reconciliations/{bankReconciliation}', [BankReconciliationController::class, 'show'])->name('accounting.bank-reconciliations.show');
+     Route::put('/bank-reconciliations/{bankReconciliation}', [BankReconciliationController::class, 'update'])->name('accounting.bank-reconciliations.update');
+     Route::get('/bank-reconciliations/{bankReconciliation}/edit', [BankReconciliationController::class, 'edit'])->name('accounting.bank-reconciliations.edit');
+     Route::delete('/bank-reconciliations/{bankReconciliation}', [BankReconciliationController::class, 'destroy'])->name('accounting.bank-reconciliations.destroy');
 });
+
+
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
 Route::resource('/landing-pages', LandingPagesController::class);
