@@ -288,9 +288,14 @@ const sidebarLinks: SidebarLink[] = [
 
   // Inventory & Warehouse Management Module
   {
-    label: 'Inventory',
+    label: 'Inventory System',
     icon: <ShoppingCart size={20} />,
     children: [
+      {
+        label: 'Overview',
+        icon: <DotIcon size={20} />,
+        href: '/inventory',
+      },
       {
         label: 'Products',
         href: '/inventory/products',

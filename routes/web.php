@@ -24,6 +24,11 @@ use App\Http\Controllers\HRM\JobController;
 use App\Http\Controllers\HRM\PayrollController;
 use App\Http\Controllers\HRM\LeaveController;
 use App\Http\Controllers\HRM\UserController;
+use App\Http\Controllers\InventoryAndWarehouse\InventoryAndWarehouseController;
+use App\Http\Controllers\InventoryAndWarehouse\InventoryMovementController;
+use App\Http\Controllers\InventoryAndWarehouse\ProductController;
+use App\Http\Controllers\InventoryAndWarehouse\ProductWarehouseController;
+use App\Http\Controllers\InventoryAndWarehouse\WarehouseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -265,6 +270,51 @@ Route::prefix('accounting')->group(function () {
 });
 
 
+Route::prefix('inventory')->group(function () {
+    // inventory and warehouse home route
+    Route::get('/', [InventoryAndWarehouseController::class, 'index'])->name('inventory.index');
+
+ // products Routes
+ Route::get('/products', [ProductController::class, 'index'])->name('inventory.products.index');
+ Route::get('/products/create', [ProductController::class, 'create'])->name('inventory.products.create');
+ Route::post('/products', [ProductController::class, 'store'])->name('inventory.products.store');
+ Route::get('/products/{product}', [ProductController::class, 'show'])->name('inventory.products.show');
+ Route::put('/products/{product}', [ProductController::class, 'update'])->name('inventory.products.update');
+ Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('inventory.products.edit');
+ Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('inventory.products.destroy');
+
+
+//  product_warehouse
+
+// warehouses Routes
+Route::get('/warehouses', [WarehouseController::class, 'index'])->name('inventory.warehouses.index');
+Route::get('/warehouses/create', [WarehouseController::class, 'create'])->name('inventory.warehouses.create');
+Route::post('/warehouses', [WarehouseController::class, 'store'])->name('inventory.warehouses.store');
+Route::get('/warehouses/{warehouse}', [WarehouseController::class, 'show'])->name('inventory.warehouses.show');
+Route::put('/warehouses/{warehouse}', [WarehouseController::class, 'update'])->name('inventory.warehouses.update');
+Route::get('/warehouses/{warehouse}/edit', [WarehouseController::class, 'edit'])->name('inventory.warehouses.edit');
+Route::delete('/warehouses/{warehouse}', [WarehouseController::class, 'destroy'])->name('inventory.warehouses.destroy');
+
+
+// inventory movement Routes
+Route::get('/inventory_movements', [InventoryMovementController::class, 'index'])->name('inventory.inventory_movements.index');
+Route::get('/inventory_movements/create', [InventoryMovementController::class, 'create'])->name('inventory.inventory_movements.create');
+Route::post('/inventory_movements', [InventoryMovementController::class, 'store'])->name('inventory.inventory_movements.store');
+Route::get('/inventory_movements/{inventory_movement}', [InventoryMovementController::class, 'show'])->name('inventory.inventory_movements.show');
+Route::put('/inventory_movements/{inventory_movement}', [InventoryMovementController::class, 'update'])->name('inventory.inventory_movements.update');
+Route::get('/inventory_movements/{inventory_movement}/edit', [InventoryMovementController::class, 'edit'])->name('inventory.inventory_movements.edit');
+Route::delete('/inventory_movements/{inventory_movement}', [InventoryMovementController::class, 'destroy'])->name('inventory.inventory_movements.destroy');
+
+// product warehouses Routes
+Route::get('/product_warehouses', [ProductWarehouseController::class, 'index'])->name('inventory.product_warehouses.index');
+Route::get('/product_warehouses/create', [ProductWarehouseController::class, 'create'])->name('inventory.product_warehouses.create');
+Route::post('/product_warehouses', [ProductWarehouseController::class, 'store'])->name('inventory.product_warehouses.store');
+Route::get('/product_warehouses/{inventory_movement}', [ProductWarehouseController::class, 'show'])->name('inventory.product_warehouses.show');
+Route::put('/product_warehouses/{inventory_movement}', [ProductWarehouseController::class, 'update'])->name('inventory.product_warehouses.update');
+Route::get('/product_warehouses/{inventory_movement}/edit', [ProductWarehouseController::class, 'edit'])->name('inventory.product_warehouses.edit');
+Route::delete('/product_warehouses/{inventory_movement}', [ProductWarehouseController::class, 'destroy'])->name('inventory.product_warehouses.destroy');
+
+});
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
 Route::resource('/landing-pages', LandingPagesController::class);

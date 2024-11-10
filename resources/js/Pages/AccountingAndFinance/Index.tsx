@@ -1,6 +1,6 @@
 import AppLayout from '@/Layouts/AppLayout';
 import Breadcrumb from '@/Components/Breadcrumb';
-import { DollarSign, FileText, User, CheckCircle } from 'lucide-react';
+import { DollarSign, FileText, User, CheckCircle, BanknoteIcon } from 'lucide-react';
 import { Link } from '@inertiajs/react';
 
 interface AccountingModule {
@@ -43,6 +43,7 @@ const Index: React.FC = () => {
     { label: 'Budgets', icon: <DollarSign className="mr-2" />, href: '/accounting/budgets' },
     { label: 'Taxes', icon: <FileText className="mr-2" />, href: '/accounting/taxes' },
     { label: 'Bank Accounts', icon: <User className="mr-2" />, href: '/accounting/bank-accounts' },
+    { label: 'Bank Reconciliations', icon: <BanknoteIcon className="mr-2" />, href: '/accounting/bank-reconciliations' },
   ];
 
   return (
