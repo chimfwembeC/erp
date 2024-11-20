@@ -4,7 +4,11 @@ namespace App\Http\Controllers\InventoryAndWarehouse;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductWarehouse;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Inertia\Inertia;
 
 class ProductController extends Controller
 {
@@ -16,7 +20,7 @@ class ProductController extends Controller
         //
         $products = Product::with(['warehouses'])->latest()->get();
 
-        return Inertia::render("Products/Index",[
+        return Inertia::render("InventoryAndWarehouses/Products/Index",[
             'products' => $products,
         ]);
     }
@@ -26,7 +30,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render("Products/Create");
+        return Inertia::render("InventoryAndWarehouses/Products/Create",[
+            'warehouses' => Warehouse::latest()->get(),
+        ]);
     }
 
     /**
@@ -36,19 +42,32 @@ class ProductController extends Controller
     {
         $validateData = $request->validate([
             'name' => 'required|max:100',
-            'description' => 'nullable|max:100',
+            'sku' => 'required|max:100|unique:products',
+            'description' => 'nullable|max:255',
             'price' => 'required|numeric',
+            'quantity' => 'required|numeric',
             'stock' => 'required|numeric',
+            'warehouse_id' => 'nullable|numeric',
         ]);
 
-        Product::create([
+        $product = Product::create([
             'name' => $validateData['name'],
+            'sku' => $validateData['sku'],
+            'quantity' => $validateData['quantity'],
             'description' => $validateData['description'],
             'price' => $validateData['price'],
             'stock' => $validateData['stock'],
         ]);
 
-        return redirect()->route('products.index')->with('success', 'product created successfully.');        
+        if(isset($validateData['warehouse_id']))
+        {
+            ProductWarehouse::create([
+                'product_id' => $product->id,
+                'warehouse_id' => $validateData['warehouse_id'],                
+            ]);
+        }
+
+        return redirect()->route('inventory.products.index')->with('success', 'product created successfully.');        
     }
 
     /**
@@ -56,7 +75,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return Inertia::render("Products/Show",[
+        return Inertia::render("InventoryAndWarehouses/Products/Show",[
             'product' => $product
         ]);
     }
@@ -66,8 +85,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return Inertia::render("Products/Edit",[
-            'product' => $product
+        return Inertia::render("InventoryAndWarehouses/Products/Edit",[
+            'product' => $product,
+            'warehouses' => Warehouse::latest()->get(),
         ]);
     }
 
@@ -78,19 +98,38 @@ class ProductController extends Controller
     {
         $validateData = $request->validate([
             'name' => 'max:100',
-            'description' => 'nullable|max:100',
+            'sku' => [
+                'max:100',
+                Rule::unique('products', 'sku')->ignore($product->id), // Exclude current product's ID
+            ],
+            'description' => 'nullable',
             'price' => 'numeric',
+            'quantity' => 'required|numeric',
             'stock' => 'numeric',
+            'warehouse_id' => 'nullable',
         ]);
+        
 
         $product->update([
             'name' => $validateData['name'],
+            'sku' => $validateData['sku'],
+            'quantity' => $validateData['quantity'],
             'description' => $validateData['description'],
             'price' => $validateData['price'],
             'stock' => $validateData['stock'],
         ]);
 
-        return redirect()->route('products.index')->with('success', 'product updated successfully.');        
+        $productWarehouse = $product->warehouses();
+
+        if(isset($validateData['warehouse_id']))
+        {
+            $productWarehouse->update([
+                'product_id' => $product->id,
+                'warehouse_id' => $validateData['warehouse_id'],                
+            ]);
+        }
+
+        return redirect()->route('inventory.products.index')->with('success', 'product updated successfully.');        
     }
 
     /**
@@ -100,6 +139,6 @@ class ProductController extends Controller
     {
         $product->delete();
 
-        return redirect()->route('products.index')->with('success', 'product deleted successfully.');                
+        return redirect()->route('inventory.products.index')->with('success', 'product deleted successfully.');                
     }
 }
