@@ -103,7 +103,7 @@ const Index = ({ products }) => {
                         <Column field="name" header="Product Name" sortable />
                         <Column field="price" header="Price" body={(rowData) => `$${rowData.price}`} sortable />
                         <Column field="stock" header="Stock" sortable />
-                        <Column field="description" header="Description" sortable />
+                        {/* <Column field="description" header="Description" sortable /> */}
                         <Column header="Actions" body={actionBodyTemplate} style={{ textAlign: 'center', width: '12rem' }} />
                     </DataTable>
                 )}

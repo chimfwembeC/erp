@@ -63,11 +63,12 @@ class ProductController extends Controller
         {
             ProductWarehouse::create([
                 'product_id' => $product->id,
-                'warehouse_id' => $validateData['warehouse_id'],                
+                'warehouse_id' => $validateData['warehouse_id'],
+                'quantity' => $validateData['quantity'],
             ]);
         }
 
-        return redirect()->route('inventory.products.index')->with('success', 'product created successfully.');        
+        return redirect()->route('inventory.products.index')->with('success', 'product created successfully.');
     }
 
     /**
@@ -108,7 +109,7 @@ class ProductController extends Controller
             'stock' => 'numeric',
             'warehouse_id' => 'nullable',
         ]);
-        
+
 
         $product->update([
             'name' => $validateData['name'],
@@ -125,11 +126,12 @@ class ProductController extends Controller
         {
             $productWarehouse->update([
                 'product_id' => $product->id,
-                'warehouse_id' => $validateData['warehouse_id'],                
+                'warehouse_id' => $validateData['warehouse_id'],
+                'quantity' => $validateData['quantity'],
             ]);
         }
 
-        return redirect()->route('inventory.products.index')->with('success', 'product updated successfully.');        
+        return redirect()->route('inventory.products.index')->with('success', 'product updated successfully.');
     }
 
     /**
@@ -139,6 +141,6 @@ class ProductController extends Controller
     {
         $product->delete();
 
-        return redirect()->route('inventory.products.index')->with('success', 'product deleted successfully.');                
+        return redirect()->route('inventory.products.index')->with('success', 'product deleted successfully.');
     }
 }
