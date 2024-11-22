@@ -23,7 +23,7 @@ const Edit = ({ product, warehouses }) => {
 
   const items = [
     { label: 'Dashboard', href: '/dashboard' },
-    { label: 'Products', href: '/products' },
+    { label: 'Products', href: '/inventory/products' },
     { label: 'Edit Product' },
   ];
 
@@ -140,7 +140,7 @@ const Edit = ({ product, warehouses }) => {
                 required
               />
             </div>
-            
+
             <div>
               <label htmlFor="stock" className="block font-medium mb-2">Stock</label>
               <InputText

@@ -79,7 +79,10 @@ const Index = ({ products }) => {
                     <>
                         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-4">
                             {products.slice(first, first + rows).map((product) => (
-                                <div key={product.id} className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                                <div key={product.id} className="bg-white relative shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                                       <div className="h-52">
+                <div className="inset-0 bg-primary h-48 top-0 absolute rounded-t-lg"></div>
+              </div>
                                     <div className="p-6">
                                         <h2 className="text-xl font-bold text-gray-800">{product.name}</h2>
                                         <p className="mt-2 text-gray-600">{product.description}</p>

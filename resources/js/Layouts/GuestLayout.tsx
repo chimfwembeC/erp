@@ -10,7 +10,7 @@ export default function GuestLayout({ children }) {
         <div className="container mx-auto flex items-center justify-between px-6 py-4">
           {/* Logo */}
           <a href="#" className="text-2xl font-bold text-white hover:text-accent">
-            ERP System
+            Tekrem Erp
           </a>
 
           {/* Navbar Links */}
@@ -33,7 +33,7 @@ export default function GuestLayout({ children }) {
           <div className="space-x-4 hidden md:flex">
             <Link
               href="/login"
-              className="px-4 py-2 border border-accent text-accent rounded hover:bg-accent hover:text-white transition duration-200"
+              className="px-4 py-2 border border-white hover:border-accent text-white rounded hover:bg-accent hover:text-white transition duration-200"
             >
               Login
             </Link>

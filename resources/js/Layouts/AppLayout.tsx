@@ -186,7 +186,7 @@ const sidebarLinks: SidebarLink[] = [
             href: '/accounting/purchase-orders/history',
           },
         ],
-      },      
+      },
       {
         label: 'Budgets',
         icon: <DotIcon size={20} />,
@@ -302,9 +302,14 @@ const sidebarLinks: SidebarLink[] = [
         icon: <FaProductHunt size={20} />,
         children: [
           {
+            label: 'Overview',
+            icon: <DotIcon size={20} />,
+            href: '/inventory/products',
+          },
+          {
             label: 'Add New Product',
             icon: <DotIcon size={20} />,
-            href: '/inventory/products/add',
+            href: '/inventory/products/create',
           },
           {
             label: 'Product Categories',

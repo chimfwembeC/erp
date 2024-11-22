@@ -23,7 +23,7 @@ const Create = ({ warehouses }) => {
 
   const items = [
     { label: 'Dashboard', href: '/dashboard' },
-    { label: 'Products', href: '/products' },
+    { label: 'Products', href: '/inventory/products' },
     { label: 'Create Product' },
   ];
 
