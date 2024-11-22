@@ -5,6 +5,7 @@ namespace App\Http\Controllers\InventoryAndWarehouse;
 use App\Http\Controllers\Controller;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class WarehouseController extends Controller
 {
@@ -15,7 +16,7 @@ class WarehouseController extends Controller
     {
         $warehouses = Warehouse::all();
 
-        return Inertia::render("Warehouses/Index",[
+        return Inertia::render("InventoryAndWarehouses/Warehouses/Index",[
             'warehouses' => $warehouses
         ]);
     }
@@ -25,7 +26,7 @@ class WarehouseController extends Controller
      */
     public function create()
     {
-        return Inertia::render("Warehouses/Create");
+        return Inertia::render("InventoryAndWarehouses/Warehouses/Create");
     }
 
     /**
@@ -35,7 +36,7 @@ class WarehouseController extends Controller
     {
         $validateData = $request->validate([
             'name' => 'required|string|max:100',
-            'location' => 'required|string|max:255',           
+            'location' => 'required|string|max:255',
         ]);
 
         Warehouse::create([
@@ -43,7 +44,7 @@ class WarehouseController extends Controller
             'location' => $validateData['location'],
         ]);
 
-        return redirect()->route('warehouses.index')->with('success', 'warehouse deleted successfully.');        
+        return redirect()->route('inventory.warehouses.index')->with('success', 'warehouse deleted successfully.');
 
     }
 
@@ -52,7 +53,7 @@ class WarehouseController extends Controller
      */
     public function show(Warehouse $warehouse)
     {
-        return Inertia::render("Warehouses/Index",[
+        return Inertia::render("InventoryAndWarehouses/Warehouses/Show",[
             'warehouse' => $warehouse
         ]);
     }
@@ -62,7 +63,7 @@ class WarehouseController extends Controller
      */
     public function edit(Warehouse $warehouse)
     {
-        return Inertia::render("Warehouses/Index",[
+        return Inertia::render("InventoryAndWarehouses/Warehouses/Edit",[
             'warehouse' => $warehouse
         ]);
     }
@@ -74,7 +75,7 @@ class WarehouseController extends Controller
     {
         $validateData = $request->validate([
             'name' => 'required|string|max:100',
-            'location' => 'required|string|max:255',           
+            'location' => 'required|string|max:255',
         ]);
 
         $warehouse->update([
@@ -82,7 +83,7 @@ class WarehouseController extends Controller
             'location' => $validateData['location'],
         ]);
 
-        return redirect()->route('warehouses.index')->with('success', 'warehouse deleted successfully.');        
+        return redirect()->route('inventory.warehouses.index')->with('success', 'warehouse deleted successfully.');
     }
 
     /**
@@ -92,7 +93,7 @@ class WarehouseController extends Controller
     {
         //
         $warehouse->delete();
-        
-        return redirect()->route('warehouses.index')->with('success', 'warehouse deleted successfully.');        
+
+        return redirect()->route('inventory.warehouses.index')->with('success', 'warehouse deleted successfully.');
     }
 }

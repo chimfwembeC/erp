@@ -333,6 +333,11 @@ const sidebarLinks: SidebarLink[] = [
         href: '/inventory/warehouses',
         icon: <Warehouse size={20} />,
         children: [
+            {
+                label: 'Overview',
+                icon: <DotIcon size={20} />,
+                href: '/inventory/warehouses',
+              },
           {
             label: 'Add New Warehouse',
             icon: <DotIcon size={20} />,
