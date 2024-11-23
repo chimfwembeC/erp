@@ -297,13 +297,13 @@ Route::delete('/warehouses/{warehouse}', [WarehouseController::class, 'destroy']
 
 
 // inventory movement Routes
-Route::get('/inventory_movements', [InventoryMovementController::class, 'index'])->name('inventory.inventory_movements.index');
-Route::get('/inventory_movements/create', [InventoryMovementController::class, 'create'])->name('inventory.inventory_movements.create');
-Route::post('/inventory_movements', [InventoryMovementController::class, 'store'])->name('inventory.inventory_movements.store');
-Route::get('/inventory_movements/{inventory_movement}', [InventoryMovementController::class, 'show'])->name('inventory.inventory_movements.show');
-Route::put('/inventory_movements/{inventory_movement}', [InventoryMovementController::class, 'update'])->name('inventory.inventory_movements.update');
-Route::get('/inventory_movements/{inventory_movement}/edit', [InventoryMovementController::class, 'edit'])->name('inventory.inventory_movements.edit');
-Route::delete('/inventory_movements/{inventory_movement}', [InventoryMovementController::class, 'destroy'])->name('inventory.inventory_movements.destroy');
+Route::get('/inventory-movements', [InventoryMovementController::class, 'index'])->name('inventory.inventory_movements.index');
+Route::get('/inventory-movements/create', [InventoryMovementController::class, 'create'])->name('inventory.inventory_movements.create');
+Route::post('/inventory-movements', [InventoryMovementController::class, 'store'])->name('inventory.inventory_movements.store');
+Route::get('/inventory-movements/{inventoryMovement}', [InventoryMovementController::class, 'show'])->name('inventory.inventory_movements.show');
+Route::put('/inventory-movements/{inventoryMovement}', [InventoryMovementController::class, 'update'])->name('inventory.inventory_movements.update');
+Route::get('/inventory-movements/{inventoryMovement}/edit', [InventoryMovementController::class, 'edit'])->name('inventory.inventory_movements.edit');
+Route::delete('/inventory-movements/{inventoryMovement}', [InventoryMovementController::class, 'destroy'])->name('inventory.inventory_movements.destroy');
 
 // product warehouses Routes
 Route::get('/product_warehouses', [ProductWarehouseController::class, 'index'])->name('inventory.product_warehouses.index');

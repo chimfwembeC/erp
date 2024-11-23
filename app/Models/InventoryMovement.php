@@ -27,4 +27,9 @@ class InventoryMovement extends Model
         return $this->belongsTo(Branch::class);
     }
 
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
+
 }
