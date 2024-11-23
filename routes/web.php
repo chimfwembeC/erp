@@ -14,6 +14,7 @@ use App\Http\Controllers\Accounting\PaymentController;
 use App\Http\Controllers\Accounting\PurchaseOrderController;
 use App\Http\Controllers\Accounting\SaleInvoiceController;
 use App\Http\Controllers\Accounting\TaxController;
+use App\Http\Controllers\AuditAndCompliance\AuditAndComplianceController;
 use App\Http\Controllers\HRM\HRMController;
 use App\Http\Controllers\HRM\EmployeeController;
 use App\Http\Controllers\HRM\AttendanceController;
@@ -313,6 +314,13 @@ Route::get('/product-warehouses/{productWarehouse}', [ProductWarehouseController
 Route::put('/product-warehouses/{productWarehouse}', [ProductWarehouseController::class, 'update'])->name('inventory.product-warehouses.update');
 Route::get('/product-warehouses/{productWarehouse}/edit', [ProductWarehouseController::class, 'edit'])->name('inventory.product-warehouses.edit');
 Route::delete('/product-warehouses/{productWarehouse}', [ProductWarehouseController::class, 'destroy'])->name('inventory.product-warehouses.destroy');
+
+
+//
+});
+
+Route::prefix('audit-trails')->group(function () {
+    Route::get('/', [AuditAndComplianceController::class, 'index'])->name('audit-trails.index');
 
 });
 

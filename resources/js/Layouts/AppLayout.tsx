@@ -333,11 +333,11 @@ const sidebarLinks: SidebarLink[] = [
         href: '/inventory/warehouses',
         icon: <Warehouse size={20} />,
         children: [
-            {
-                label: 'Overview',
-                icon: <DotIcon size={20} />,
-                href: '/inventory/warehouses',
-              },
+          {
+            label: 'Overview',
+            icon: <DotIcon size={20} />,
+            href: '/inventory/warehouses',
+          },
           {
             label: 'Add New Warehouse',
             icon: <DotIcon size={20} />,
@@ -359,6 +359,13 @@ const sidebarLinks: SidebarLink[] = [
         label: 'Product Warehouse',
         icon: <DotIcon size={20} />,
         href: '/inventory/product-warehouses',
+        children: [
+          {
+            label: 'Product Warehouse',
+            icon: <DotIcon size={20} />,
+            href: '/inventory/product-warehouses',
+          },
+        ],
       },
     ],
   },
@@ -392,27 +399,27 @@ const sidebarLinks: SidebarLink[] = [
   },
 
   // Project Management & Task Management Module
-  {
-    label: 'Projects',
-    icon: <Folder size={20} />, // Assuming you have a folder icon
-    children: [
-      {
-        label: 'Active Projects',
-        icon: <DotIcon size={20} />,
-        href: '/projects/active',
-      },
-      {
-        label: 'Completed Projects',
-        icon: <DotIcon size={20} />,
-        href: '/projects/completed',
-      },
-      {
-        label: 'Project Templates',
-        icon: <DotIcon size={20} />,
-        href: '/projects/templates',
-      },
-    ],
-  },
+//   {
+//     label: 'Projects',
+//     icon: <Folder size={20} />, // Assuming you have a folder icon
+//     children: [
+//       {
+//         label: 'Active Projects',
+//         icon: <DotIcon size={20} />,
+//         href: '/projects/active',
+//       },
+//       {
+//         label: 'Completed Projects',
+//         icon: <DotIcon size={20} />,
+//         href: '/projects/completed',
+//       },
+//       {
+//         label: 'Project Templates',
+//         icon: <DotIcon size={20} />,
+//         href: '/projects/templates',
+//       },
+//     ],
+//   },
 
   // CRM Module
   {
@@ -434,19 +441,19 @@ const sidebarLinks: SidebarLink[] = [
   },
 
   // POS Module
-  {
-    label: 'POS',
-    icon: <ShoppingCart size={20} />,
-    children: [
-      { label: 'Sales', icon: <DotIcon size={20} />, href: '/pos/sales' },
-      {
-        label: 'Inventory',
-        icon: <DotIcon size={20} />,
-        href: '/pos/inventory',
-      },
-      { label: 'Reports', icon: <DotIcon size={20} />, href: '/pos/reports' },
-    ],
-  },
+//   {
+//     label: 'POS',
+//     icon: <ShoppingCart size={20} />,
+//     children: [
+//       { label: 'Sales', icon: <DotIcon size={20} />, href: '/pos/sales' },
+//       {
+//         label: 'Inventory',
+//         icon: <DotIcon size={20} />,
+//         href: '/pos/inventory',
+//       },
+//       { label: 'Reports', icon: <DotIcon size={20} />, href: '/pos/reports' },
+//     ],
+//   },
 
   // Support Module
   {
