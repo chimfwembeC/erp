@@ -26,6 +26,7 @@ import {
 import { useRoute } from 'ziggy-js';
 import { FaFileInvoice, FaMoneyCheckAlt, FaProductHunt } from 'react-icons/fa';
 import SearchInput from '@/Components/SearchInput';
+import useTypedPage from '@/Hooks/useTypedPage';
 
 interface LayoutProps {
   title: string;
@@ -478,6 +479,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [activeDropdowns, setActiveDropdowns] = useState<string[]>([]);
+    const page = useTypedPage();
 
   // Get the current URL path using usePage hook from Inertia
   const { url } = usePage();
@@ -548,13 +550,13 @@ export default function AppLayout({ title, children }: LayoutProps) {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-100">
+    <div className="flex h-screen overflow-hidden bg-gray-100 ">
       <Head title={title} />
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 z-30 h-full w-64 bg-white shadow-lg transition-transform duration-300 ease-in-out lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed top-0 left-0 z-30 h-full w-64 bg-white transition-transform duration-300 ease-in-out lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        <nav className="h-full flex flex-col border-r">
+        <nav className="h-full flex flex-col">
           {/* Mobile Sidebar Toggle */}
           <div className="p-4 flex justify-between items-center lg:hidden">
             <h1 className="font-bold text-xl">Logo</h1>
@@ -587,8 +589,8 @@ export default function AppLayout({ title, children }: LayoutProps) {
                 className="w-10 h-10 rounded-full"
               />
               <div>
-                <p className="text-sm font-medium text-gray-800">John Doe</p>
-                <p className="text-xs text-gray-500">Administrator</p>
+                <p className="text-sm font-medium text-gray-800">{page.props.auth.user?.name}</p>
+                <p className="text-xs text-gray-500">{page.props.auth.user?.role}</p>
               </div>
             </div>
 
@@ -630,14 +632,14 @@ export default function AppLayout({ title, children }: LayoutProps) {
       {/* Main Content */}
       <div className="flex-1 flex flex-col lg:ml-64">
         {/* MenuBar */}
-        <header className="fixed top-0 left-0 lg:left-64 right-0 z-40 bg-white shadow-md p-4 flex items-center justify-between">
+        <header className="fixed top-0 left-0 lg:left-64 right-0 z-40 bg-white p-4 flex items-center justify-between">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="lg:hidden p-2"
           >
             <Menu size={24} />
           </button>
-          <h1 className="text-xs md:text-md lg:text-xl font-semibold">
+          <h1 className="text-sm md:text-md lg:text-xl font-semibold">
             {title}
           </h1>
           <nav className="flex items-center space-x-4">

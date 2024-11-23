@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog } from 'primereact/dialog';
 import { Link } from '@inertiajs/react';
 
 interface SidebarLink {
   label: string;
   href: string;
   icon: React.ReactNode;
-  children?: SidebarLink[]; // Add optional children for nested links
+  children?: SidebarLink[]; // Optional children for nested links
 }
 
 interface SearchInputProps {
@@ -52,10 +51,6 @@ const SearchInput: React.FC<SearchInputProps> = ({ links }) => {
     setIsModalOpen(false);
   };
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
-
   const toggleModal = () => {
     setIsModalOpen(prev => !prev);
     setSearchTerm('');
@@ -75,119 +70,115 @@ const SearchInput: React.FC<SearchInputProps> = ({ links }) => {
     const parts = text.split(new RegExp(`(${search})`, 'gi'));
     return parts.map((part, index) =>
       part.toLowerCase() === search.toLowerCase() ? (
-        <span key={index} className="bg-primary text-white">
-          {part}
-        </span>
+        <span key={index} className="bg-yellow-200">{part}</span>
       ) : (
         part
       ),
     );
   };
 
-  const footer = (
-    <div className="flex justify-end">
-      <button
-        onClick={toggleModal}
-        className="p-button p-component bg-primary text-white p-2"
-      >
-        Close
-      </button>
-    </div>
-  );
-
   return (
     <div className="relative">
-      <div className="flex items-center justify-center">
+      {/* Input to trigger the modal */}
+      <div className="w-28 flex items-center justify-center">
         <i className="pi pi-search absolute left-2"></i>
         <input
           type="text"
           value={searchTerm}
           onClick={toggleModal}
-          onChange={handleSearchChange}
-          placeholder="Search..."
-          className="border pl-8 rounded px-2 py-1 w-full"
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="border pl-8 rounded px-2 py-1 w-full cursor-pointer"
           readOnly
         />
+        <div className="flex items-center justify-center rounded h-6 w-6 text-xs right-1 absolute bg-cyan-100">#</div>
       </div>
 
-      <Dialog
-        visible={isModalOpen}
-        onHide={toggleModal}
-        header="Search"
-        footer={footer}
-        style={{ width: 500, height: 800, margin: 0 }}
-        closable={false}
-      >
-        <form onSubmit={handleSearchSubmit} className="relative">
-          <div className="flex items-center justify-center">
-            <i className="pi pi-search absolute left-2"></i>
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={handleSearchChange}
-              placeholder="Search..."
-              className="border rounded pl-8 mb-2 w-full"
-            />
-          </div>
-        </form>
-
-        <div className="max-h-64 overflow-y-auto">
-          {filteredLinks.length > 0 && (
-            <div className="suggestions">
-              {filteredLinks.map(link => (
-                <div
-                  key={link.label}
-                  className="flex items-center justify-between p-2 hover:bg-gray-100"
-                >
-                  <Link
-                    href={link.href}
-                    onClick={toggleModal}
-                    className="flex items-center w-full"
-                  >
-                    {link.icon}
-                    <span className="ml-2">{highlightText(link.label, searchTerm)}</span>
-                  </Link>
-                  <button
-                    onClick={() => toggleFavorite(link)}
-                    className={`p-button ${favorites.includes(link) ? 'p-button-danger' : 'p-button-success'}`}
-                    title={
-                      favorites.includes(link)
-                        ? 'Remove from favorites'
-                        : 'Add to favorites'
-                    }
-                  >
-                    {favorites.includes(link) ? '★' : '☆'}
-                  </button>
-                </div>
-              ))}
+      {/* Tailwind CSS Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
+          <div className="bg-white w-full max-w-lg rounded-lg shadow-lg">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center px-4 py-2 border-b">
+              <h2 className="text-lg font-bold">Search</h2>
+              <button onClick={toggleModal} className="text-gray-500 hover:text-gray-800">
+                ✖
+              </button>
             </div>
-          )}
 
-          {noResults && (
-            <div className="text-red-600 text-center mt-2">
-              <p>
-                No results found for "<strong>{searchTerm}</strong>". Please try a
-                different search term.
-              </p>
-            </div>
-          )}
+            {/* Modal Body */}
+            <form onSubmit={handleSearchSubmit} className="p-4">
+              <div className="relative mb-4">
+                <i className="pi pi-search absolute left-2 top-2"></i>
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Search..."
+                  className="border rounded pl-8 py-2 w-full"
+                />
+              </div>
+            </form>
 
-          {recentSearches.length > 0 && (
-            <div className="mt-2">
-              <h4 className="font-semibold">Recent Searches:</h4>
-              <ul>
-                {recentSearches
-                  .filter(search => !favorites.some(fav => fav.label === search))
-                  .map(search => (
-                    <li key={search} className="p-2 hover:bg-gray-100">
-                      {highlightText(search, searchTerm)}
-                    </li>
+            <div className="px-4 pb-4 max-h-60 overflow-y-auto">
+              {filteredLinks.length > 0 ? (
+                <div className="suggestions">
+                  {filteredLinks.map(link => (
+                    <div
+                      key={link.label}
+                      className="flex items-center justify-between p-2 hover:bg-gray-100"
+                    >
+                      <Link
+                        href={link.href}
+                        onClick={toggleModal}
+                        className="flex items-center w-full"
+                      >
+                        {link.icon} - {link.href}
+                        <span className="ml-2">{highlightText(link.label, searchTerm)}</span>
+                      </Link>
+                      <button
+                        onClick={() => toggleFavorite(link)}
+                        className={`p-2 text-sm ${
+                          favorites.includes(link) ? 'text-red-600' : 'text-green-600'
+                        }`}
+                        title={
+                          favorites.includes(link)
+                            ? 'Remove from favorites'
+                            : 'Add to favorites'
+                        }
+                      >
+                        {favorites.includes(link) ? '★' : '☆'}
+                      </button>
+                    </div>
                   ))}
-              </ul>
+                </div>
+              ) : (
+                noResults && (
+                  <div className="text-red-600 text-center mt-2">
+                    <p>No results found for "<strong>{searchTerm}</strong>".</p>
+                  </div>
+                )
+              )}
+
+              {recentSearches.length > 0 && (
+                <div className="mt-4">
+                  <h4 className="font-semibold">Recent Searches:</h4>
+                  <ul>
+                    {recentSearches.map(search => (
+                      <li
+                        key={search}
+                        className="p-2 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => setSearchTerm(search)}
+                      >
+                        {highlightText(search, searchTerm)}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
-      </Dialog>
+      )}
     </div>
   );
 };
