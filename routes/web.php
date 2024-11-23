@@ -306,13 +306,13 @@ Route::get('/inventory-movements/{inventoryMovement}/edit', [InventoryMovementCo
 Route::delete('/inventory-movements/{inventoryMovement}', [InventoryMovementController::class, 'destroy'])->name('inventory.inventory_movements.destroy');
 
 // product warehouses Routes
-Route::get('/product_warehouses', [ProductWarehouseController::class, 'index'])->name('inventory.product_warehouses.index');
-Route::get('/product_warehouses/create', [ProductWarehouseController::class, 'create'])->name('inventory.product_warehouses.create');
-Route::post('/product_warehouses', [ProductWarehouseController::class, 'store'])->name('inventory.product_warehouses.store');
-Route::get('/product_warehouses/{inventory_movement}', [ProductWarehouseController::class, 'show'])->name('inventory.product_warehouses.show');
-Route::put('/product_warehouses/{inventory_movement}', [ProductWarehouseController::class, 'update'])->name('inventory.product_warehouses.update');
-Route::get('/product_warehouses/{inventory_movement}/edit', [ProductWarehouseController::class, 'edit'])->name('inventory.product_warehouses.edit');
-Route::delete('/product_warehouses/{inventory_movement}', [ProductWarehouseController::class, 'destroy'])->name('inventory.product_warehouses.destroy');
+Route::get('/product-warehouses', [ProductWarehouseController::class, 'index'])->name('inventory.product-warehouses.index');
+Route::get('/product-warehouses/create', [ProductWarehouseController::class, 'create'])->name('inventory.product-warehouses.create');
+Route::post('/product-warehouses', [ProductWarehouseController::class, 'store'])->name('inventory.product-warehouses.store');
+Route::get('/product-warehouses/{productWarehouse}', [ProductWarehouseController::class, 'show'])->name('inventory.product-warehouses.show');
+Route::put('/product-warehouses/{productWarehouse}', [ProductWarehouseController::class, 'update'])->name('inventory.product-warehouses.update');
+Route::get('/product-warehouses/{productWarehouse}/edit', [ProductWarehouseController::class, 'edit'])->name('inventory.product-warehouses.edit');
+Route::delete('/product-warehouses/{productWarehouse}', [ProductWarehouseController::class, 'destroy'])->name('inventory.product-warehouses.destroy');
 
 });
 

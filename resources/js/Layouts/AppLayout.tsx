@@ -358,7 +358,7 @@ const sidebarLinks: SidebarLink[] = [
       {
         label: 'Product Warehouse',
         icon: <DotIcon size={20} />,
-        href: '/inventory/product-warehouse',
+        href: '/inventory/product-warehouses',
       },
     ],
   },
