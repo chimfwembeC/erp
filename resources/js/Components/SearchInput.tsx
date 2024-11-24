@@ -70,7 +70,9 @@ const SearchInput: React.FC<SearchInputProps> = ({ links }) => {
     const parts = text.split(new RegExp(`(${search})`, 'gi'));
     return parts.map((part, index) =>
       part.toLowerCase() === search.toLowerCase() ? (
-        <span key={index} className="bg-yellow-200">{part}</span>
+        <span key={index} className="bg-yellow-200">
+          {part}
+        </span>
       ) : (
         part
       ),
@@ -80,19 +82,29 @@ const SearchInput: React.FC<SearchInputProps> = ({ links }) => {
   return (
     <div className="relative">
       {/* Input to trigger the modal */}
-      <div className="w-28 flex items-center justify-center">
+      <div className="hidden md:flex w-28  items-center justify-center">
         <i className="pi pi-search absolute left-2"></i>
         <input
           type="text"
           value={searchTerm}
           onClick={toggleModal}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
           className="border pl-8 rounded px-2 py-1 w-full cursor-pointer"
           readOnly
         />
-        <div className="flex items-center justify-center rounded h-6 w-6 text-xs right-1 absolute bg-cyan-100">#</div>
+        <div className="flex items-center justify-center rounded h-6 w-6 text-xs right-1 absolute bg-cyan-100">
+          #
+        </div>
       </div>
 
+      <div className="block md:hidden">
+        <div
+          onClick={toggleModal}
+          className="h-8 w-8 flex cursor-pointer justify-center items-center transition-all duration-300"
+        >
+          <i className="pi pi-search absolute text-xl font-bold"></i>
+        </div>
+      </div>
       {/* Tailwind CSS Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
@@ -100,7 +112,10 @@ const SearchInput: React.FC<SearchInputProps> = ({ links }) => {
             {/* Modal Header */}
             <div className="flex justify-between items-center px-4 py-2 border-b">
               <h2 className="text-lg font-bold">Search</h2>
-              <button onClick={toggleModal} className="text-gray-500 hover:text-gray-800">
+              <button
+                onClick={toggleModal}
+                className="text-gray-500 hover:text-gray-800"
+              >
                 ✖
               </button>
             </div>
@@ -112,7 +127,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ links }) => {
                 <input
                   type="text"
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={e => setSearchTerm(e.target.value)}
                   placeholder="Search..."
                   className="border rounded pl-8 py-2 w-full"
                 />
@@ -133,12 +148,16 @@ const SearchInput: React.FC<SearchInputProps> = ({ links }) => {
                         className="flex items-center w-full"
                       >
                         {link.icon} - {link.href}
-                        <span className="ml-2">{highlightText(link.label, searchTerm)}</span>
+                        <span className="ml-2">
+                          {highlightText(link.label, searchTerm)}
+                        </span>
                       </Link>
                       <button
                         onClick={() => toggleFavorite(link)}
                         className={`p-2 text-sm ${
-                          favorites.includes(link) ? 'text-red-600' : 'text-green-600'
+                          favorites.includes(link)
+                            ? 'text-red-600'
+                            : 'text-green-600'
                         }`}
                         title={
                           favorites.includes(link)
@@ -154,7 +173,9 @@ const SearchInput: React.FC<SearchInputProps> = ({ links }) => {
               ) : (
                 noResults && (
                   <div className="text-red-600 text-center mt-2">
-                    <p>No results found for "<strong>{searchTerm}</strong>".</p>
+                    <p>
+                      No results found for "<strong>{searchTerm}</strong>".
+                    </p>
                   </div>
                 )
               )}

@@ -27,12 +27,12 @@ export default function Welcome({
       <>
         <Head title="Welcome" />
         {/* Hero Section */}
-        <section className="relative pt-24 pb-24 text-white text-center  h-screen-70">
+        <section className="relative -pt-1 flex justify-center items-center pb-24 text-white text-center  h-screen">
           {/* Background Image */}
           <img
             src="assets/imgs/hero-section-background.jpeg"
             alt="Background with abstract graphics representing ERP system"
-            className="absolute inset-0 w-full h-full object-cover opacity-30 rounded-lg"
+            className="absolute inset-0 w-full h-full object-cover opacity-30 rounded-lg hover:scale-105 transition-transform duration-200 ease-out"
           />
 
           {/* Overlay */}
@@ -68,10 +68,10 @@ export default function Welcome({
         </section>
 
         {/* Main Content */}
-        <main className="pt-10 bg-background">
-          <div className="container mx-auto px-6 py-10 space-y-16">
+        <main className="pt-10">
+          <div className="space-y-16">
             {/* Features Section */}
-            <section className="flex flex-col md:flex-row items-center gap-4 space-y-8 md:space-y-0 md:space-x-12  h-screen-70">
+            <section className="flex flex-col px-6 md:flex-row items-center gap-4 space-y-8 md:space-y-0 md:space-x-12  h-screen-70">
               <div className="grid grid-cols-2 gap-4">
                 <div className="border-2 p-2 rounded-lg hover:border-primary hover:scale-105 transition-transform duration-200 ease-out">
                   <img
@@ -85,7 +85,7 @@ export default function Welcome({
                   <img
                     src="assets/svgs/undraw_features_overview_re_2w78.svg"
                     alt="Feature illustration"
-                    className="w-48 h-48 rounded-lg"
+                    className="w-48 h-48 rounded-lg "
                   />
                 </div>
 
@@ -267,7 +267,7 @@ export default function Welcome({
             </section>
 
             {/* Benefits Section */}
-            <section className="flex flex-col md:flex-row-reverse items-center space-y-8 gap-4 md:space-y-0 md:space-x-12  h-screen-70">
+            <section className="px-6 flex flex-col md:flex-row-reverse items-center space-y-8 gap-4 md:space-y-0 md:space-x-12  h-screen-70">
               <div className="border-2 p-2 rounded-lg hover:border-primary hover:scale-105 transition-transform duration-200 ease-out">
                               <img
                 src="assets/svgs/undraw_selection_re_ycpo.svg"
@@ -318,7 +318,7 @@ export default function Welcome({
             </section>
 
             {/* Testimonials Section */}
-            <section className="h-screen-70">
+            <section className="h-screen-70 px-8">
               {/* Header */}
               <div className="flex flex-col items-center text-center mb-8 ">
                 <h2 className="text-2xl font-bold text-primary">
@@ -368,11 +368,11 @@ export default function Welcome({
             </section>
 
             {/* FAQ Section */}
-            <section className="py-16 bg-gray-50">
+            <section className="px-6 py-16">
               <h2 className="text-3xl font-bold text-primary text-center mb-8">
                 Frequently Asked Questions
               </h2>
-              <div className="max-w-2xl mx-auto">
+              <div className="w-3/4 mx-auto">
                 <Accordion>
                   <AccordionTab header="What is included in the free trial?">
                     <p className="text-gray-700 mt-2">
@@ -400,6 +400,7 @@ export default function Welcome({
                 </Accordion>
               </div>
             </section>
+
 
             {/* Call to Action Section */}
             <section className="text-center py-16 bg-primary text-white">

@@ -35,6 +35,10 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\LandingPagesController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SalesAndOrders\OrderController;
+use App\Http\Controllers\SalesAndOrders\OrderItemController;
+use App\Http\Controllers\SalesAndOrders\QuoteController;
+use App\Http\Controllers\SalesAndOrders\SalesAndOrderController;
 
 Route::get('/', function () {
     // return view('landing-page', [
@@ -321,6 +325,37 @@ Route::delete('/product-warehouses/{productWarehouse}', [ProductWarehouseControl
 
 Route::prefix('audit-trails')->group(function () {
     Route::get('/', [AuditAndComplianceController::class, 'index'])->name('audit-trails.index');
+
+});
+
+
+Route::prefix('sale-orders')->group(function () {
+    Route::get('/', [SalesAndOrderController::class, 'index'])->name('sale-orders.index');
+
+    Route::get('/orders', [OrderController::class, 'index'])->name('sale-orders.orders.index');
+    Route::get('/orders/create', [OrderController::class, 'create'])->name('sale-orders.orders.create');
+    Route::post('/orders', [OrderController::class, 'store'])->name('sale-orders.orders.store');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('sale-orders.orders.show');
+    Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('sale-orders.orders.edit');
+    Route::put('/orders/{order}', [OrderController::class, 'update'])->name('sale-orders.orders.update');
+    Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('sale-orders.orders.destroy');
+
+    // order items
+    Route::post('/order-items', [OrderItemController::class, 'store'])->name('sale-orders.order-items.store');
+    Route::get('/order-items/{order}', [OrderItemController::class, 'show'])->name('sale-orders.order-items.show');
+    Route::put('/order-items/{order}', [OrderItemController::class, 'update'])->name('sale-orders.order-items.update');
+    Route::delete('/order-items/{order}', [OrderItemController::class, 'destroy'])->name('sale-orders.order-items.destroy');
+
+
+    // quotes
+    Route::get('/quotes', [QuoteController::class, 'index'])->name('sale-orders.quotes.index');
+    Route::get('/quotes/create', [QuoteController::class, 'create'])->name('sale-orders.quotes.create');
+    Route::post('/quotes', [QuoteController::class, 'store'])->name('sale-orders.quotes.store');
+    Route::get('/quotes/{quote}', [QuoteController::class, 'show'])->name('sale-orders.quotes.show');
+    Route::get('/quotes/{quote}/edit', [QuoteController::class, 'edit'])->name('sale-orders.quotes.edit');
+    Route::put('/quotes/{quote}', [QuoteController::class, 'update'])->name('sale-orders.quotes.update');
+    Route::delete('/quotes/{quote}', [QuoteController::class, 'destroy'])->name('sale-orders.quotes.destroy');
+
 
 });
 

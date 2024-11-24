@@ -22,6 +22,7 @@ import {
   Warehouse,
   ListOrdered,
   PiggyBankIcon,
+  ListOrderedIcon,
 } from 'lucide-react';
 import { useRoute } from 'ziggy-js';
 import { FaFileInvoice, FaMoneyCheckAlt, FaProductHunt } from 'react-icons/fa';
@@ -342,7 +343,7 @@ const sidebarLinks: SidebarLink[] = [
           {
             label: 'Add New Warehouse',
             icon: <DotIcon size={20} />,
-            href: '/inventory/warehouses/add',
+            href: '/inventory/warehouses/create',
           },
           {
             label: 'Warehouse Locations',
@@ -362,9 +363,14 @@ const sidebarLinks: SidebarLink[] = [
         href: '/inventory/product-warehouses',
         children: [
           {
-            label: 'Product Warehouse',
+            label: 'Overview',
             icon: <DotIcon size={20} />,
             href: '/inventory/product-warehouses',
+          },
+          {
+            label: 'Add Product To Warehouse',
+            icon: <DotIcon size={20} />,
+            href: '/inventory/product-warehouses/create',
           },
         ],
       },
@@ -386,41 +392,61 @@ const sidebarLinks: SidebarLink[] = [
 
   // Sales & Order Management Module
   {
-    label: 'Sales',
+    label: 'Sale And Orders',
     icon: <User size={20} />,
     children: [
-      { label: 'Orders', icon: <DotIcon size={20} />, href: '/sales/orders' },
       {
-        label: 'Order Items',
+        label: 'Overview',
         icon: <DotIcon size={20} />,
-        href: '/sales/order-items',
+        href: '/sale-orders',
       },
-      { label: 'Quotes', icon: <DotIcon size={20} />, href: '/sales/quotes' },
+      {
+        label: 'Orders',
+        icon: <ListOrderedIcon size={20} />,
+        children: [
+          {
+            label: 'Order',
+            icon: <DotIcon size={20} />,
+            href: '/sale-orders/orders',
+          },
+          {
+            label: 'Order Items',
+            icon: <DotIcon size={20} />,
+            href: '/sale-orders/order-items',
+          },
+        ],
+      },
+
+      {
+        label: 'Quotes',
+        icon: <DotIcon size={20} />,
+        href: '/sale-orders/quotes',
+      },
     ],
   },
 
   // Project Management & Task Management Module
-//   {
-//     label: 'Projects',
-//     icon: <Folder size={20} />, // Assuming you have a folder icon
-//     children: [
-//       {
-//         label: 'Active Projects',
-//         icon: <DotIcon size={20} />,
-//         href: '/projects/active',
-//       },
-//       {
-//         label: 'Completed Projects',
-//         icon: <DotIcon size={20} />,
-//         href: '/projects/completed',
-//       },
-//       {
-//         label: 'Project Templates',
-//         icon: <DotIcon size={20} />,
-//         href: '/projects/templates',
-//       },
-//     ],
-//   },
+  //   {
+  //     label: 'Projects',
+  //     icon: <Folder size={20} />, // Assuming you have a folder icon
+  //     children: [
+  //       {
+  //         label: 'Active Projects',
+  //         icon: <DotIcon size={20} />,
+  //         href: '/projects/active',
+  //       },
+  //       {
+  //         label: 'Completed Projects',
+  //         icon: <DotIcon size={20} />,
+  //         href: '/projects/completed',
+  //       },
+  //       {
+  //         label: 'Project Templates',
+  //         icon: <DotIcon size={20} />,
+  //         href: '/projects/templates',
+  //       },
+  //     ],
+  //   },
 
   // CRM Module
   {
@@ -442,19 +468,19 @@ const sidebarLinks: SidebarLink[] = [
   },
 
   // POS Module
-//   {
-//     label: 'POS',
-//     icon: <ShoppingCart size={20} />,
-//     children: [
-//       { label: 'Sales', icon: <DotIcon size={20} />, href: '/pos/sales' },
-//       {
-//         label: 'Inventory',
-//         icon: <DotIcon size={20} />,
-//         href: '/pos/inventory',
-//       },
-//       { label: 'Reports', icon: <DotIcon size={20} />, href: '/pos/reports' },
-//     ],
-//   },
+  //   {
+  //     label: 'POS',
+  //     icon: <ShoppingCart size={20} />,
+  //     children: [
+  //       { label: 'Sales', icon: <DotIcon size={20} />, href: '/pos/sales' },
+  //       {
+  //         label: 'Inventory',
+  //         icon: <DotIcon size={20} />,
+  //         href: '/pos/inventory',
+  //       },
+  //       { label: 'Reports', icon: <DotIcon size={20} />, href: '/pos/reports' },
+  //     ],
+  //   },
 
   // Support Module
   {
@@ -479,7 +505,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [activeDropdowns, setActiveDropdowns] = useState<string[]>([]);
-    const page = useTypedPage();
+  const page = useTypedPage();
 
   // Get the current URL path using usePage hook from Inertia
   const { url } = usePage();
@@ -589,8 +615,12 @@ export default function AppLayout({ title, children }: LayoutProps) {
                 className="w-10 h-10 rounded-full"
               />
               <div>
-                <p className="text-sm font-medium text-gray-800">{page.props.auth.user?.name}</p>
-                <p className="text-xs text-gray-500">{page.props.auth.user?.role}</p>
+                <p className="text-sm font-medium text-gray-800">
+                  {page.props.auth.user?.name}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {page.props.auth.user?.role}
+                </p>
               </div>
             </div>
 

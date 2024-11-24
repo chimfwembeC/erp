@@ -53,12 +53,12 @@ export default function GuestLayout({ children }) {
       </header>
 
       {/* Main Content */}
-      <main className="pt-20">
-        <div className="container mx-auto px-6 py-10">{children}</div>
+      <main className="pt-10">
+       {children}
       </main>
 
       {/* Footer with Social Links */}
-      <footer className="bg-primary-dark text-white py-6 mt-10">
+      <footer className="bg-primary-dark text-white py-6">
         <div className="container mx-auto px-6 text-center">
           <p className="text-sm mb-4">
             &copy; 2023 ERP System. All rights reserved.
