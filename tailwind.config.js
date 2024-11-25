@@ -30,7 +30,7 @@ export default {
               },
               height: {
                 'screen-70': '70vh',
-              },            
+              },
         },
     },
 

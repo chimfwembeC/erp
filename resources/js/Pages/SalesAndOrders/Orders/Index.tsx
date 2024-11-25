@@ -12,10 +12,9 @@ const Index = ({ orders }) => {
   const route = useRoute();
 
 //   console.log('orders',orders);
-  console.log(orders);
   const items = [
     { label: 'Dashboard', href: '/dashboard' },
-    { label: 'Order Management', href: '/sale-orders/orders' },
+    { label: 'Sale Orders', href: '/sale-orders' },
     { label: 'orders' },
   ];
 
@@ -30,7 +29,7 @@ const Index = ({ orders }) => {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        router.delete(route('orders.destroy', userId), {
+        router.delete(route('sale-orders.orders.destroy', userId), {
           onSuccess: () => {
             Swal.fire('Deleted!', 'The order has been deleted.', 'success').then(() => {
               router.get(route('sale-orders.orders.index')); // Redirect after deletion

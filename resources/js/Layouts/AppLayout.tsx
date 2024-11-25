@@ -401,20 +401,9 @@ const sidebarLinks: SidebarLink[] = [
         href: '/sale-orders',
       },
       {
-        label: 'Orders',
+        label: 'Order',
         icon: <ListOrderedIcon size={20} />,
-        children: [
-          {
-            label: 'Order',
-            icon: <DotIcon size={20} />,
-            href: '/sale-orders/orders',
-          },
-          {
-            label: 'Order Items',
-            icon: <DotIcon size={20} />,
-            href: '/sale-orders/order-items',
-          },
-        ],
+        href: '/sale-orders/orders',
       },
 
       {

@@ -334,6 +334,7 @@ Route::prefix('sale-orders')->group(function () {
 
     Route::get('/orders', [OrderController::class, 'index'])->name('sale-orders.orders.index');
     Route::get('/orders/create', [OrderController::class, 'create'])->name('sale-orders.orders.create');
+    Route::post('/orders/addItems/{orderId}', [OrderController::class, 'addItemsToOrder'])->name('sale-orders.orders.addItemsToOrder');
     Route::post('/orders', [OrderController::class, 'store'])->name('sale-orders.orders.store');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('sale-orders.orders.show');
     Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('sale-orders.orders.edit');
@@ -342,9 +343,9 @@ Route::prefix('sale-orders')->group(function () {
 
     // order items
     Route::post('/order-items', [OrderItemController::class, 'store'])->name('sale-orders.order-items.store');
-    Route::get('/order-items/{order}', [OrderItemController::class, 'show'])->name('sale-orders.order-items.show');
-    Route::put('/order-items/{order}', [OrderItemController::class, 'update'])->name('sale-orders.order-items.update');
-    Route::delete('/order-items/{order}', [OrderItemController::class, 'destroy'])->name('sale-orders.order-items.destroy');
+    Route::get('/order-items/{orderItem}', [OrderItemController::class, 'show'])->name('sale-orders.order-items.show');
+    Route::put('/order-items/{orderItem}', [OrderItemController::class, 'update'])->name('sale-orders.order-items.update');
+    Route::delete('/order-items/{orderItem}', [OrderItemController::class, 'destroy'])->name('sale-orders.order-items.destroy');
 
 
     // quotes
