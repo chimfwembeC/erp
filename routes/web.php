@@ -20,6 +20,7 @@ use App\Http\Controllers\HRM\EmployeeController;
 use App\Http\Controllers\HRM\AttendanceController;
 use App\Http\Controllers\HRM\BranchController;
 use App\Http\Controllers\HRM\DepartmentController;
+use App\Http\Controllers\HRM\DepartmentGroupController;
 use App\Http\Controllers\HRM\JobApplicationController;
 use App\Http\Controllers\HRM\JobController;
 use App\Http\Controllers\HRM\PayrollController;
@@ -89,6 +90,14 @@ Route::prefix('hrm')->group(function () {
     Route::get('/departments/{id}/edit', [DepartmentController::class, 'edit'])->name('hrm.departments.edit'); // Fixed route
     Route::put('/departments/{id}', [DepartmentController::class, 'update'])->name('hrm.departments.update');
     Route::delete('/departments/{id}', [DepartmentController::class, 'destroy'])->name('hrm.departments.destroy');
+
+    Route::get('/department-groups', [DepartmentGroupController::class, 'index'])->name('hrm.department-groups.index');
+    Route::get('/department-groups/create', [DepartmentGroupController::class, 'create'])->name('hrm.department-groups.create');
+    Route::post('/department-groups', [DepartmentGroupController::class, 'store'])->name('hrm.department-groups.store');
+    Route::get('/department-groups/{departmentGroup}', [DepartmentGroupController::class, 'show'])->name('hrm.department-groups.show');
+    Route::get('/department-groups/{departmentGroup}/edit', [DepartmentGroupController::class, 'edit'])->name('hrm.department-groups.edit'); // Fixed route
+    Route::put('/department-groups/{departmentGroup}', [DepartmentGroupController::class, 'update'])->name('hrm.department-groups.update');
+    Route::delete('/department-groups/{departmentGroup}', [DepartmentGroupController::class, 'destroy'])->name('hrm.department-groups.destroy');
 
 
     // Branch Management Routes
