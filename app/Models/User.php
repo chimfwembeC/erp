@@ -10,8 +10,10 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as AuditableTrait; // Import the Auditable trait
 
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
     use HasRoles;
     use HasApiTokens;
@@ -19,6 +21,10 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use AuditableTrait;
+
+    // Exclude certain fields from the audit
+    protected $auditExclude = ['password', 'remember_token'];
 
     /**
      * The attributes that are mass assignable.
@@ -109,5 +115,5 @@ class User extends Authenticatable
     public function attendances() {
         return $this->hasMany(Attendance::class);
     }
-    
+
 }
