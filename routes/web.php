@@ -94,10 +94,14 @@ Route::prefix('hrm')->group(function () {
     Route::get('/department-groups', [DepartmentGroupController::class, 'index'])->name('hrm.department-groups.index');
     Route::get('/department-groups/create', [DepartmentGroupController::class, 'create'])->name('hrm.department-groups.create');
     Route::post('/department-groups', [DepartmentGroupController::class, 'store'])->name('hrm.department-groups.store');
+    Route::post('/department-groups/{departmentGroup}/link', [DepartmentGroupController::class, 'linkDepartments'])->name('hrm.department-groups.link-department');
     Route::get('/department-groups/{departmentGroup}', [DepartmentGroupController::class, 'show'])->name('hrm.department-groups.show');
     Route::get('/department-groups/{departmentGroup}/edit', [DepartmentGroupController::class, 'edit'])->name('hrm.department-groups.edit'); // Fixed route
     Route::put('/department-groups/{departmentGroup}', [DepartmentGroupController::class, 'update'])->name('hrm.department-groups.update');
     Route::delete('/department-groups/{departmentGroup}', [DepartmentGroupController::class, 'destroy'])->name('hrm.department-groups.destroy');
+    Route::delete('/department-groups/{group}/unlink-department/{department}', [DepartmentGroupController::class, 'unlinkDepartment'])->name('hrm.department-groups.unlink-department');
+
+
 
 
     // Branch Management Routes

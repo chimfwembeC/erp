@@ -12,6 +12,6 @@ class DepartmentGroup extends Model
 
     public function departments()
     {
-        return $this->hasMany(Department::class);
+        return $this->belongsToMany(Department::class, 'department_group_links');
     }
 }
