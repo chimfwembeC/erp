@@ -48,43 +48,43 @@ const ShowDepartment = ({ department }) => {
             <div className="p-6 bg-white shadow-md rounded-lg">
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-2xl font-bold">Department Details</h1>
-                    <Button 
-                        label="Back to Departments" 
-                        icon="pi pi-arrow-left" 
+                    <Button
+                        label="Back to Departments"
+                        icon="pi pi-arrow-left"
                         className="p-button-secondary p-2 rounded-lg text-white"
                         onClick={() => router.get(route('hrm.departments.index'))}
                     />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 border rounded-lg">
+                <div className="p-4 border rounded-lg">
+                    <div className="">
                         <h2 className="font-semibold text-lg">Name</h2>
                         <p>{department.name}</p>
                     </div>
-                    <div className="p-4 border rounded-lg">
+                    <div className="">
                         <h2 className="font-semibold text-lg">Description</h2>
                         <p>{department.description || 'No description provided'}</p>
                     </div>
-                    <div className="p-4 border rounded-lg">
+                    <div className="">
                         <h2 className="font-semibold text-lg">Manager</h2>
                         <p>{department.manager?.name || 'No manager assigned'}</p>
                     </div>
-                    <div className="p-4 border rounded-lg">
+                    <div className="">
                         <h2 className="font-semibold text-lg">Department Group</h2>
                         <p>{department.department_group?.name || 'No group assigned'}</p>
                     </div>
                 </div>
 
                 <div className="mt-6 flex gap-2">
-                    <Button 
-                        label="Edit Department" 
-                        icon="pi pi-pencil" 
+                    <Button
+                        label="Edit Department"
+                        icon="pi pi-pencil"
                         className="p-button-warning"
                         onClick={() => router.get(route('hrm.departments.edit', department.id))}
                     />
-                    <Button 
-                        label="Delete Department" 
-                        icon="pi pi-trash" 
+                    <Button
+                        label="Delete Department"
+                        icon="pi pi-trash"
                         className="p-button-danger"
                         onClick={handleDelete} // Use the SweetAlert function for delete
                     />
