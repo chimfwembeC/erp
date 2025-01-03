@@ -1,86 +1,90 @@
+import React, { useState } from 'react'
 import AppLayout from '@/Layouts/AppLayout';
 import Breadcrumb from '@/Components/Breadcrumb';
-import { DollarSign, FileText, User, CheckCircle, BanknoteIcon } from 'lucide-react';
+import { DollarSign, FileText, User, CheckCircle, BanknoteIcon, Users, UserCheck, Clock, Calendar } from 'lucide-react';
 import { Link } from '@inertiajs/react';
+import { StatCard } from '@/Components/Shared/StatCard';
+import Activity from '@/Components/Activity';
+import { Payments } from '@/types';
+import { PaymentsPanel } from './Components/PaymentsPanel';
+import PaymentsChart from './Components/Charts/PaymentsChart';
+import TaxSummaryChart from './Components/Charts/TaxSummaryChart';
 
 interface AccountingModule {
-  label: string;
-  icon: JSX.Element;
-  href: string;
+    label: string;
+    icon: JSX.Element;
+    href: string;
 }
 
 interface AccountingInsight {
-  label: string;
-  description: string;
-  icon: JSX.Element;
+    label: string;
+    description: string;
+    icon: JSX.Element;
 }
 
 const Index: React.FC = () => {
-  const breadcrumbItems = [
-    { label: 'Dashboard', href: '/dashboard' },
-    { label: 'Accounting', href: '/accounting' },
-  ];
+    const breadcrumbItems = [
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Accounting', href: '/accounting' },
+    ];
 
-  const accountingInsights: AccountingInsight[] = [
-    { label: 'Total Invoices', description: 'Manage and track all invoices issued.', icon: <FileText className="text-green-500 mb-2" /> },
-    { label: 'Total Payments', description: 'Overview of all payments received.', icon: <DollarSign className="text-green-500 mb-2" /> },
-    { label: 'Outstanding Balances', description: 'Monitor outstanding payments and balances.', icon: <DollarSign className="text-green-500 mb-2" /> },
-    { label: 'Sales Invoices', description: 'Track and manage sales invoices.', icon: <FileText className="text-green-500 mb-2" /> },
-    { label: 'Purchase Orders', description: 'Manage and track purchase orders.', icon: <FileText className="text-green-500 mb-2" /> },
-    { label: 'Budgets Overview', description: 'View and manage your budgeting.', icon: <DollarSign className="text-green-500 mb-2" /> },
-    { label: 'Tax Reports', description: 'Generate and manage tax reports.', icon: <FileText className="text-green-500 mb-2" /> },
-    { label: 'Bank Account Overview', description: 'Manage all bank accounts and transactions.', icon: <User className="text-green-500 mb-2" /> },
-  ];
+    const stats = [
+        { icon: Users, label: 'Total Employees', value: '156', change: '+12%' },
+        { icon: UserCheck, label: 'Present Today', value: '142', change: '91%' },
+        { icon: Clock, label: 'On Leave', value: '8', change: '5%' },
+        { icon: Calendar, label: 'Upcoming Reviews', value: '24', change: '' },
+    ];
 
-  const accountingModules: AccountingModule[] = [
-    { label: 'Invoices', icon: <FileText className="mr-2" />, href: '/accounting/invoices' },
-    { label: 'Payments', icon: <DollarSign className="mr-2" />, href: '/accounting/payments' },
-    { label: 'Accounts', icon: <User className="mr-2" />, href: '/accounting/accounts' },
-    { label: 'General Ledgers', icon: <FileText className="mr-2" />, href: '/accounting/general-ledgers' },
-    { label: 'Journal Entries', icon: <FileText className="mr-2" />, href: '/accounting/journal-entries' },
-    { label: 'Sales Invoices', icon: <FileText className="mr-2" />, href: '/accounting/sales-invoices' },
-    { label: 'Purchase Orders', icon: <FileText className="mr-2" />, href: '/accounting/purchase-orders' },
-    { label: 'Budgets', icon: <DollarSign className="mr-2" />, href: '/accounting/budgets' },
-    { label: 'Taxes', icon: <FileText className="mr-2" />, href: '/accounting/taxes' },
-    { label: 'Bank Accounts', icon: <User className="mr-2" />, href: '/accounting/bank-accounts' },
-    { label: 'Bank Reconciliations', icon: <BanknoteIcon className="mr-2" />, href: '/accounting/bank-reconciliations' },
-  ];
+    const [payments, setPayments] = useState<Payments[]>(
+        Array.from({ length: 15 }, (_, i) => ({
+            id: (i + 1).toString(),
+            invoice_id: `INV00${i + 1}`,
+            amount: `$${(100 + i * 50).toFixed(2)}`,
+            payment_date: `2025-01-${String(10 + i).padStart(2, '0')}`,
+            payment_method: i % 3 === 0 ? 'Credit Card' : i % 3 === 1 ? 'PayPal' : 'Bank Transfer',
+        }))
+    );
 
-  return (
-    <AppLayout title="Accounting Dashboard">
-      <div className="overflow-hidden">
-        <Breadcrumb items={breadcrumbItems} />
 
-        <div className="p-6">
-          <h1 className="text-2xl font-semibold mb-4">Accounting Dashboard</h1>
+    const handleRefund = (id: string) => {
+        alert(`Refund issued for payment ID: ${id}`);
+        setPayments((prev) => prev.filter((payment) => payment.id !== id));
+    };
 
-          {/* Accounting Insights Section */}
-          <h2 className="text-xl font-semibold mt-8 mb-4">Key Insights</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {accountingInsights.map((insight, index) => (
-              <div key={index} className="p-4 bg-white shadow rounded-lg flex flex-col">
-                {insight.icon}
-                <h3 className="font-medium">{insight.label}</h3>
-                <p className="text-sm text-gray-600">{insight.description}</p>
-                <CheckCircle className="text-green-500 mt-2" />
-              </div>
-            ))}
-          </div>
+    const taxData = [
+        { tax_name: 'VAT', tax_type: 'Sales Tax', amount: 5000 },
+        { tax_name: 'Income Tax', tax_type: 'Income Tax', amount: 3000 },
+        { tax_name: 'VAT', tax_type: 'Sales Tax', amount: 2000 },
+        { tax_name: 'Income Tax', tax_type: 'Income Tax', amount: 2500 },
+        { tax_name: 'VAT', tax_type: 'Sales Tax', amount: 1500 },
+    ];
+    return (
+        <AppLayout title="Accounting Dashboard">
+            <div className="overflow-hidden">
+                <Breadcrumb items={breadcrumbItems} />
+                {/* Accounting Insights Section */}
+                <h2 className="text-xl font-semibold mt-8 mb-4">Key Insights</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    {stats.map((stat) => (
+                        <StatCard key={stat.label} {...stat} />
+                    ))}
+                </div>
 
-          {/* Accounting Modules Section */}
-          <h2 className="text-xl font-semibold mt-8 mb-4">Accounting & Finance Module</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {accountingModules.map((module, index) => (
-              <div key={index} className="p-4 bg-white shadow rounded-lg flex items-center">
-                {module.icon}                
-                <Link href={module.href} className="text-blue-600 hover:underline">{module.label}</Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </AppLayout>
-  );
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+                    <div className="col-span col-span-3">
+                        <PaymentsChart />
+                        <TaxSummaryChart data={taxData} />
+                    </div>
+                    <div className="col-span col-span-2">
+                        <Activity />
+                        <div className="mt-4">
+                            <PaymentsPanel payments={payments} onRefund={handleRefund} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </AppLayout>
+    );
 }
 
 export default Index;

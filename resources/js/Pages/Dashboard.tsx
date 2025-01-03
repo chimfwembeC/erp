@@ -11,22 +11,7 @@ import { Users, UserCheck, Clock, Calendar } from 'lucide-react';
 import { StatCard } from '@/Components/Shared/StatCard';
 
 export default function Dashboard() {
-    // Dynamic metrics example, you can fetch these from an API
-    const [metrics, setMetrics] = useState([
-        { title: "Total Employees", value: 120, icon: "pi pi-users" },
-        { title: "Pending Leaves", value: 5, icon: "pi pi-calendar" },
-        { title: "Projects", value: 18, icon: "pi pi-briefcase" },
-        { title: "Tasks", value: 45, icon: "pi pi-list" },
-    ]);
 
-    // Optionally fetch metrics from your backend API
-    useEffect(() => {
-        // Example fetch (replace with your actual API call)
-        fetch('/api/dashboard-metrics')
-            .then((res) => res.json())
-            .then((data) => setMetrics(data))
-            .catch((error) => console.error('Error fetching metrics:', error));
-    }, []);
 
     const stats = [
         { icon: Users, label: 'Total Employees', value: '156', change: '+12%' },
