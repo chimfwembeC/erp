@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Equity extends Model
 {
-    protected $table = 'equity'; // The table name
+    protected $table = 'equities'; // The table name
 
     protected $fillable = [
         'owner_equity',

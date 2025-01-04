@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from '@inertiajs/react';
 import { ChevronDown, ChevronUp, X } from 'lucide-react';
 import useTypedPage from '@/Hooks/useTypedPage';
@@ -21,6 +21,21 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ links, sidebarOpen, setSidebarOpen }) => {
     const [activeDropdowns, setActiveDropdowns] = useState<string[]>([]);
     const page = useTypedPage();
+
+    // Load active dropdowns from localStorage on component mount
+    useEffect(() => {
+        const storedDropdowns = localStorage.getItem('activeDropdowns');
+        if (storedDropdowns) {
+            setActiveDropdowns(JSON.parse(storedDropdowns));
+        }
+    }, []);
+
+    // Save active dropdowns to localStorage whenever they change
+    useEffect(() => {
+        if (activeDropdowns.length > 0) {
+            localStorage.setItem('activeDropdowns', JSON.stringify(activeDropdowns));
+        }
+    }, [activeDropdowns]);
 
     const toggleDropdowns = (label: string) => {
         setActiveDropdowns(prev =>
@@ -56,7 +71,7 @@ const Sidebar: React.FC<SidebarProps> = ({ links, sidebarOpen, setSidebarOpen })
                             )}
                         </div>
                         {activeDropdowns.includes(link.label) && (
-                            <ul className="ml-4 mt-2 space-y-2 border-l-2 border-indigo-100 pl-2">
+                            <ul className="ml-4 mt-2 mb-2 space-y-2 border-l-2 border-primary-dark pl-2">
                                 {renderLinks(link.children)}
                             </ul>
                         )}
@@ -65,12 +80,14 @@ const Sidebar: React.FC<SidebarProps> = ({ links, sidebarOpen, setSidebarOpen })
                     <Link
                         href={link.href!}
                         className={`flex items-center p-3 rounded-md transition ${isActiveLink(link.href)
-                            ? 'bg-indigo-200 font-semibold text-indigo-800'
-                            : 'hover:bg-indigo-50'
+                                ? 'bg-primary text-white font-semibold'
+                                : 'font-semibold text-gray-700 hover:bg-indigo-100 hover:text-white'
                             }`}
                     >
-                        {link.icon}
-                        <span className="ml-3 text-sm text-gray-700">{link.label}</span>
+                        <div className="flex items-center space-x-3">
+                            {link.icon}
+                            <span className="text-sm font-medium">{link.label}</span>
+                        </div>
                         {link.badge && (
                             <span className="ml-auto inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-600">
                                 {link.badge}
@@ -78,13 +95,13 @@ const Sidebar: React.FC<SidebarProps> = ({ links, sidebarOpen, setSidebarOpen })
                         )}
                     </Link>
                 )}
-                {link.divider && <div className="my-4 border-t border-gray-200"></div>}
+                {link.divider && <div className="border-t border-primary-dark my-2"></div>}
             </li>
         ));
 
     return (
         <div
-            className={`fixed top-0 left-0 z-30 h-full w-64 bg-gray-100 transition-transform duration-300 ease-in-out lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+            className={`fixed top-0 left-0 z-30 h-full w-64 bg-primary transition-transform duration-300 ease-in-out lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
                 }`}
         >
             <nav className="h-full flex flex-col">
@@ -96,14 +113,14 @@ const Sidebar: React.FC<SidebarProps> = ({ links, sidebarOpen, setSidebarOpen })
                 </div>
                 <div className="p-4">
                     <Link href="/dashboard" className="text-xl font-bold text-gray-800">
-                        Dashboard
+                        ERP
                     </Link>
                 </div>
                 <div className="flex-1 p-4 space-y-3 overflow-auto">
-                    <ul className="">{renderLinks(links)}</ul>
+                    <ul>{renderLinks(links)}</ul>
                 </div>
 
-                <div className="p-4 border-t">
+                <div className="p-4">
                     <div className="flex items-center space-x-3">
                         <img
                             src={`https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true&name=${page.props.auth.user?.name}`}

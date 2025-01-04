@@ -53,7 +53,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
     ];
 
     return (
-        <div className="flex h-screen overflow-hidden bg-gray-100">
+        <div className="flex h-screen overflow-hidden bg-primary">
             <Head title={title} />
             <Sidebar links={sidebarLinks} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
             <div className="flex-1 flex flex-col lg:ml-64">
@@ -79,7 +79,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
                                 onClick={() => toggleDropdown('notifications')}
                             >
                                 <Bell size={24} />
-                                <span className="absolute -top-2 -right-1 w-4 h-4 bg-primary text-white text-xs flex items-center justify-center rounded-full">
+                                <span className="absolute -top-2 -right-1 w-4 h-4 bg-accent text-white text-xs flex items-center justify-center rounded-full">
                                     3
                                 </span>
                             </button>
@@ -107,7 +107,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
                     </nav>
                 </header>
                 {/* Main Content */}
-                <main className="flex-1 overflow-auto mt-16 md:p-6 bg-gray-100">{children}</main>
+                <main className="flex-1 overflow-auto mt-16 md:p-6 bg-primary">{children}</main>
             </div>
         </div>
     );

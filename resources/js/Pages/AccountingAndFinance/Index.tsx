@@ -9,6 +9,7 @@ import { Payments } from '@/types';
 import { PaymentsPanel } from './Components/PaymentsPanel';
 import PaymentsChart from './Components/Charts/PaymentsChart';
 import TaxSummaryChart from './Components/Charts/TaxSummaryChart';
+import BalanceSheetChart from './Components/Charts/BalanceSheetChart';
 
 interface AccountingModule {
     label: string;
@@ -73,7 +74,13 @@ const Index: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
                     <div className="col-span col-span-3">
                         <PaymentsChart />
-                        <TaxSummaryChart data={taxData} />
+                        <div className="mt-4">
+                            <TaxSummaryChart />
+                        </div>
+
+                        <div className="mt-4">
+                            <BalanceSheetChart />
+                        </div>
                     </div>
                     <div className="col-span col-span-2">
                         <Activity />

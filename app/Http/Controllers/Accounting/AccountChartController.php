@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Accounting;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Asset;
 use App\Models\Liability;
@@ -12,13 +12,14 @@ use App\Models\Expense;
 use App\Models\Invoice;
 use App\Models\CashFlow;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
-class FinanceChartController extends Controller
+class AccountChartController extends Controller
 {
     // Balance Sheet Overview (Assets, Liabilities, Equity)
     public function getBalanceSheetChart()
     {
-        $assets = Asset::selectRaw('SUM(amount) as total_assets')
+        $assets = Asset::selectRaw('SUM(value) as total_assets')
             ->whereBetween('created_at', [Carbon::now()->subMonth(), Carbon::now()])
             ->first();
 
@@ -26,7 +27,7 @@ class FinanceChartController extends Controller
             ->whereBetween('created_at', [Carbon::now()->subMonth(), Carbon::now()])
             ->first();
 
-        $equity = Equity::selectRaw('SUM(amount) as total_equity')
+        $equity = Equity::selectRaw('SUM(retained_earnings) as total_equity')
             ->whereBetween('created_at', [Carbon::now()->subMonth(), Carbon::now()])
             ->first();
 
@@ -62,9 +63,12 @@ class FinanceChartController extends Controller
     // Tax Summary (Tax Paid/Payable)
     public function getTaxSummaryChart()
     {
-        $taxes = Tax::selectRaw('tax_name, SUM(amount) as total_tax')
-            ->groupBy('tax_name')
-            ->whereBetween('created_at', [Carbon::now()->subMonth(), Carbon::now()])
+        // Fetch tax amounts from the invoice_taxes table
+        $taxes = DB::table('invoice_taxes')
+            ->join('taxes', 'invoice_taxes.tax_id', '=', 'taxes.id') // Join the taxes table to get the tax_name
+            ->selectRaw('taxes.tax_name, SUM(invoice_taxes.tax_amount) as total_tax') // Sum the tax_amount
+            ->groupBy('taxes.tax_name')
+            ->whereBetween('invoice_taxes.created_at', [Carbon::now()->subMonth(), Carbon::now()]) // Filter by date range
             ->get();
 
         return response()->json($taxes->map(function ($tax) {
@@ -75,39 +79,38 @@ class FinanceChartController extends Controller
         }));
     }
 
+
     // Cash Flow (Cash Inflows and Outflows)
     public function getCashFlowChart()
     {
         // Get all inflows
-$inflows = CashFlow::where('type', 'inflow')
-->whereBetween('created_at', [Carbon::now()->subMonth(), Carbon::now()])
-->get();
+        $inflows = CashFlow::where('type', 'inflow')
+            ->whereBetween('created_at', [Carbon::now()->subMonth(), Carbon::now()])
+            ->get();
 
-// Get all inflows
-$outflows = CashFlow::where('type', 'outflow')
-->whereBetween('created_at', [Carbon::now()->subMonth(), Carbon::now()])
-->get();
-
+        // Get all outflows
+        $outflows = CashFlow::where('type', 'outflow')
+            ->whereBetween('created_at', [Carbon::now()->subMonth(), Carbon::now()])
+            ->get();
 
         return response()->json([
-            'inflows' => $inflows->total_inflows,
-            'outflows' => $outflows->total_outflows,
+            'inflows' => $inflows->sum('amount'),
+            'outflows' => $outflows->sum('amount'),
         ]);
     }
 
     // Expense Breakdown (Categories of Expenses)
     public function getExpenseBreakdownChart()
     {
-       // Fetch expenses grouped by category for the chart
-$expensesByCategory = Expense::selectRaw('category, SUM(amount) as total')
-->groupBy('category')
-->get();
+        // Fetch expenses grouped by category for the chart
+        $expensesByCategory = Expense::selectRaw('category, SUM(amount) as total')
+            ->groupBy('category')
+            ->get();
 
-// Example response for chart endpoint
-return response()->json([
-'labels' => $expensesByCategory->pluck('category'),
-'data' => $expensesByCategory->pluck('total'),
-]);
+        return response()->json([
+            'labels' => $expensesByCategory->pluck('category'),
+            'data' => $expensesByCategory->pluck('total'),
+        ]);
     }
 
     // Profit and Loss Trend (Monthly Profit or Loss)

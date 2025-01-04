@@ -1,3 +1,4 @@
+import React from 'react'
 import { DollarSign, FileText, Folder, HelpCircle, Home, ListOrdered, ShoppingCart, User, Warehouse } from "lucide-react";
 import { FaFileInvoice, FaMoneyCheckAlt, FaProductHunt } from "react-icons/fa";
 
@@ -7,15 +8,18 @@ interface SidebarLink {
     icon?: React.ReactNode;
     href?: string;
     children?: SidebarLink[];
+    badge?: string; // Badge for additional info
+    divider?: boolean; // Flag to add a divider
 }
 
 const sidebarLinks: SidebarLink[] = [
-    { label: 'Dashboard', icon: <Home size={20} />, href: '/dashboard' },
+    { label: 'Dashboard', divider: true, icon: <Home size={20} />, href: '/dashboard' },
 
     // Accounting & Finance Module
     {
         label: 'Accounting',
         icon: <DollarSign size={20} />,
+        divider: true,
         children: [
             { label: 'Overview', href: '/accounting' },
             { label: 'Invoices', href: '/accounting/invoices' },
@@ -81,6 +85,7 @@ const sidebarLinks: SidebarLink[] = [
     {
         label: 'HRM System',
         icon: <User size={20} />,
+        divider: true,
         children: [
             { label: 'Overview', href: '/hrm' },
             { label: 'Departments', href: '/hrm/departments' },
@@ -112,11 +117,11 @@ const sidebarLinks: SidebarLink[] = [
             },
         ],
     },
-
     // Inventory & Warehouse Management Module
     {
         label: 'Inventory System',
         icon: <ShoppingCart size={20} />,
+        divider: true,
         children: [
             { label: 'Overview', href: '/inventory' },
             {
@@ -152,20 +157,11 @@ const sidebarLinks: SidebarLink[] = [
             },
         ],
     },
-
-    // Auditing & Compliance Module
-    {
-        label: 'Auditing',
-        icon: <FileText size={20} />,
-        children: [
-            { label: 'Audit Trails', href: '/audit-trails' },
-        ],
-    },
-
     // Sales & Order Management Module
     {
         label: 'Sales and Orders',
         icon: <User size={20} />,
+        divider: true,
         children: [
             { label: 'Overview', href: '/sale-orders' },
             { label: 'Orders', icon: <ListOrdered size={20} />, href: '/sale-orders/orders' },
@@ -173,21 +169,11 @@ const sidebarLinks: SidebarLink[] = [
         ],
     },
 
-    // Project Management & Task Management Module
-    {
-        label: 'Projects',
-        icon: <Folder size={20} />,
-        children: [
-            { label: 'Active Projects', href: '/projects/active' },
-            { label: 'Completed Projects', href: '/projects/completed' },
-            { label: 'Project Templates', href: '/projects/templates' },
-        ],
-    },
-
     // CRM Module
     {
         label: 'CRM',
         icon: <User size={20} />,
+        divider: true,
         children: [
             { label: 'Leads', href: '/crm/leads' },
             { label: 'Opportunities', href: '/crm/opportunities' },
@@ -199,6 +185,7 @@ const sidebarLinks: SidebarLink[] = [
     {
         label: 'POS',
         icon: <ShoppingCart size={20} />,
+        divider: true,
         children: [
             { label: 'Sales', href: '/pos/sales' },
             { label: 'Inventory', href: '/pos/inventory' },

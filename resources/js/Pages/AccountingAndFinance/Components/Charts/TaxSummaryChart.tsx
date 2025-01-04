@@ -1,52 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import axios from 'axios';
 
-// Sample data format for tax summary (you'll typically fetch this from the backend)
-const taxData = [
-    { tax_name: 'VAT', tax_type: 'Sales Tax', amount: 5000 },
-    { tax_name: 'Income Tax', tax_type: 'Income Tax', amount: 3000 },
-    { tax_name: 'VAT', tax_type: 'Sales Tax', amount: 2000 },
-    { tax_name: 'Income Tax', tax_type: 'Income Tax', amount: 2500 },
-    { tax_name: 'VAT', tax_type: 'Sales Tax', amount: 1500 },
-];
+const TaxSummaryChart = () => {
+    const [taxes, setTaxes] = useState([]);
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+    useEffect(() => {
+        axios.get('/api/tax-summary-chart')
+            .then(response => {
+                // Ensure the response is in the correct format for the PieChart
+                const formattedData = response.data.map(tax => ({
+                    name: tax.name,
+                    value: tax.value
+                }));
+                setTaxes(formattedData);
+            });
+    }, []);
 
-interface TaxSummaryProps {
-    data: Array<{ tax_name: string; amount: number; }>;
-}
-
-const TaxSummaryChart: React.FC<TaxSummaryProps> = ({ data }) => {
-    // Summarize the tax amounts by type (e.g., VAT, Income Tax)
-    const summarizedData = data.reduce((acc: any, { tax_name, amount }) => {
-        if (acc[tax_name]) {
-            acc[tax_name].amount += amount;
-        } else {
-            acc[tax_name] = { tax_name, amount };
-        }
-        return acc;
-    }, {});
-
-    // Convert summarized data to an array for the PieChart
-    const chartData = Object.values(summarizedData);
+    const COLORS = ['#0088FE', '#00C49F', '#FF8042'];
 
     return (
-        <div className="bg-white p-4 rounded-lg shadow-lg">
+        <div className="bg-white rounded-lg shadow-lg p-4">
             <div className="text-2xl font-semibold">Tax Summary</div>
             <div className="overflow-x-auto">
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer width="100%" height={400}>
                     <PieChart>
                         <Pie
-                            data={chartData}
-                            dataKey="amount"
-                            nameKey="tax_name"
+                            data={taxes}
+                            dataKey="value"
+                            nameKey="name"
                             cx="50%"
                             cy="50%"
-                            outerRadius={80}
+                            outerRadius={150}
                             fill="#8884d8"
                             label
                         >
-                            {chartData.map((entry, index) => (
+                            {taxes.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                             ))}
                         </Pie>

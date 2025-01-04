@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Accounting\AccountChartController;
 use App\Http\Controllers\ContentBlockController;
 use App\Http\Controllers\HRM\JobController;
 use App\Http\Controllers\LandingPagesController;
@@ -25,3 +26,24 @@ Route::get('/quote', function () {
         'quote' => Inspiring::plainQuote(),
     ]);
 });
+
+  // Balance Sheet Overview (Assets, Liabilities, Equity)
+  Route::get('/balance-sheet-chart', [AccountChartController::class, 'getBalanceSheetChart']);
+
+  // Income Statement Overview (Revenue, Expenses, Profit)
+  Route::get('/income-statement-chart', [AccountChartController::class, 'getIncomeStatementChart']);
+
+  // Tax Summary (Tax Paid/Payable)
+  Route::get('/tax-summary-chart', [AccountChartController::class, 'getTaxSummaryChart']);
+
+  // Cash Flow (Cash Inflows and Outflows)
+  Route::get('/cash-flow-chart', [AccountChartController::class, 'getCashFlowChart']);
+
+  // Expense Breakdown (Categories of Expenses)
+  Route::get('/expense-breakdown-chart', [AccountChartController::class, 'getExpenseBreakdownChart']);
+
+  // Profit and Loss Trend (Monthly Profit or Loss)
+  Route::get('/profit-loss-trend-chart', [AccountChartController::class, 'getProfitLossTrendChart']);
+
+  // Accounts Receivable/Payable Overview
+  Route::get('/receivables-payables-chart', [AccountChartController::class, 'getReceivablesPayablesChart']);
