@@ -16,42 +16,10 @@ interface SidebarLink {
     roles?: string[]; // Allowed roles for this link
 }
 
-// const page = useTypedPage();
-// const role = page.props.auth.user?.role;
-
 const sidebarLinks: SidebarLink[] = [
     { label: 'Dashboard', divider: true, icon: <Home size={20} />, href: '/dashboard' },
-    {
-        label: 'Projects',
-        icon: <Clipboard size={20} />,
-        href: '/projects',
-        roles: ['customer',],
-        children: [
-            {
-                label: 'Active Projects',
-                href: '/projects/active',
-            },
-            {
-                label: 'Completed Projects',
-                href: '/projects/completed',
-            },
-        ],
-    },
-    {
-        label: 'Invoices',
-        icon: <FileText size={20} />,
-        roles: ['customer'],
-        children: [
-            {
-                label: 'Pending Invoices',
-                href: '/invoices/pending',
-            },
-            {
-                label: 'Paid Invoices',
-                href: '/invoices/paid',
-            },
-        ],
-    },
+    { label: 'Projects', icon: <Clipboard size={20} />, badge: '1+', href: '/projects', roles: ['customer',] },
+    { label: 'Invoices', icon: <FileText size={20} />, badge: '5+', roles: ['customer'] },
 
     // Accounting & Finance Module
     {
@@ -204,9 +172,10 @@ const sidebarLinks: SidebarLink[] = [
                 // label: role === 'customer' ? 'My Tickets' : 'All Tickets', // Adjust label dynamically
                 label: 'All Tickets', // Adjust label dynamically
                 href: '/support/tickets',
+                badge: '5+',
             },
             { label: 'Submit a Ticket', href: '/support/new-ticket', },
-            { label: 'Knowledge Base', href: '/support/knowledge-base' },
+            { label: 'Knowledge Base', href: '/support/knowledge-base', badge: '5+', },
         ],
     },
 ];

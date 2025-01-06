@@ -1,0 +1,17 @@
+{
+    "welcome": "Welcome",
+    "dashboard": "Dashboard",
+    "projects": "Projects",
+    "active_projects": "Active Projects",
+    "completed_projects": "Completed Projects",
+    "invoices": "Invoices",
+    "pending_invoices": "Pending Invoices",
+    "paid_invoices": "Paid Invoices",
+    "account": "Account",
+    "profile_settings": "Profile Settings",
+    "billing_information": "Billing Information",
+    "overview": "Overview",
+    "payments": "Payments",
+    "accounts": "Accounts",
+    "sales_and_orders": "Sales and Orders"
+}
