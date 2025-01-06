@@ -5,6 +5,7 @@ import NotificationPanel from '@/Components/NotificationPanel';
 import sidebarLinks from './sidebarLinks';
 import { Bell, Settings, Menu } from 'lucide-react';
 import ProfileDropdown from './ProfileDropdown';
+import LanguageSelector from '@/Components/LanguageSelector';
 
 interface LayoutProps {
     title: string;
@@ -88,6 +89,9 @@ export default function AppLayout({ title, children }: LayoutProps) {
                                 <NotificationPanel notifications={notifications} />
                                 // </div>
                             )}
+                        </div>
+                        <div className="">
+                            <LanguageSelector />
                         </div>
                         {/* Profile Dropdown */}
                         <div
