@@ -26,7 +26,7 @@ export default function Welcome() {
             {/* Inspiring Quote */}
             {quote && (
                 <div className="mt-8 p-4 bg-gray-100 rounded-lg">
-                    <h3 className="text-lg font-semibold text-gray-800">Inspiration of the Day</h3>
+                    <h3 className="text-lg font-semibold text-gray-800">{t('inspirationOfTheDay')}</h3>
                     <p className="text-gray-600 mt-2 italic">“{quote}”</p>
                 </div>
             )}

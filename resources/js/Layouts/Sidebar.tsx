@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from '@inertiajs/react';
 import { ChevronDown, ChevronUp, X } from 'lucide-react';
 import useTypedPage from '@/Hooks/useTypedPage';
+import { useTranslation } from 'react-i18next';
 
 interface SidebarLink {
     label: string;
@@ -19,6 +20,8 @@ interface SidebarProps {
     setSidebarOpen: (open: boolean) => void;
 }
 
+
+
 const filterLinksByRole = (links: SidebarLink[], role: string): SidebarLink[] => {
     return links
         .filter(link => !link.roles || link.roles.includes(role)) // Include if no roles or role matches
@@ -33,7 +36,17 @@ const Sidebar: React.FC<SidebarProps> = ({ links, sidebarOpen, setSidebarOpen })
     const [activeDropdowns, setActiveDropdowns] = useState<string[]>([]);
     const page = useTypedPage();
     const userRole = page.props.auth.user?.role || ''; // Get user's role
+    const { t } = useTranslation();
 
+    // Map sidebar links and translate labels dynamically
+    const translatedSidebarLinks = links.map(link => ({
+        ...link,
+        label: t(link.labelKey),
+        children: link.children ? link.children.map(child => ({
+            ...child,
+            label: t(child.labelKey)
+        })) : []
+    }));
     // Filter links based on the user's role
     const filteredLinks = filterLinksByRole(links, userRole);
 

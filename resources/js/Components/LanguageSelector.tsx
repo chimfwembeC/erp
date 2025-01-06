@@ -4,10 +4,17 @@ import { Globe } from 'lucide-react';
 import { Toast } from 'primereact/toast';
 
 const languages = [
-    { code: 'en', label: 'English' },
-    { code: 'fr', label: 'Français' },
+    { code: 'en', label: 'English', flag: '🇬🇧' },
+    // { code: 'fr', label: 'Français', flag: '🇫🇷' },
+    { code: 'bem', label: 'Bemba', flag: '🇿🇲' },
+    { code: 'nya', label: 'Nyanja', flag: '🇿🇲' },
+    { code: 'toi', label: 'Tonga', flag: '🇿🇲' },
+    { code: 'loz', label: 'Lozi', flag: '🇿🇲' },
+    { code: 'knd', label: 'Kaonde', flag: '🇿🇲' },
+    { code: 'lun', label: 'Lunda', flag: '🇿🇲' },
+    { code: 'lue', label: 'Luvale', flag: '🇿🇲' },
+    { code: 'tum', label: 'Tumbuka', flag: '🇿🇲' },
 ];
-
 const LanguageSelector: React.FC = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [selectedLanguage, setSelectedLanguage] = useState<string>(i18n.language); // Initialize with i18n's current language
@@ -79,14 +86,15 @@ const LanguageSelector: React.FC = () => {
                 <span>{selectedLanguage.toUpperCase()}</span> {/* Display selected language */}
             </button>
             {dropdownOpen && (
-                <div className="absolute right-0 top-10 bg-white shadow-lg rounded-lg w-40 py-2 z-50">
+                <div className="absolute right-0 top-10 bg-white shadow-lg rounded-lg w-48 py-2 z-50">
                     {languages.map((lang) => (
                         <button
                             key={lang.code}
-                            className="block w-full text-left px-4 py-2 hover:bg-gray-200"
+                            className="flex items-center space-x-2 w-full text-left px-4 py-2 hover:bg-gray-200"
                             onClick={() => changeLanguage(lang.code)}
                         >
-                            {lang.label}
+                            <span>{lang.flag}</span>
+                            <span>{lang.label}</span>
                         </button>
                     ))}
                 </div>
