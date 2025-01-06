@@ -9,10 +9,14 @@ import ProjectPieChart from '@/Components/Charts/Admin/ProjectPieChart';
 import AdditionalFeatures from '@/Components/AdditionalFeatures';
 import { Users, UserCheck, Clock, Calendar } from 'lucide-react';
 import { StatCard } from '@/Components/Shared/StatCard';
+import useTypedPage from '@/Hooks/useTypedPage';
+import CustomerDashboard from './Dashboards/CustomerDashboard';
+import AdminDashboard from './Dashboards/AdminDashboard';
 
 export default function Dashboard() {
 
-
+    const page = useTypedPage();
+    const user = page.props.auth?.user;
     const stats = [
         { icon: Users, label: 'Total Employees', value: '156', change: '+12%' },
         { icon: UserCheck, label: 'Present Today', value: '142', change: '91%' },
@@ -22,51 +26,16 @@ export default function Dashboard() {
 
     return (
         <AppLayout title="Dashboard">
-            <div className="py-8">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
+            {/* admin dashboard */}
+            {user?.role === "admin" && (
+                <AdminDashboard />
+            )}
+            {/* customer dashboard */}
+            {user?.role === "customer" && (
+                <CustomerDashboard />
+            )}
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                        {stats.map((stat) => (
-                            <StatCard key={stat.label} {...stat} />
-                        ))}
-                    </div>
-
-
-                    <div className="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                        <Welcome />
-                    </div>
-
-                    <TaskLineChart />
-                    {/* Charts Section */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                        <DepartmentBarChart />
-                        <ProjectPieChart />
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-                        <div className="col-span col-span-3">
-
-                            {/* Attendance Section */}
-                            <div className="">
-                                <Attendance />
-                            </div>
-                            <div className="mt-4">
-                                <AdditionalFeatures />
-                            </div>
-
-                        </div>
-                        <div className="col-span col-span-2">
-                            <Activity />
-                            <div className="bg-white p-4 rounded-lg shadow-lg mt-4">
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maiores illum vel atque illo eum qui enim, exercitationem expedita, quam quae ut aspernatur dolor aliquid facilis laborum iste magnam dicta distinctio.
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
         </AppLayout>
     );
 }

@@ -10,6 +10,7 @@ interface SidebarLink {
     children?: SidebarLink[];
     badge?: string;
     divider?: boolean;
+    roles?: string[]; // Allowed roles for this link
 }
 
 interface SidebarProps {
@@ -18,11 +19,24 @@ interface SidebarProps {
     setSidebarOpen: (open: boolean) => void;
 }
 
+const filterLinksByRole = (links: SidebarLink[], role: string): SidebarLink[] => {
+    return links
+        .filter(link => !link.roles || link.roles.includes(role)) // Include if no roles or role matches
+        .map(link => ({
+            ...link,
+            children: link.children ? filterLinksByRole(link.children, role) : undefined, // Recursively filter children
+        }))
+        .filter(link => link.children ? link.children.length > 0 : true); // Remove parent links with no accessible children
+};
+
 const Sidebar: React.FC<SidebarProps> = ({ links, sidebarOpen, setSidebarOpen }) => {
     const [activeDropdowns, setActiveDropdowns] = useState<string[]>([]);
     const page = useTypedPage();
+    const userRole = page.props.auth.user?.role || ''; // Get user's role
 
-    // Load active dropdowns from localStorage on component mount
+    // Filter links based on the user's role
+    const filteredLinks = filterLinksByRole(links, userRole);
+
     useEffect(() => {
         const storedDropdowns = localStorage.getItem('activeDropdowns');
         if (storedDropdowns) {
@@ -30,11 +44,8 @@ const Sidebar: React.FC<SidebarProps> = ({ links, sidebarOpen, setSidebarOpen })
         }
     }, []);
 
-    // Save active dropdowns to localStorage whenever they change
     useEffect(() => {
-        if (activeDropdowns.length > 0) {
-            localStorage.setItem('activeDropdowns', JSON.stringify(activeDropdowns));
-        }
+        localStorage.setItem('activeDropdowns', JSON.stringify(activeDropdowns));
     }, [activeDropdowns]);
 
     const toggleDropdowns = (label: string) => {
@@ -52,12 +63,15 @@ const Sidebar: React.FC<SidebarProps> = ({ links, sidebarOpen, setSidebarOpen })
 
     const renderLinks = (links: SidebarLink[]) =>
         links.map(link => (
-            <li key={link.label}>
+            <li key={link.label} className="mb-2">
                 {link.children ? (
                     <div>
+                        {/* Parent Link */}
                         <div
                             onClick={() => toggleDropdowns(link.label)}
-                            className={`flex items-center justify-between p-3 rounded-md cursor-pointer transition ${activeDropdowns.includes(link.label) ? 'bg-indigo-50' : 'hover:bg-indigo-100'
+                            className={`flex items-center justify-between p-3 rounded-full cursor-pointer transition ${activeDropdowns.includes(link.label)
+                                ? 'bg-indigo-50 shadow-md'
+                                : 'hover:bg-indigo-100'
                                 }`}
                         >
                             <div className="flex items-center space-x-3">
@@ -70,18 +84,32 @@ const Sidebar: React.FC<SidebarProps> = ({ links, sidebarOpen, setSidebarOpen })
                                 <ChevronDown size={18} className="text-gray-500" />
                             )}
                         </div>
+
+                        {/* Child Links */}
                         {activeDropdowns.includes(link.label) && (
-                            <ul className="ml-4 mt-2 mb-2 space-y-2 border-l-2 border-primary-dark pl-2">
-                                {renderLinks(link.children)}
+                            <ul className="ml-4 mt-2 space-y-2 border-l-2 border-indigo-500 pl-4">
+                                {link.children.map(child => (
+                                    <li key={child.label}>
+                                        <Link
+                                            href={child.href!}
+                                            className={`block px-3 py-2 rounded-md text-sm font-medium transition ${isActiveLink(child.href)
+                                                ? 'bg-indigo-100 text-indigo-600 shadow'
+                                                : 'text-gray-600 hover:bg-indigo-50 hover:text-indigo-600'
+                                                }`}
+                                        >
+                                            {child.label}
+                                        </Link>
+                                    </li>
+                                ))}
                             </ul>
                         )}
                     </div>
                 ) : (
                     <Link
                         href={link.href!}
-                        className={`flex items-center p-3 rounded-md transition ${isActiveLink(link.href)
-                                ? 'bg-primary text-white font-semibold'
-                                : 'font-semibold text-gray-700 hover:bg-indigo-100 hover:text-white'
+                        className={`flex items-center p-3 rounded-full transition ${isActiveLink(link.href)
+                            ? 'bg-indigo-100 text-indigo-600 shadow-md'
+                            : 'text-gray-700 hover:bg-indigo-100'
                             }`}
                     >
                         <div className="flex items-center space-x-3">
@@ -95,31 +123,30 @@ const Sidebar: React.FC<SidebarProps> = ({ links, sidebarOpen, setSidebarOpen })
                         )}
                     </Link>
                 )}
-                {link.divider && <div className="border-t border-primary-dark my-2"></div>}
+                {link.divider && <div className="border-t border-gray-200 my-2"></div>}
             </li>
         ));
 
     return (
         <div
-            className={`fixed top-0 left-0 z-30 h-full w-64 bg-primary transition-transform duration-300 ease-in-out lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+            className={`fixed top-0 left-0 z-30 h-full w-64 bg-white shadow-md transition-transform duration-300 ease-in-out lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
                 }`}
         >
             <nav className="h-full flex flex-col">
                 <div className="p-4 flex justify-between items-center lg:hidden">
-                    <h1 className="font-bold text-xl">Logo</h1>
+                    <h1 className="font-bold text-xl text-gray-800">Logo</h1>
                     <button onClick={() => setSidebarOpen(false)} className="p-2">
                         <X size={24} />
                     </button>
                 </div>
                 <div className="p-4">
                     <Link href="/dashboard" className="text-xl font-bold text-gray-800">
-                        ERP
+                        ERP System
                     </Link>
                 </div>
                 <div className="flex-1 p-4 space-y-3 overflow-auto">
-                    <ul>{renderLinks(links)}</ul>
+                    <ul>{renderLinks(filteredLinks)}</ul>
                 </div>
-
                 <div className="p-4">
                     <div className="flex items-center space-x-3">
                         <img

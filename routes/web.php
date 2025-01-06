@@ -31,6 +31,8 @@ use App\Http\Controllers\InventoryAndWarehouse\InventoryMovementController;
 use App\Http\Controllers\InventoryAndWarehouse\ProductController;
 use App\Http\Controllers\InventoryAndWarehouse\ProductWarehouseController;
 use App\Http\Controllers\InventoryAndWarehouse\WarehouseController;
+use App\Http\Controllers\HomeController;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -61,9 +63,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 });
 
 

@@ -1,7 +1,10 @@
 import React from 'react'
-import { DollarSign, FileText, Folder, HelpCircle, Home, ListOrdered, ShoppingCart, User, Warehouse } from "lucide-react";
+import { Clipboard, DollarSign, FileText, Folder, HelpCircle, Home, LifeBuoy, ListOrdered, Settings, ShoppingCart, User, Warehouse } from "lucide-react";
 import { FaFileInvoice, FaMoneyCheckAlt, FaProductHunt } from "react-icons/fa";
+import useTypedPage from '@/Hooks/useTypedPage';
+// import { useTranslation } from 'react-i18next';
 
+// const { t } = useTranslation();
 // Define the structure for sidebar links
 interface SidebarLink {
     label: string;
@@ -10,70 +13,77 @@ interface SidebarLink {
     children?: SidebarLink[];
     badge?: string; // Badge for additional info
     divider?: boolean; // Flag to add a divider
+    roles?: string[]; // Allowed roles for this link
 }
+
+// const page = useTypedPage();
+// const role = page.props.auth.user?.role;
 
 const sidebarLinks: SidebarLink[] = [
     { label: 'Dashboard', divider: true, icon: <Home size={20} />, href: '/dashboard' },
+    {
+        label: 'Projects',
+        icon: <Clipboard size={20} />,
+        href: '/projects',
+        roles: ['customer',],
+        children: [
+            {
+                label: 'Active Projects',
+                href: '/projects/active',
+            },
+            {
+                label: 'Completed Projects',
+                href: '/projects/completed',
+            },
+        ],
+    },
+    {
+        label: 'Invoices',
+        icon: <FileText size={20} />,
+        roles: ['customer'],
+        children: [
+            {
+                label: 'Pending Invoices',
+                href: '/invoices/pending',
+            },
+            {
+                label: 'Paid Invoices',
+                href: '/invoices/paid',
+            },
+        ],
+    },
 
     // Accounting & Finance Module
     {
         label: 'Accounting',
         icon: <DollarSign size={20} />,
         divider: true,
+        roles: ['admin', 'finance'],
         children: [
             { label: 'Overview', href: '/accounting' },
             { label: 'Invoices', href: '/accounting/invoices' },
             {
                 label: 'Payments',
                 href: '/accounting/payments',
-                icon: <FaMoneyCheckAlt size={20} />,
-                children: [
-                    { label: 'Overview', href: '/accounting/payments' },
-                    { label: 'Make Payment', href: '/accounting/payments/create' },
-                    { label: 'Payment History', href: '/accounting/payments/history' },
-                ],
+                badge: 'unpaid',
             },
             {
                 label: 'Accounts',
                 href: '/accounting/accounts',
-                icon: <FaMoneyCheckAlt size={20} />,
-                children: [
-                    { label: 'Overview', href: '/accounting/accounts' },
-                    { label: 'Account Settings', href: '/accounting/accounts/settings' },
-                    { label: 'Account Balances', href: '/accounting/accounts/balances' },
-                    { label: 'Transaction History', href: '/accounting/accounts/transaction-history' },
-                ],
             },
             { label: 'General Ledgers', href: '/accounting/general-ledgers' },
             { label: 'Journal Entries', href: '/accounting/journal-entries' },
             {
                 label: 'Sales Invoices',
                 href: '/accounting/sales-invoices',
-                icon: <FaFileInvoice size={20} />,
-                children: [
-                    { label: 'Overview', href: '/accounting/sales-invoices' },
-                    { label: 'Create Sales Invoice', href: '/accounting/sales-invoices/create' },
-                    { label: 'Sales Invoice History', href: '/accounting/sales-invoices/history' },
-                ],
             },
             {
                 label: 'Bank Reconciliation',
                 href: '/accounting/bank-reconciliations',
-                icon: <ListOrdered size={20} />,
-                children: [
-                    { label: 'Overview', href: '/accounting/bank-reconciliations' },
-                    { label: 'Create Reconciliation', href: '/accounting/bank-reconciliations/create' },
-                ],
             },
             {
                 label: 'Purchase Orders',
                 href: '/accounting/purchase-orders',
-                icon: <ListOrdered size={20} />,
-                children: [
-                    { label: 'Overview', href: '/accounting/purchase-orders' },
-                    { label: 'Create Purchase Order', href: '/accounting/purchase-orders/create' },
-                    { label: 'Purchase Order History', href: '/accounting/purchase-orders/history' },
-                ],
             },
             { label: 'Budgets', href: '/accounting/budgets' },
             { label: 'Taxes', href: '/accounting/taxes' },
@@ -86,19 +96,20 @@ const sidebarLinks: SidebarLink[] = [
         label: 'HRM System',
         icon: <User size={20} />,
         divider: true,
+        roles: ['admin', 'hrm'],
         children: [
             { label: 'Overview', href: '/hrm' },
             { label: 'Departments', href: '/hrm/departments' },
             { label: 'Branches', href: '/hrm/branches' },
             { label: 'Jobs', href: '/hrm/jobs' },
             { label: 'Applications', href: '/hrm/job-applications' },
-            { label: 'Attendances', href: '/hrm/attendances' },
+            { label: 'Attendances', href: '/hrm/attendances', badge: 'new +10', },
             { label: 'Employees', href: '/hrm/employees' },
             { label: 'Leaves', href: '/hrm/leaves' },
             { label: 'Users', href: '/hrm/users' },
             {
                 label: 'Payroll Management',
-                icon: <FileText size={20} />,
+                divider: true,
                 children: [
                     { label: 'Payrolls', href: '/hrm/payrolls' },
                     { label: 'Payroll Reports', href: '/hrm/payroll/reports' },
@@ -106,13 +117,13 @@ const sidebarLinks: SidebarLink[] = [
             },
             {
                 label: 'HRM Setup',
-                icon: <FileText size={20} />,
+                icon: <Settings size={20} />,
                 children: [
+                    { label: 'Overview', href: '/hrm/setup' },
                     { label: 'Positions', href: '/hrm/positions' },
                     { label: 'Leave Types', href: '/hrm/leave-types' },
                     { label: 'Department Groups', href: '/hrm/department-groups' },
                     { label: 'Net Pay', href: '/payroll/net-pay' },
-                    { label: 'HRM Setup', href: '/hrm/setup' },
                 ],
             },
         ],
@@ -122,29 +133,16 @@ const sidebarLinks: SidebarLink[] = [
         label: 'Inventory System',
         icon: <ShoppingCart size={20} />,
         divider: true,
+        roles: ['admin', 'inventory'],
         children: [
             { label: 'Overview', href: '/inventory' },
             {
                 label: 'Products',
                 href: '/inventory/products',
-                icon: <FaProductHunt size={20} />,
-                children: [
-                    { label: 'Overview', href: '/inventory/products' },
-                    { label: 'Add New Product', href: '/inventory/products/create' },
-                    { label: 'Product Categories', href: '/inventory/products/categories' },
-                    { label: 'Product Suppliers', href: '/inventory/products/suppliers' },
-                    { label: 'Product Inventory', href: '/inventory/products/inventory' },
-                ],
             },
             {
                 label: 'Warehouses',
                 href: '/inventory/warehouses',
-                icon: <Warehouse size={20} />,
-                children: [
-                    { label: 'Overview', href: '/inventory/warehouses' },
-                    { label: 'Add New Warehouse', href: '/inventory/warehouses/create' },
-                    { label: 'Warehouse Locations', href: '/inventory/warehouses/locations' },
-                ],
             },
             { label: 'Inventory Movements', href: '/inventory/inventory-movements' },
             {
@@ -162,6 +160,7 @@ const sidebarLinks: SidebarLink[] = [
         label: 'Sales and Orders',
         icon: <User size={20} />,
         divider: true,
+        roles: ['admin', 'sales'],
         children: [
             { label: 'Overview', href: '/sale-orders' },
             { label: 'Orders', icon: <ListOrdered size={20} />, href: '/sale-orders/orders' },
@@ -174,6 +173,7 @@ const sidebarLinks: SidebarLink[] = [
         label: 'CRM',
         icon: <User size={20} />,
         divider: true,
+        roles: ['admin', 'crm'],
         children: [
             { label: 'Leads', href: '/crm/leads' },
             { label: 'Opportunities', href: '/crm/opportunities' },
@@ -186,6 +186,7 @@ const sidebarLinks: SidebarLink[] = [
         label: 'POS',
         icon: <ShoppingCart size={20} />,
         divider: true,
+        roles: ['admin', 'pos'],
         children: [
             { label: 'Sales', href: '/pos/sales' },
             { label: 'Inventory', href: '/pos/inventory' },
@@ -197,8 +198,14 @@ const sidebarLinks: SidebarLink[] = [
     {
         label: 'Support',
         icon: <HelpCircle size={20} />,
+        roles: ['admin', 'support', 'customer'],
         children: [
-            { label: 'Tickets', href: '/support/tickets' },
+            {
+                // label: role === 'customer' ? 'My Tickets' : 'All Tickets', // Adjust label dynamically
+                label: 'All Tickets', // Adjust label dynamically
+                href: '/support/tickets',
+            },
+            { label: 'Submit a Ticket', href: '/support/new-ticket', },
             { label: 'Knowledge Base', href: '/support/knowledge-base' },
         ],
     },
