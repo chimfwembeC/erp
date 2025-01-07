@@ -1,8 +1,8 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import TranslationEn from "../../public/locales/en/translation.json";
-import TranslationBem from "../../public/locales/bem/translation.json";
-import TranslationNya from "../../public/locales/nya/translation.json";
+import en from "../../public/locales/en/translation.json";
+import bem from "../../public/locales/bem/translation.json";
+import nya from "../../public/locales/nya/translation.json";
 
 // import Backend from "i18next-http-backend";
 // import LanguageDetector from "i18next-browser-languagedetector";
@@ -13,13 +13,13 @@ const savedLanguage = localStorage.getItem('language') || 'en';
 
 const resources = {
     en: {
-        translation: TranslationEn
+        translation: en
     },
     bem: {
-        translation: TranslationBem
+        translation: bem
     },
     nya: {
-        translation: TranslationNya
+        translation: nya
     }
 };
 

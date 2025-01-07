@@ -7,7 +7,7 @@ import useTypedPage from '@/Hooks/useTypedPage';
 // const { t } = useTranslation();
 // Define the structure for sidebar links
 interface SidebarLink {
-    label: string;
+    labelKey: string;
     icon?: React.ReactNode;
     href?: string;
     children?: SidebarLink[];
@@ -17,165 +17,165 @@ interface SidebarLink {
 }
 
 const sidebarLinks: SidebarLink[] = [
-    { label: 'Dashboard', divider: true, icon: <Home size={20} />, href: '/dashboard' },
-    { label: 'Projects', icon: <Clipboard size={20} />, badge: '1+', href: '/projects', roles: ['customer',] },
-    { label: 'Invoices', icon: <FileText size={20} />, badge: '5+', roles: ['customer'] },
+    { labelKey: 'dashboard', divider: true, icon: <Home size={20} />, href: '/dashboard' },
+    { labelKey: 'projects', icon: <Clipboard size={20} />, badge: '1+', href: '/projects', roles: ['customer',] },
+    { labelKey: 'invoices', icon: <FileText size={20} />, badge: '5+', roles: ['customer'] },
 
     // Accounting & Finance Module
     {
-        label: 'Accounting',
+        labelKey: 'accounting',
         icon: <DollarSign size={20} />,
         divider: true,
         roles: ['admin', 'finance'],
         children: [
-            { label: 'Overview', href: '/accounting' },
-            { label: 'Invoices', href: '/accounting/invoices' },
+            { labelKey: 'overview', href: '/accounting' },
+            { labelKey: 'invoices', href: '/accounting/invoices' },
             {
-                label: 'Payments',
+                labelKey: 'payments',
                 href: '/accounting/payments',
                 badge: 'unpaid',
             },
             {
-                label: 'Accounts',
+                labelKey: 'accounts',
                 href: '/accounting/accounts',
             },
-            { label: 'General Ledgers', href: '/accounting/general-ledgers' },
-            { label: 'Journal Entries', href: '/accounting/journal-entries' },
+            { labelKey: 'generalLedgers', href: '/accounting/general-ledgers' },
+            { labelKey: 'journalEntries', href: '/accounting/journal-entries' },
             {
-                label: 'Sales Invoices',
+                labelKey: 'salesInvoices',
                 href: '/accounting/sales-invoices',
             },
             {
-                label: 'Bank Reconciliation',
+                labelKey: 'bankReconciliation',
                 href: '/accounting/bank-reconciliations',
             },
             {
-                label: 'Purchase Orders',
+                labelKey: 'purchaseOrders',
                 href: '/accounting/purchase-orders',
             },
-            { label: 'Budgets', href: '/accounting/budgets' },
-            { label: 'Taxes', href: '/accounting/taxes' },
-            { label: 'Bank Accounts', href: '/accounting/bank-accounts' },
+            { labelKey: 'budgets', href: '/accounting/budgets' },
+            { labelKey: 'taxes', href: '/accounting/taxes' },
+            { labelKey: 'bankAccounts', href: '/accounting/bank-accounts' },
         ],
     },
 
     // Human Resources (HR) & Payroll Module
     {
-        label: 'HRM System',
+        labelKey: 'hrmSystem',
         icon: <User size={20} />,
         divider: true,
         roles: ['admin', 'hrm'],
         children: [
-            { label: 'Overview', href: '/hrm' },
-            { label: 'Departments', href: '/hrm/departments' },
-            { label: 'Branches', href: '/hrm/branches' },
-            { label: 'Jobs', href: '/hrm/jobs' },
-            { label: 'Applications', href: '/hrm/job-applications' },
-            { label: 'Attendances', href: '/hrm/attendances', badge: 'new +10', },
-            { label: 'Employees', href: '/hrm/employees' },
-            { label: 'Leaves', href: '/hrm/leaves' },
-            { label: 'Users', href: '/hrm/users' },
+            { labelKey: 'overview', href: '/hrm' },
+            { labelKey: 'departments', href: '/hrm/departments' },
+            { labelKey: 'branches', href: '/hrm/branches' },
+            { labelKey: 'jobs', href: '/hrm/jobs' },
+            { labelKey: 'applications', href: '/hrm/job-applications' },
+            { labelKey: 'attendances', href: '/hrm/attendances', badge: 'new +10', },
+            { labelKey: 'employees', href: '/hrm/employees' },
+            { labelKey: 'leaves', href: '/hrm/leaves' },
+            { labelKey: 'users', href: '/hrm/users' },
             {
-                label: 'Payroll Management',
+                labelKey: 'payrollManagement',
                 divider: true,
                 children: [
-                    { label: 'Payrolls', href: '/hrm/payrolls' },
-                    { label: 'Payroll Reports', href: '/hrm/payroll/reports' },
+                    { labelKey: 'payrolls', href: '/hrm/payrolls' },
+                    { labelKey: 'payrollReports', href: '/hrm/payroll/reports' },
                 ],
             },
             {
-                label: 'HRM Setup',
+                labelKey: 'hrmSetup',
                 icon: <Settings size={20} />,
                 children: [
-                    { label: 'Overview', href: '/hrm/setup' },
-                    { label: 'Positions', href: '/hrm/positions' },
-                    { label: 'Leave Types', href: '/hrm/leave-types' },
-                    { label: 'Department Groups', href: '/hrm/department-groups' },
-                    { label: 'Net Pay', href: '/payroll/net-pay' },
+                    { labelKey: 'overview', href: '/hrm/setup' },
+                    { labelKey: 'positions', href: '/hrm/positions' },
+                    { labelKey: 'leaveTypes', href: '/hrm/leave-types' },
+                    { labelKey: 'departmentGroups', href: '/hrm/department-groups' },
+                    { labelKey: 'netPay', href: '/payroll/net-pay' },
                 ],
             },
         ],
     },
     // Inventory & Warehouse Management Module
     {
-        label: 'Inventory System',
+        labelKey: 'Inventory System',
         icon: <ShoppingCart size={20} />,
         divider: true,
         roles: ['admin', 'inventory'],
         children: [
-            { label: 'Overview', href: '/inventory' },
+            { labelKey: 'overview', href: '/inventory' },
             {
-                label: 'Products',
+                labelKey: 'products',
                 href: '/inventory/products',
             },
             {
-                label: 'Warehouses',
+                labelKey: 'warehouses',
                 href: '/inventory/warehouses',
             },
-            { label: 'Inventory Movements', href: '/inventory/inventory-movements' },
+            { labelKey: 'inventoryMovements', href: '/inventory/inventory-movements' },
             {
-                label: 'Product Warehouse',
+                labelKey: 'productWarehouse',
                 href: '/inventory/product-warehouses',
-                children: [
-                    { label: 'Overview', href: '/inventory/product-warehouses' },
-                    { label: 'Add Product To Warehouse', href: '/inventory/product-warehouses/create' },
-                ],
+                // children: [
+                //     { labelKey: 'Overview', href: '/inventory/product-warehouses' },
+                //     { labelKey: 'Add Product To Warehouse', href: '/inventory/product-warehouses/create' },
+                // ],
             },
         ],
     },
     // Sales & Order Management Module
     {
-        label: 'Sales and Orders',
+        labelKey: 'salesAndOrders',
         icon: <User size={20} />,
         divider: true,
         roles: ['admin', 'sales'],
         children: [
-            { label: 'Overview', href: '/sale-orders' },
-            { label: 'Orders', icon: <ListOrdered size={20} />, href: '/sale-orders/orders' },
-            { label: 'Quotes', href: '/sale-orders/quotes' },
+            { labelKey: 'overview', href: '/sale-orders' },
+            { labelKey: 'orders', icon: <ListOrdered size={20} />, href: '/sale-orders/orders' },
+            { labelKey: 'quotes', href: '/sale-orders/quotes' },
         ],
     },
 
     // CRM Module
     {
-        label: 'CRM',
+        labelKey: 'crm',
         icon: <User size={20} />,
         divider: true,
         roles: ['admin', 'crm'],
         children: [
-            { label: 'Leads', href: '/crm/leads' },
-            { label: 'Opportunities', href: '/crm/opportunities' },
-            { label: 'Customers', href: '/crm/customers' },
+            { labelKey: 'Leads', href: '/crm/leads' },
+            { labelKey: 'Opportunities', href: '/crm/opportunities' },
+            { labelKey: 'Customers', href: '/crm/customers' },
         ],
     },
 
     // POS Module
     {
-        label: 'POS',
+        labelKey: 'pos',
         icon: <ShoppingCart size={20} />,
         divider: true,
         roles: ['admin', 'pos'],
         children: [
-            { label: 'Sales', href: '/pos/sales' },
-            { label: 'Inventory', href: '/pos/inventory' },
-            { label: 'Reports', href: '/pos/reports' },
+            { labelKey: 'Sales', href: '/pos/sales' },
+            { labelKey: 'Inventory', href: '/pos/inventory' },
+            { labelKey: 'Reports', href: '/pos/reports' },
         ],
     },
 
     // Support Module
     {
-        label: 'Support',
+        labelKey: 'support',
         icon: <HelpCircle size={20} />,
         roles: ['admin', 'support', 'customer'],
         children: [
             {
-                // label: role === 'customer' ? 'My Tickets' : 'All Tickets', // Adjust label dynamically
-                label: 'All Tickets', // Adjust label dynamically
+                // labelKey: role === 'customer' ? 'My Tickets' : 'All Tickets', // Adjust labelKey dynamically
+                labelKey: 'allTickets', // Adjust labelKey dynamically
                 href: '/support/tickets',
                 badge: '5+',
             },
-            { label: 'Submit a Ticket', href: '/support/new-ticket', },
-            { label: 'Knowledge Base', href: '/support/knowledge-base', badge: '5+', },
+            { labelKey: 'submitATicket', href: '/support/new-ticket', },
+            { labelKey: 'knowledgeBase', href: '/support/knowledge-base', badge: '5+', },
         ],
     },
 ];

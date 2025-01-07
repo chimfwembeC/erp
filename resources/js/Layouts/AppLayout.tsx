@@ -6,6 +6,8 @@ import sidebarLinks from './sidebarLinks';
 import { Bell, Settings, Menu } from 'lucide-react';
 import ProfileDropdown from './ProfileDropdown';
 import LanguageSelector from '@/Components/LanguageSelector';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '@/i18n';
 
 interface LayoutProps {
     title: string;
@@ -56,7 +58,10 @@ export default function AppLayout({ title, children }: LayoutProps) {
     return (
         <div className="flex h-screen overflow-hidden bg-primary">
             <Head title={title} />
-            <Sidebar links={sidebarLinks} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+            <I18nextProvider i18n={i18n}>
+                <Sidebar links={sidebarLinks} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+            </I18nextProvider>
+
             <div className="flex-1 flex flex-col lg:ml-64">
                 {/* Header */}
                 <header className="fixed top-0 left-0 lg:left-64 right-0 z-40 p-4 flex items-center justify-between">

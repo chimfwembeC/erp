@@ -5,50 +5,51 @@ import useTypedPage from '@/Hooks/useTypedPage';
 import { useTranslation } from 'react-i18next';
 
 interface SidebarLink {
-    label: string;
+    labelKey: string; // Change to use keys for translation
     icon?: React.ReactNode;
     href?: string;
     children?: SidebarLink[];
     badge?: string;
     divider?: boolean;
-    roles?: string[]; // Allowed roles for this link
+    roles?: string[];
 }
-
-interface SidebarProps {
-    links: SidebarLink[];
-    sidebarOpen: boolean;
-    setSidebarOpen: (open: boolean) => void;
-}
-
-
-
 const filterLinksByRole = (links: SidebarLink[], role: string): SidebarLink[] => {
     return links
         .filter(link => !link.roles || link.roles.includes(role)) // Include if no roles or role matches
-        .map(link => ({
-            ...link,
-            children: link.children ? filterLinksByRole(link.children, role) : undefined, // Recursively filter children
-        }))
-        .filter(link => link.children ? link.children.length > 0 : true); // Remove parent links with no accessible children
+        .map(link => {
+            // Only filter children if they exist
+            const children = link.children ? filterLinksByRole(link.children, role) : undefined;
+
+            // If the link has children, we include the children; otherwise, it's just a regular link.
+            return {
+                ...link,
+                children: children && children.length > 0 ? children : undefined, // Only keep children if they exist
+            };
+        });
 };
+
+
 
 const Sidebar: React.FC<SidebarProps> = ({ links, sidebarOpen, setSidebarOpen }) => {
     const [activeDropdowns, setActiveDropdowns] = useState<string[]>([]);
     const page = useTypedPage();
-    const userRole = page.props.auth.user?.role || ''; // Get user's role
+    const userRole = page.props.auth.user?.role || '';
     const { t } = useTranslation();
 
     // Map sidebar links and translate labels dynamically
     const translatedSidebarLinks = links.map(link => ({
         ...link,
-        label: t(link.labelKey),
-        children: link.children ? link.children.map(child => ({
-            ...child,
-            label: t(child.labelKey)
-        })) : []
+        label: t(link.labelKey), // Translate the label based on the key
+        children: link.children
+            ? link.children.map(child => ({
+                ...child,
+                label: t(child.labelKey), // Translate the child label as well
+            }))
+            : [],
     }));
+
     // Filter links based on the user's role
-    const filteredLinks = filterLinksByRole(links, userRole);
+    const filteredLinks = filterLinksByRole(translatedSidebarLinks, userRole);
 
     useEffect(() => {
         const storedDropdowns = localStorage.getItem('activeDropdowns');
@@ -63,9 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({ links, sidebarOpen, setSidebarOpen })
 
     const toggleDropdowns = (label: string) => {
         setActiveDropdowns(prev =>
-            prev.includes(label)
-                ? prev.filter(item => item !== label)
-                : [...prev, label],
+            prev.includes(label) ? prev.filter(item => item !== label) : [...prev, label]
         );
     };
 
@@ -74,71 +73,59 @@ const Sidebar: React.FC<SidebarProps> = ({ links, sidebarOpen, setSidebarOpen })
         return href && url === href;
     };
 
-    const renderLinks = (links: SidebarLink[]) =>
-        links.map(link => (
-            <li key={link.label} className="mb-2">
+    const renderLinks = (links: SidebarLink[]) => {
+        return links.map(link => (
+            <li key={link.labelKey}>
                 {link.children ? (
                     <div>
-                        {/* Parent Link */}
+                        {/* Parent Link with Dropdown */}
                         <div
-                            onClick={() => toggleDropdowns(link.label)}
-                            className={`flex items-center justify-between p-3 rounded-full cursor-pointer transition ${activeDropdowns.includes(link.label)
-                                ? 'bg-indigo-50 shadow-md'
-                                : 'hover:bg-indigo-100'
+                            onClick={() => toggleDropdowns(link.labelKey)}
+                            className={`flex items-center justify-between p-3 rounded-md cursor-pointer transition ${activeDropdowns.includes(link.labelKey) ? 'bg-indigo-50' : 'hover:bg-indigo-100'
                                 }`}
                         >
                             <div className="flex items-center space-x-3">
                                 {link.icon}
-                                <span className="text-sm font-medium text-gray-700">{link.label}</span>
+                                <span className="text-sm font-medium text-gray-700">{t(link.labelKey)}</span>
                             </div>
-                            {activeDropdowns.includes(link.label) ? (
+                            {activeDropdowns.includes(link.labelKey) ? (
                                 <ChevronUp size={18} className="text-gray-500" />
                             ) : (
                                 <ChevronDown size={18} className="text-gray-500" />
                             )}
                         </div>
 
-                        {/* Child Links */}
-                        {activeDropdowns.includes(link.label) && (
-                            <ul className="ml-4 mt-2 space-y-2 border-l-2 border-indigo-500 pl-4">
-                                {link.children.map(child => (
-                                    <li key={child.label}>
-                                        <Link
-                                            href={child.href!}
-                                            className={`block px-3 py-2 rounded-md text-sm font-medium transition ${isActiveLink(child.href)
-                                                ? 'bg-indigo-100 text-indigo-600 shadow'
-                                                : 'text-gray-600 hover:bg-indigo-50 hover:text-indigo-600'
-                                                }`}
-                                        >
-                                            {child.label}
-                                        </Link>
-                                    </li>
-                                ))}
+                        {/* Dropdown Items */}
+                        {activeDropdowns.includes(link.labelKey) && (
+                            <ul className="ml-4 mt-2 space-y-2 border-l-2 border-indigo-100 pl-2">
+                                {renderLinks(link.children)} {/* Recursively render child links */}
                             </ul>
                         )}
                     </div>
                 ) : (
-                    <Link
-                        href={link.href!}
-                        className={`flex items-center p-3 rounded-full transition ${isActiveLink(link.href)
-                            ? 'bg-indigo-100 text-indigo-600 shadow-md'
-                            : 'text-gray-700 hover:bg-indigo-100'
-                            }`}
-                    >
-                        <div className="flex items-center space-x-3">
+                    <>
+                        {/* Single Link */}
+                        <Link
+                            href={link.href!}
+                            className={`flex items-center p-3 rounded-md transition ${isActiveLink(link.href) ? 'bg-indigo-200 font-semibold text-indigo-800' : 'hover:bg-indigo-50'
+                                }`}
+                        >
                             {link.icon}
-                            <span className="text-sm font-medium">{link.label}</span>
-                        </div>
-                        {link.badge && (
-                            <span className="ml-auto inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-600">
-                                {link.badge}
-                            </span>
-                        )}
-                    </Link>
+                            <span className="ml-3 text-sm text-gray-700">{t(link.labelKey)}</span>
+                            {link.badge && (
+                                <span className="ml-auto inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-600">
+                                    {link.badge}
+                                </span>
+                            )}
+                        </Link>
+                    </>
                 )}
-                {link.divider && <div className="border-t border-gray-200 my-2"></div>}
+
+                {/* Divider */}
+                {link.divider && <div className="my-4 border-t border-gray-200"></div>}
             </li>
         ));
+    };
 
     return (
         <div
