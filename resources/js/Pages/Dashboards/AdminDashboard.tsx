@@ -9,15 +9,17 @@ import ProjectPieChart from '@/Components/Charts/Admin/ProjectPieChart';
 import AdditionalFeatures from '@/Components/AdditionalFeatures';
 import { Users, UserCheck, Clock, Calendar } from 'lucide-react';
 import { StatCard } from '@/Components/Shared/StatCard';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminDashboard() {
 
+    const { t } = useTranslation();
 
     const stats = [
-        { icon: Users, label: 'Total Employees', value: '156', change: '+12%' },
-        { icon: UserCheck, label: 'Present Today', value: '142', change: '91%' },
-        { icon: Clock, label: 'On Leave', value: '8', change: '5%' },
-        { icon: Calendar, label: 'Upcoming Reviews', value: '24', change: '' },
+        { icon: Users, label: t('totalEmployees'), value: '156', change: '+12%' },
+        { icon: UserCheck, label: t('presentToday'), value: '142', change: '91%' },
+        { icon: Clock, label: t('onLeave'), value: '8', change: '5%' },
+        { icon: Calendar, label: t('upcomingReviews'), value: '24', change: '' },
     ];
 
     return (

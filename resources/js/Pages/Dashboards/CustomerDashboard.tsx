@@ -9,14 +9,15 @@ import ProjectPieChart from '@/Components/Charts/Admin/ProjectPieChart';
 import AdditionalFeatures from '@/Components/AdditionalFeatures';
 import { Users, UserCheck, Clock, Calendar } from 'lucide-react';
 import { StatCard } from '@/Components/Shared/StatCard';
+import { useTranslation } from 'react-i18next';
 
 export default function CustomerDashboard() {
-
+    const { t } = useTranslation();
 
     const stats = [
-        { icon: Users, label: 'Projects', value: '10', change: '+12%' },
-        { icon: UserCheck, label: 'Invoices', value: '8', change: '91%' },
-        { icon: Clock, label: 'Tickets  ', value: '8', change: '5%' },
+        { icon: Users, label: t('projects'), value: '10', change: '+12%' },
+        { icon: UserCheck, label: t('invoices'), value: '8', change: '91%' },
+        { icon: Clock, label: t('tickets'), value: '8', change: '5%' },
         { icon: Calendar, label: 'Upcoming Reviews', value: '24', change: '' },
     ];
 

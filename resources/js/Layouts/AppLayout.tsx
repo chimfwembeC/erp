@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import Sidebar from './Sidebar';
 import NotificationPanel from '@/Components/NotificationPanel';
 import sidebarLinks from './sidebarLinks';
@@ -49,14 +49,14 @@ export default function AppLayout({ title, children }: LayoutProps) {
         {
             label: 'Logout',
             onClick: () => {
-                console.log('Logged out');
+                router.post('logout');
             },
             className: 'hover:text-red-600',
         },
     ];
 
     return (
-        <div className="flex h-screen overflow-hidden bg-primary">
+        <div className="flex h-screen overflow-hidden bg-gray-100">
             <Head title={title} />
             <I18nextProvider i18n={i18n}>
                 <Sidebar links={sidebarLinks} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -123,7 +123,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
                     </nav>
                 </header>
                 {/* Main Content */}
-                <main className="flex-1 overflow-auto mt-16 p-4 md:p-6 bg-primary">{children}</main>
+                <main className="flex-1 overflow-auto mt-16 p-4 md:p-6 bg-gray-100">{children}</main>
             </div>
         </div>
     );

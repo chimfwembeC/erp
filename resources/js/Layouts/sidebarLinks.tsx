@@ -1,5 +1,5 @@
 import React from 'react'
-import { Clipboard, DollarSign, FileText, Folder, HelpCircle, Home, LifeBuoy, ListOrdered, Settings, ShoppingCart, User, Warehouse } from "lucide-react";
+import { Activity, Bell, Brush, Clipboard, CreditCard, Database, DollarSign, FileText, Folder, Globe, HelpCircle, Home, LifeBuoy, Link, ListOrdered, Lock, Settings, Shield, ShoppingCart, User, Users, Warehouse } from "lucide-react";
 import { FaFileInvoice, FaMoneyCheckAlt, FaProductHunt } from "react-icons/fa";
 import useTypedPage from '@/Hooks/useTypedPage';
 // import { useTranslation } from 'react-i18next';
@@ -178,6 +178,70 @@ const sidebarLinks: SidebarLink[] = [
             { labelKey: 'knowledgeBase', href: '/support/knowledge-base', badge: '5+', },
         ],
     },
+    // Settings Module
+    {
+        labelKey: 'settings',
+        icon: <Settings size={20} />, // Main settings icon
+        roles: ['admin'], // Restrict settings to admins
+        children: [
+            {
+                labelKey: 'generalSettings',
+                href: '/settings/general',
+                icon: <Settings size={18} />, // General settings
+            },
+            {
+                labelKey: 'userManagement',
+                href: '/settings/users',
+                icon: <Users size={18} />, // User management
+            },
+            {
+                labelKey: 'notifications',
+                href: '/settings/notifications',
+                icon: <Bell size={18} />, // Notifications
+            },
+            {
+                labelKey: 'systemLogs',
+                href: '/settings/logs',
+                icon: <Activity size={18} />, // System logs
+            },
+            {
+                labelKey: 'languageSettings',
+                href: '/settings/language',
+                icon: <Globe size={18} />, // Language preferences
+            },
+            {
+                labelKey: 'accessControl',
+                href: '/settings/access-control',
+                icon: <Lock size={18} />, // Access control
+            },
+            {
+                labelKey: 'integrations',
+                href: '/settings/integrations',
+                icon: <Link size={18} />, // Integrations
+            },
+            {
+                labelKey: 'dataManagement',
+                href: '/settings/data',
+                icon: <Database size={18} />, // Data management
+            },
+            {
+                labelKey: 'billing',
+                href: '/settings/billing',
+                icon: <CreditCard size={18} />, // Billing and subscriptions
+            },
+            {
+                labelKey: 'securitySettings',
+                href: '/settings/security',
+                icon: <Shield size={18} />, // Security
+            },
+            {
+                labelKey: 'customization',
+                href: '/settings/customization',
+                icon: <Brush size={18} />, // Customization
+            },
+        ],
+    }
+
 ];
 
 export default sidebarLinks;

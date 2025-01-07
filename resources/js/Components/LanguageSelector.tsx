@@ -75,7 +75,7 @@ const LanguageSelector: React.FC = () => {
     return (
         <div className="relative" ref={dropdownRef}>
             {/* PrimeReact Toast */}
-            <Toast ref={toastRef} />
+            <Toast ref={toastRef} position="bottom-right" />
 
             {/* Language Selector */}
             <button
@@ -86,7 +86,7 @@ const LanguageSelector: React.FC = () => {
                 <span>{selectedLanguage.toUpperCase()}</span> {/* Display selected language */}
             </button>
             {dropdownOpen && (
-                <div className="absolute right-0 top-10 bg-white shadow-lg rounded-lg w-40 py-2 z-50">
+                <div className="absolute right-0 top-12 bg-white shadow-lg rounded-lg w-40 py-2 z-50">
                     {languages.map((lang) => (
                         <button
                             key={lang.code}

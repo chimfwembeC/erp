@@ -41,10 +41,10 @@ export default function Welcome({
                 <main className="pt-10">
                     <div className="space-y-16">
                         {/* Features Section */}
-                        <Features />
+                        {/* <Features /> */}
 
                         {/* Pricing Plans Section */}
-                        <PlanGrid />
+                        {/* <PlanGrid /> */}
 
                         {/* Benefits Section */}
                         <Benefits />

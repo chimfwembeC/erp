@@ -122,7 +122,7 @@ const Sidebar: React.FC<SidebarProps> = ({ links, sidebarOpen, setSidebarOpen })
                 )}
 
                 {/* Divider */}
-                {link.divider && <div className="my-4 border-t border-gray-200"></div>}
+                {link.divider && <div className="my-1 border-t border-gray-200"></div>}
             </li>
         ));
     };
@@ -141,7 +141,7 @@ const Sidebar: React.FC<SidebarProps> = ({ links, sidebarOpen, setSidebarOpen })
                 </div>
                 <div className="p-4">
                     <Link href="/dashboard" className="text-xl font-bold text-gray-800">
-                        ERP System
+                        Tekrem Solutions
                     </Link>
                 </div>
                 <div className="flex-1 p-4 space-y-3 overflow-auto">
