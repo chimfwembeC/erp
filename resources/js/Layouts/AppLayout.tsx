@@ -4,7 +4,7 @@ import Sidebar from './Sidebar';
 import NotificationPanel from '@/Components/NotificationPanel';
 import sidebarLinks from './sidebarLinks';
 import { Bell, Settings, Menu } from 'lucide-react';
-import ProfileDropdown from './ProfileDropdown';
+import ProfileDropdown from '../Components/ProfileDropdown';
 import LanguageSelector from '@/Components/LanguageSelector';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '@/i18n';

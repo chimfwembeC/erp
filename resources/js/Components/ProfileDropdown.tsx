@@ -14,7 +14,7 @@ interface ProfileDropdownProps {
 
 const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ menuItems }) => {
     return (
-        <div className="absolute right-0 top-10 w-48 bg-white shadow-lg rounded-lg py-2">
+        <div className="absolute right-0 top-12 w-48 bg-white shadow-lg rounded-lg py-2">
             <h3 className="px-4 py-2 text-sm font-semibold text-gray-700">
                 Settings
             </h3>
