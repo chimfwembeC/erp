@@ -8,12 +8,12 @@ const languages = [
     // { code: 'fr', label: 'Français', flag: '🇫🇷' },
     { code: 'bem', label: 'Bemba', flag: '🇿🇲' },
     { code: 'nya', label: 'Nyanja', flag: '🇿🇲' },
-    { code: 'toi', label: 'Tonga', flag: '🇿🇲' },
-    { code: 'loz', label: 'Lozi', flag: '🇿🇲' },
-    { code: 'knd', label: 'Kaonde', flag: '🇿🇲' },
-    { code: 'lun', label: 'Lunda', flag: '🇿🇲' },
-    { code: 'lue', label: 'Luvale', flag: '🇿🇲' },
-    { code: 'tum', label: 'Tumbuka', flag: '🇿🇲' },
+    // { code: 'toi', label: 'Tonga', flag: '🇿🇲' },
+    // { code: 'loz', label: 'Lozi', flag: '🇿🇲' },
+    // { code: 'knd', label: 'Kaonde', flag: '🇿🇲' },
+    // { code: 'lun', label: 'Lunda', flag: '🇿🇲' },
+    // { code: 'lue', label: 'Luvale', flag: '🇿🇲' },
+    // { code: 'tum', label: 'Tumbuka', flag: '🇿🇲' },
 ];
 const LanguageSelector: React.FC = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -79,18 +79,18 @@ const LanguageSelector: React.FC = () => {
 
             {/* Language Selector */}
             <button
-                className="text-gray-700 flex items-center space-x-2 focus:outline-none"
+                className="text-gray-700 bg-white p-2 rounded-lg flex items-center space-x-2 focus:outline-none"
                 onClick={toggleDropdown}
             >
                 <Globe size={24} />
                 <span>{selectedLanguage.toUpperCase()}</span> {/* Display selected language */}
             </button>
             {dropdownOpen && (
-                <div className="absolute right-0 top-10 bg-white shadow-lg rounded-lg w-48 py-2 z-50">
+                <div className="absolute right-0 top-10 bg-white shadow-lg rounded-lg w-40 py-2 z-50">
                     {languages.map((lang) => (
                         <button
                             key={lang.code}
-                            className="flex items-center space-x-2 w-full text-left px-4 py-2 hover:bg-gray-200"
+                            className="block w-full text-left px-4 py-2 hover:bg-gray-200 space-x-3"
                             onClick={() => changeLanguage(lang.code)}
                         >
                             <span>{lang.flag}</span>

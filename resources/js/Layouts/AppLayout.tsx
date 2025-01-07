@@ -67,16 +67,25 @@ export default function AppLayout({ title, children }: LayoutProps) {
                     >
                         <Menu size={24} />
                     </button>
-                    <h1 className="text-sm md:text-md lg:text-xl font-semibold">{title}</h1>
+                    <div className="relative">
+                        <div className="left-0 bg-white p-2 rounded-lg">
+                            <h1 className="text-sm md:text-md lg:text-xl font-semibold">{title}</h1>
+                        </div>
+                    </div>
                     {/* Right-side Actions */}
                     <nav className="flex items-center space-x-4 relative">
+
+                        {/* Langauages */}
+                        <div className="relative">
+                            <LanguageSelector />
+                        </div>
                         {/* Notifications */}
                         <div
                             className="relative"
                             onMouseLeave={closeDropdown} // Close dropdown when mouse leaves
                         >
                             <button
-                                className="relative focus:outline-none"
+                                className="relative bg-white p-2 rounded-lg focus:outline-none"
                                 onClick={() => toggleDropdown('notifications')}
                             >
                                 <Bell size={24} />
@@ -90,16 +99,14 @@ export default function AppLayout({ title, children }: LayoutProps) {
                                 // </div>
                             )}
                         </div>
-                        <div className="">
-                            <LanguageSelector />
-                        </div>
+
                         {/* Profile Dropdown */}
                         <div
                             className="relative"
                             onMouseLeave={closeDropdown} // Close dropdown when mouse leaves
                         >
                             <button
-                                className="text-gray-700 focus:outline-none"
+                                className="text-gray-700 bg-white p-2 rounded-lg focus:outline-none"
                                 onClick={() => toggleDropdown('settings')}
                             >
                                 <Settings size={24} />
