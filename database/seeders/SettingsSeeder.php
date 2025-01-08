@@ -36,7 +36,7 @@ class SettingsSeeder extends Seeder
 
             // Language Preferences
             ['key' => 'default_language', 'value' => 'en', 'type' => 'string'],
-            ['key' => 'available_languages', 'value' => '["en","es","fr"]', 'type' => 'json'],
+            ['key' => 'available_languages', 'value' => '[{\"code\":\"en\",\"label\":\"English\",\"flag\":\"\\ud83c\\uddec\\ud83c\\udde7\"},{\"code\":\"bem\",\"label\":\"Bemba\",\"flag\":\"\\ud83c\\uddff\\ud83c\\uddf2\"},{\"code\":\"nya\",\"label\":\"Nyanja\",\"flag\":\"\\ud83c\\uddff\\ud83c\\uddf2\"}]', 'type' => 'json'],
 
             // Storage Settings
             ['key' => 'upload_storage_path', 'value' => 'storage/app/uploads', 'type' => 'string'],

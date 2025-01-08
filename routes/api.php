@@ -78,6 +78,11 @@ Route::get('/settings/logs', [SettingController::class, 'getLogSettings']);
 // Update customization settings
 Route::post('/settings/logs/update', [SettingController::class, 'updateLogSettings']);
 
+// Fetch customization settings
+Route::get('/settings/languages', [SettingController::class, 'getLanguageSettings']);
+// Update customization settings
+Route::post('/settings/languages/update', [SettingController::class, 'updateLanguageSettings']);
+
 Route::post('/settings/upload-files', [SettingController::class, 'uploadFiles']);
 
 

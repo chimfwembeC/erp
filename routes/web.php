@@ -379,6 +379,7 @@ Route::prefix('settings')->group(function () {
     Route::get('/storage', [SettingController::class, 'index']);
     Route::get('/customization', [SettingController::class, 'index']);
     Route::get('/logs', [SettingController::class, 'index']);
+    Route::get('/language', [SettingController::class, 'index']);
 });
 //
 

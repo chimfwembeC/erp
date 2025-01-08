@@ -101,7 +101,7 @@ class SettingController extends Controller
 
         // Handle logo upload logic here, if applicable
 
-        return redirect()->back();
+        return response()->json(['message' => 'General settings updated successfully.']);
     }
 
     public function getLogSettings()
@@ -125,7 +125,33 @@ class SettingController extends Controller
             ['value' => $request->input('enable_logging')]
         );
 
-        return redirect()->back();
+        return response()->json(['message' => 'Logs settings updated successfully.']);
+    }
+
+    public function getLanguageSettings()
+    {
+        // Fetch settings from the database or return default values
+        $settings = Setting::whereIn('key', ['default_language', 'available_languages',])->get()->pluck('value', 'key');
+
+        return response()->json($settings);
+    }
+
+    public function updateLanguageSettings(Request $request)
+    {
+        // Update the settings in the database
+        Setting::updateOrCreate(
+            ['key' => 'default_language'],
+            ['value' => $request->input('default_language')]
+        );
+
+        $availableLanguages = json_encode($request->input('available_languages'));
+
+        Setting::updateOrCreate(
+            ['key' => 'available_languages'],
+            ['value' => $availableLanguages]
+        );
+
+        return response()->json(['message' => 'Langauge settings updated successfully.']);
     }
 
     public function getStorageSettings()
@@ -170,7 +196,7 @@ class SettingController extends Controller
             ['value' => $request->input('cloud_storage_provider')]
         );
 
-        return redirect()->back();
+        return response()->json(['message' => 'Storage settings updated successfully.']);
     }
 
     public function getUserSettings()
@@ -201,7 +227,7 @@ class SettingController extends Controller
 
         // Handle logo upload logic here, if applicable
 
-        return redirect()->back();
+        return response()->json(['message' => 'User settings updated successfully.']);
     }
 
     public function getNotificationSettings()
@@ -271,7 +297,7 @@ class SettingController extends Controller
         );
         // Handle logo upload logic here, if applicable
 
-        return redirect()->back();
+        return response()->json(['message' => 'Notifications settings updated successfully.']);
     }
 
 
