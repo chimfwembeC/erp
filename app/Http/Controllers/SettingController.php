@@ -8,7 +8,8 @@ use Inertia\Inertia;
 
 class SettingController extends Controller
 {
-    function getSetting($key, $default = null) {
+    function getSetting($key, $default = null)
+    {
         $setting = Setting::where('key', $key)->first();
         return $setting ? $setting->value : $default;
     }
@@ -40,6 +41,51 @@ class SettingController extends Controller
         );
 
         // Handle logo upload logic here, if applicable
+
+        return redirect()->back();
+    }
+
+    public function getStorageSettings()
+    {
+        // Fetch settings from the database or return default values
+        $settings = Setting::whereIn('key', [
+            'upload_storage_path',
+            'max_upload_size_mb',
+            'allowed_file_types',
+            'enable_cloud_storage',
+            'cloud_storage_provider'
+        ])->get()->pluck('value', 'key');
+
+        return response()->json($settings);
+    }
+
+    public function updateStorageSettings(Request $request)
+    {
+        // Update the settings in the database
+        Setting::updateOrCreate(
+            ['key' => 'upload_storage_path'],
+            ['value' => $request->input('upload_storage_path')]
+        );
+
+        Setting::updateOrCreate(
+            ['key' => 'max_upload_size_mb'],
+            ['value' => $request->input('max_upload_size_mb')]
+        );
+
+        Setting::updateOrCreate(
+            ['key' => 'allowed_file_types'],
+            ['value' => $request->input('allowed_file_types')]
+        );
+
+        Setting::updateOrCreate(
+            ['key' => 'enable_cloud_storage'],
+            ['value' => $request->input('enable_cloud_storage')]
+        );
+
+        Setting::updateOrCreate(
+            ['key' => 'cloud_storage_provider'],
+            ['value' => $request->input('cloud_storage_provider')]
+        );
 
         return redirect()->back();
     }
@@ -87,7 +133,7 @@ class SettingController extends Controller
             'smtp_server',
             'smtp_port',
             'email_sender'
-            ])->get()->pluck('value', 'key');
+        ])->get()->pluck('value', 'key');
 
         return response()->json($settings);
     }
@@ -110,6 +156,11 @@ class SettingController extends Controller
             ['key' => 'email_notifications_enabled'],
             ['value' => $request->input('email_notifications_enabled')]
         );
+
+        // Setting::updateOrCreate(
+        //     ['key' => 'email_notifications'],
+        //     ['value' => $request->input('email_notifications')]
+        // );
 
         Setting::updateOrCreate(
             ['key' => 'notification_email'],

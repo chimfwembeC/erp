@@ -221,14 +221,14 @@ const sidebarLinks: SidebarLink[] = [
             },
             {
                 labelKey: 'dataManagement',
-                href: '/settings/data',
+                href: '/settings/storage',
                 icon: <Database size={18} />, // Data management
             },
-            {
-                labelKey: 'billing',
-                href: '/settings/billing',
-                icon: <CreditCard size={18} />, // Billing and subscriptions
-            },
+            // {
+            //     labelKey: 'billing',
+            //     href: '/settings/billing',
+            //     icon: <CreditCard size={18} />, // Billing and subscriptions
+            // },
             {
                 labelKey: 'securitySettings',
                 href: '/settings/security',

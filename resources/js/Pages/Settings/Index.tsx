@@ -8,7 +8,8 @@ import { Activity, Bell, Brush, CreditCard, Database, Globe, Link, Lock, Setting
 import GeneralSettings from '@/Components/GeneralSettings';
 import { SettingsLayout } from '@/Components/SettingsLayout';
 import NotificationSettings from '@/Components/NotificationSettings';
-import UserManagement from '@/Components/UserManagement';
+import UserSettings from '@/Components/UserSettings';
+import StorageSettings from '@/Components/StorageSettings';
 
 const Index = ({ settings }) => {
     const route = useRoute();
@@ -31,11 +32,13 @@ const Index = ({ settings }) => {
             <SettingsLayout currentSection={currentSection} onSectionChange={handleSectionChange}>
                 {/* Render content based on the current section */}
                 {currentSection === '/settings/general' && <GeneralSettings />}
-                {/* Add other sections like UserManagement, Notifications, etc. */}
+
                 {currentSection === '/settings/notifications' && <NotificationSettings />}
-                {/* Add other sections like UserManagement, Notifications, etc. */}
-                {currentSection === '/settings/users' && <UserManagement />}
-                {/* Add other sections like UserManagement, Notifications, etc. */}
+
+                {currentSection === '/settings/users' && <UserSettings />}
+
+                {currentSection === '/settings/storage' && <StorageSettings />}
+
             </SettingsLayout>
         </AppLayout>
     );

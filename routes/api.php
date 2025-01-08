@@ -61,3 +61,8 @@ Route::post('/notification/settings/update', [SettingController::class, 'updateN
 Route::get('/settings/users', [SettingController::class, 'getUserSettings']);
 // Update users settings
 Route::post('/settings/users/update', [SettingController::class, 'updateUserSettings']);
+
+// Fetch users settings
+Route::get('/settings/storage', [SettingController::class, 'getStorageSettings']);
+// Update users settings
+Route::post('/settings/storage/update', [SettingController::class, 'updateStorageSettings']);

@@ -379,6 +379,8 @@ Route::prefix('settings')->group(function () {
     Route::get('/general', [SettingController::class, 'index']);
     Route::get('/notifications', [SettingController::class, 'index']);
     Route::get('/users', [SettingController::class, 'index']);
+    Route::get('/storage', [SettingController::class, 'index']);
+
 
 
 
