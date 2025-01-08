@@ -73,6 +73,11 @@ Route::get('/settings/customization', [SettingController::class, 'getCustomizati
 // Update customization settings
 Route::post('/settings/customization/update', [SettingController::class, 'updateCustomizationSettings']);
 
+// Fetch customization settings
+Route::get('/settings/logs', [SettingController::class, 'getLogSettings']);
+// Update customization settings
+Route::post('/settings/logs/update', [SettingController::class, 'updateLogSettings']);
+
 Route::post('/settings/upload-files', [SettingController::class, 'uploadFiles']);
 
 

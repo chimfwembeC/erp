@@ -11,6 +11,7 @@ import NotificationSettings from '@/Components/NotificationSettings';
 import UserSettings from '@/Components/UserSettings';
 import StorageSettings from '@/Components/StorageSettings';
 import CustomizationSettings from '@/Components/CustomizationSettings';
+import LogSettings from '@/Components/LogSettings';
 
 const Index = ({ settings }) => {
     const route = useRoute();
@@ -41,6 +42,8 @@ const Index = ({ settings }) => {
                 {currentSection === '/settings/storage' && <StorageSettings />}
 
                 {currentSection === '/settings/customization' && <CustomizationSettings />}
+
+                {currentSection === '/settings/logs' && <LogSettings />}
 
             </SettingsLayout>
         </AppLayout>

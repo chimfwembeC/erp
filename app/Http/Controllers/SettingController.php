@@ -104,6 +104,30 @@ class SettingController extends Controller
         return redirect()->back();
     }
 
+    public function getLogSettings()
+    {
+        // Fetch settings from the database or return default values
+        $settings = Setting::whereIn('key', ['enable_logging', 'log_retention_days',])->get()->pluck('value', 'key');
+
+        return response()->json($settings);
+    }
+
+    public function updateLogSettings(Request $request)
+    {
+        // Update the settings in the database
+        Setting::updateOrCreate(
+            ['key' => 'log_retention_days'],
+            ['value' => $request->input('log_retention_days')]
+        );
+
+        Setting::updateOrCreate(
+            ['key' => 'enable_logging'],
+            ['value' => $request->input('enable_logging')]
+        );
+
+        return redirect()->back();
+    }
+
     public function getStorageSettings()
     {
         // Fetch settings from the database or return default values
