@@ -72,7 +72,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
                     >
                         <Menu size={24} />
                     </button>
-                    <div className="relative">
+                    <div className="relative hidden md:block">
                         <div className="left-0 bg-white p-2 rounded-lg">
                             <h1 className="text-sm md:text-md lg:text-xl font-semibold">{title}</h1>
                         </div>

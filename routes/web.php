@@ -32,6 +32,7 @@ use App\Http\Controllers\InventoryAndWarehouse\ProductController;
 use App\Http\Controllers\InventoryAndWarehouse\ProductWarehouseController;
 use App\Http\Controllers\InventoryAndWarehouse\WarehouseController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SettingController;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -372,6 +373,17 @@ Route::prefix('sale-orders')->group(function () {
 
 
 });
+
+
+Route::prefix('settings')->group(function () {
+    Route::get('/general', [SettingController::class, 'index']);
+    Route::get('/notifications', [SettingController::class, 'index']);
+    Route::get('/users', [SettingController::class, 'index']);
+
+
+
+});
+
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
 Route::resource('/landing-pages', LandingPagesController::class);

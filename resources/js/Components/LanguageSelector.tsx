@@ -88,14 +88,21 @@ const LanguageSelector: React.FC = () => {
             {dropdownOpen && (
                 <div className="absolute right-0 top-12 bg-white shadow-lg rounded-lg w-40 py-2 z-50">
                     {languages.map((lang) => (
-                        <button
-                            key={lang.code}
-                            className="block w-full text-left px-4 py-2 hover:bg-gray-200 space-x-3"
-                            onClick={() => changeLanguage(lang.code)}
-                        >
-                            <span>{lang.flag}</span>
-                            <span>{lang.label}</span>
-                        </button>
+                        <>
+                            {/* <span>
+                                <input type="radio" name='language' value={selectedLanguage === lang.code && 1} />
+                            </span> */}
+                            <button
+                                key={lang.code}
+                                className={`block w-full text-left px-4 py-2 hover:bg-gray-200 space-x-3 ${selectedLanguage === lang.code && 'bg-gray-100'}`}
+                                onClick={() => changeLanguage(lang.code)}
+                            >
+                                <span>{lang.flag}</span>
+                                <span>{lang.label}</span>
+                            </button>
+
+                        </>
+
                     ))}
                 </div>
             )}
