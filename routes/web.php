@@ -278,14 +278,14 @@ Route::prefix('accounting')->group(function () {
     Route::get('/purchase-orders/{purchaseOrder}/edit', [PurchaseOrderController::class, 'edit'])->name('accounting.purchase-orders.edit');
     Route::delete('/purchase-orders/{purchaseOrder}', [PurchaseOrderController::class, 'destroy'])->name('accounting.purchase-orders.destroy');
 
-     // bank reconciliations Routes
-     Route::get('/bank-reconciliations', [BankReconciliationController::class, 'index'])->name('accounting.bank-reconciliations.index');
-     Route::get('/bank-reconciliations/create', [BankReconciliationController::class, 'create'])->name('accounting.bank-reconciliations.create');
-     Route::post('/bank-reconciliations', [BankReconciliationController::class, 'store'])->name('accounting.bank-reconciliations.store');
-     Route::get('/bank-reconciliations/{bankReconciliation}', [BankReconciliationController::class, 'show'])->name('accounting.bank-reconciliations.show');
-     Route::put('/bank-reconciliations/{bankReconciliation}', [BankReconciliationController::class, 'update'])->name('accounting.bank-reconciliations.update');
-     Route::get('/bank-reconciliations/{bankReconciliation}/edit', [BankReconciliationController::class, 'edit'])->name('accounting.bank-reconciliations.edit');
-     Route::delete('/bank-reconciliations/{bankReconciliation}', [BankReconciliationController::class, 'destroy'])->name('accounting.bank-reconciliations.destroy');
+    // bank reconciliations Routes
+    Route::get('/bank-reconciliations', [BankReconciliationController::class, 'index'])->name('accounting.bank-reconciliations.index');
+    Route::get('/bank-reconciliations/create', [BankReconciliationController::class, 'create'])->name('accounting.bank-reconciliations.create');
+    Route::post('/bank-reconciliations', [BankReconciliationController::class, 'store'])->name('accounting.bank-reconciliations.store');
+    Route::get('/bank-reconciliations/{bankReconciliation}', [BankReconciliationController::class, 'show'])->name('accounting.bank-reconciliations.show');
+    Route::put('/bank-reconciliations/{bankReconciliation}', [BankReconciliationController::class, 'update'])->name('accounting.bank-reconciliations.update');
+    Route::get('/bank-reconciliations/{bankReconciliation}/edit', [BankReconciliationController::class, 'edit'])->name('accounting.bank-reconciliations.edit');
+    Route::delete('/bank-reconciliations/{bankReconciliation}', [BankReconciliationController::class, 'destroy'])->name('accounting.bank-reconciliations.destroy');
 });
 
 
@@ -293,53 +293,52 @@ Route::prefix('inventory')->group(function () {
     // inventory and warehouse home route
     Route::get('/', [InventoryAndWarehouseController::class, 'index'])->name('inventory.index');
 
- // products Routes
- Route::get('/products', [ProductController::class, 'index'])->name('inventory.products.index');
- Route::get('/products/create', [ProductController::class, 'create'])->name('inventory.products.create');
- Route::post('/products', [ProductController::class, 'store'])->name('inventory.products.store');
- Route::get('/products/{product}', [ProductController::class, 'show'])->name('inventory.products.show');
- Route::put('/products/{product}', [ProductController::class, 'update'])->name('inventory.products.update');
- Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('inventory.products.edit');
- Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('inventory.products.destroy');
+    // products Routes
+    Route::get('/products', [ProductController::class, 'index'])->name('inventory.products.index');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('inventory.products.create');
+    Route::post('/products', [ProductController::class, 'store'])->name('inventory.products.store');
+    Route::get('/products/{product}', [ProductController::class, 'show'])->name('inventory.products.show');
+    Route::put('/products/{product}', [ProductController::class, 'update'])->name('inventory.products.update');
+    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('inventory.products.edit');
+    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('inventory.products.destroy');
 
 
-//  product_warehouse
+    //  product_warehouse
 
-// warehouses Routes
-Route::get('/warehouses', [WarehouseController::class, 'index'])->name('inventory.warehouses.index');
-Route::get('/warehouses/create', [WarehouseController::class, 'create'])->name('inventory.warehouses.create');
-Route::post('/warehouses', [WarehouseController::class, 'store'])->name('inventory.warehouses.store');
-Route::get('/warehouses/{warehouse}', [WarehouseController::class, 'show'])->name('inventory.warehouses.show');
-Route::put('/warehouses/{warehouse}', [WarehouseController::class, 'update'])->name('inventory.warehouses.update');
-Route::get('/warehouses/{warehouse}/edit', [WarehouseController::class, 'edit'])->name('inventory.warehouses.edit');
-Route::delete('/warehouses/{warehouse}', [WarehouseController::class, 'destroy'])->name('inventory.warehouses.destroy');
-
-
-// inventory movement Routes
-Route::get('/inventory-movements', [InventoryMovementController::class, 'index'])->name('inventory.inventory_movements.index');
-Route::get('/inventory-movements/create', [InventoryMovementController::class, 'create'])->name('inventory.inventory_movements.create');
-Route::post('/inventory-movements', [InventoryMovementController::class, 'store'])->name('inventory.inventory_movements.store');
-Route::get('/inventory-movements/{inventoryMovement}', [InventoryMovementController::class, 'show'])->name('inventory.inventory_movements.show');
-Route::put('/inventory-movements/{inventoryMovement}', [InventoryMovementController::class, 'update'])->name('inventory.inventory_movements.update');
-Route::get('/inventory-movements/{inventoryMovement}/edit', [InventoryMovementController::class, 'edit'])->name('inventory.inventory_movements.edit');
-Route::delete('/inventory-movements/{inventoryMovement}', [InventoryMovementController::class, 'destroy'])->name('inventory.inventory_movements.destroy');
-
-// product warehouses Routes
-Route::get('/product-warehouses', [ProductWarehouseController::class, 'index'])->name('inventory.product-warehouses.index');
-Route::get('/product-warehouses/create', [ProductWarehouseController::class, 'create'])->name('inventory.product-warehouses.create');
-Route::post('/product-warehouses', [ProductWarehouseController::class, 'store'])->name('inventory.product-warehouses.store');
-Route::get('/product-warehouses/{productWarehouse}', [ProductWarehouseController::class, 'show'])->name('inventory.product-warehouses.show');
-Route::put('/product-warehouses/{productWarehouse}', [ProductWarehouseController::class, 'update'])->name('inventory.product-warehouses.update');
-Route::get('/product-warehouses/{productWarehouse}/edit', [ProductWarehouseController::class, 'edit'])->name('inventory.product-warehouses.edit');
-Route::delete('/product-warehouses/{productWarehouse}', [ProductWarehouseController::class, 'destroy'])->name('inventory.product-warehouses.destroy');
+    // warehouses Routes
+    Route::get('/warehouses', [WarehouseController::class, 'index'])->name('inventory.warehouses.index');
+    Route::get('/warehouses/create', [WarehouseController::class, 'create'])->name('inventory.warehouses.create');
+    Route::post('/warehouses', [WarehouseController::class, 'store'])->name('inventory.warehouses.store');
+    Route::get('/warehouses/{warehouse}', [WarehouseController::class, 'show'])->name('inventory.warehouses.show');
+    Route::put('/warehouses/{warehouse}', [WarehouseController::class, 'update'])->name('inventory.warehouses.update');
+    Route::get('/warehouses/{warehouse}/edit', [WarehouseController::class, 'edit'])->name('inventory.warehouses.edit');
+    Route::delete('/warehouses/{warehouse}', [WarehouseController::class, 'destroy'])->name('inventory.warehouses.destroy');
 
 
-//
+    // inventory movement Routes
+    Route::get('/inventory-movements', [InventoryMovementController::class, 'index'])->name('inventory.inventory_movements.index');
+    Route::get('/inventory-movements/create', [InventoryMovementController::class, 'create'])->name('inventory.inventory_movements.create');
+    Route::post('/inventory-movements', [InventoryMovementController::class, 'store'])->name('inventory.inventory_movements.store');
+    Route::get('/inventory-movements/{inventoryMovement}', [InventoryMovementController::class, 'show'])->name('inventory.inventory_movements.show');
+    Route::put('/inventory-movements/{inventoryMovement}', [InventoryMovementController::class, 'update'])->name('inventory.inventory_movements.update');
+    Route::get('/inventory-movements/{inventoryMovement}/edit', [InventoryMovementController::class, 'edit'])->name('inventory.inventory_movements.edit');
+    Route::delete('/inventory-movements/{inventoryMovement}', [InventoryMovementController::class, 'destroy'])->name('inventory.inventory_movements.destroy');
+
+    // product warehouses Routes
+    Route::get('/product-warehouses', [ProductWarehouseController::class, 'index'])->name('inventory.product-warehouses.index');
+    Route::get('/product-warehouses/create', [ProductWarehouseController::class, 'create'])->name('inventory.product-warehouses.create');
+    Route::post('/product-warehouses', [ProductWarehouseController::class, 'store'])->name('inventory.product-warehouses.store');
+    Route::get('/product-warehouses/{productWarehouse}', [ProductWarehouseController::class, 'show'])->name('inventory.product-warehouses.show');
+    Route::put('/product-warehouses/{productWarehouse}', [ProductWarehouseController::class, 'update'])->name('inventory.product-warehouses.update');
+    Route::get('/product-warehouses/{productWarehouse}/edit', [ProductWarehouseController::class, 'edit'])->name('inventory.product-warehouses.edit');
+    Route::delete('/product-warehouses/{productWarehouse}', [ProductWarehouseController::class, 'destroy'])->name('inventory.product-warehouses.destroy');
+
+
+    //
 });
 
 Route::prefix('audit-trails')->group(function () {
     Route::get('/', [AuditAndComplianceController::class, 'index'])->name('audit-trails.index');
-
 });
 
 
@@ -370,8 +369,6 @@ Route::prefix('sale-orders')->group(function () {
     Route::get('/quotes/{quote}/edit', [QuoteController::class, 'edit'])->name('sale-orders.quotes.edit');
     Route::put('/quotes/{quote}', [QuoteController::class, 'update'])->name('sale-orders.quotes.update');
     Route::delete('/quotes/{quote}', [QuoteController::class, 'destroy'])->name('sale-orders.quotes.destroy');
-
-
 });
 
 
@@ -380,12 +377,9 @@ Route::prefix('settings')->group(function () {
     Route::get('/notifications', [SettingController::class, 'index']);
     Route::get('/users', [SettingController::class, 'index']);
     Route::get('/storage', [SettingController::class, 'index']);
-
-
-
-
+    Route::get('/customization', [SettingController::class, 'index']);
 });
-
+//
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
 Route::resource('/landing-pages', LandingPagesController::class);

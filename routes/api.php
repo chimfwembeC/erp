@@ -62,7 +62,18 @@ Route::get('/settings/users', [SettingController::class, 'getUserSettings']);
 // Update users settings
 Route::post('/settings/users/update', [SettingController::class, 'updateUserSettings']);
 
-// Fetch users settings
+// Fetch storage settings
 Route::get('/settings/storage', [SettingController::class, 'getStorageSettings']);
-// Update users settings
+// Update storage settings
 Route::post('/settings/storage/update', [SettingController::class, 'updateStorageSettings']);
+
+
+// Fetch customization settings
+Route::get('/settings/customization', [SettingController::class, 'getCustomizationSettings']);
+// Update customization settings
+Route::post('/settings/customization/update', [SettingController::class, 'updateCustomizationSettings']);
+
+Route::post('/settings/upload-files', [SettingController::class, 'uploadFiles']);
+
+
+// customization
