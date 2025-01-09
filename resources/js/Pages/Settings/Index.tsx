@@ -54,6 +54,8 @@ const Index = ({ settings }) => {
 
                 {currentSection === '/settings/integrations' && <IntegrationSettings />}
 
+                {currentSection === '/settings/access-control' && <IntegrationSettings />}
+
 
             </SettingsLayout>
         </AppLayout>

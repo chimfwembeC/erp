@@ -106,9 +106,10 @@ class SettingsSeeder extends Seeder
             // Branding: Favicon
             ['key' => 'branding_favicon', 'value' => 'uploads/favicon.ico', 'type' => 'string'],
             // Primary color for UI elements
-            ['key' => 'ui_primary_color', 'value' => '#0052CC', 'type' => 'string'], // Hexadecimal format
+            ['key' => 'ui_primary_color', 'value' => 'bg-blue-100', 'type' => 'string'], // Hexadecimal format
             // Secondary color for UI elements
-            ['key' => 'ui_secondary_color', 'value' => '#FF5722', 'type' => 'string'], // Hexadecimal format
+            ['key' => 'ui_secondary_color', 'value' => 'bg-tail-100', 'type' => 'string'], // Hexadecimal format
+            ['key' => 'ui_neutral_color', 'value' => 'bg-red-100', 'type' => 'string'], // Hexadecimal format
             // Default font for the application
             ['key' => 'ui_font_family', 'value' => 'Arial, sans-serif', 'type' => 'string'],
             // Enable dark mode

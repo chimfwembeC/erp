@@ -9,9 +9,9 @@ import { Dropdown } from 'primereact/dropdown';
 export default function CustomizationSettings() {
     const [brandingLogo, setBrandingLogo] = useState('');
     const [brandingFavicon, setBrandingFavicon] = useState('');
-    const [uiPrimaryColor, setUiPrimaryColor] = useState('#0052CC');
-    const [uiSecondaryColor, setUiSecondaryColor] = useState('#FF5722');
-    const [uiNeutralColor, setUiNeutralColor] = useState('#FF5722');
+    const [uiPrimaryColor, setUiPrimaryColor] = useState('bg-blue-100');
+    const [uiSecondaryColor, setUiSecondaryColor] = useState('bg-yellow-100');
+    const [uiNeutralColor, setUiNeutralColor] = useState('bg-gray-100');
     const [uiFontFamily, setUiFontFamily] = useState('Arial, sans-serif');
     const [enableDarkMode, setEnableDarkMode] = useState(true);
     const [uiLayoutType, setUiLayoutType] = useState('fixed');

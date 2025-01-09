@@ -94,6 +94,11 @@ Route::get('/settings/integrations', [SettingController::class, 'getIntegrationS
 // Update integrations settings
 Route::post('/settings/integrations/update', [SettingController::class, 'updateIntegrationSettings']);
 
+// Fetch integrations settings
+Route::get('/settings/access-control', [SettingController::class, 'getAccessControlSettings']);
+// Update integrations settings
+Route::post('/settings/access-control/update', [SettingController::class, 'updateAccessContronSettings']);
+
 Route::post('/settings/upload-files', [SettingController::class, 'uploadFiles']);
 
 
