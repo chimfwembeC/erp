@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
 import Sidebar from './Sidebar';
 import NotificationPanel from '@/Components/NotificationPanel';
@@ -8,6 +8,8 @@ import ProfileDropdown from '../Components/ProfileDropdown';
 import LanguageSelector from '@/Components/LanguageSelector';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '@/i18n';
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
+import axios from 'axios';
 
 interface LayoutProps {
     title: string;
@@ -23,6 +25,11 @@ const notifications = [
 export default function AppLayout({ title, children }: LayoutProps) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+    const [uiPrimaryColor, setUiPrimaryColor] = useState('#0052CC');
+    const [uiSecondaryColor, setUiSecondaryColor] = useState('#FF5722');
+    const [uiNeutralColor, setUiNeutralColor] = useState('#FF5722');
+    const [showFooter, setShowFooter] = useState(true);
+    const [footerText, setFooterText] = useState('© 2025 My Application. All rights reserved.');
 
     const toggleDropdown = (label: string) => {
         setActiveDropdown(activeDropdown === label ? null : label);
@@ -55,8 +62,24 @@ export default function AppLayout({ title, children }: LayoutProps) {
         },
     ];
 
+    useEffect(() => {
+        // Fetch current customization settings from the backend
+        axios.get('/api/settings/customization')
+            .then(response => {
+                const data = response.data;
+                setUiPrimaryColor(data.ui_primary_color);
+                setUiSecondaryColor(data.ui_secondary_color);
+                setUiNeutralColor(data.ui_neutral_color);
+                setShowFooter(data.show_footer === '1');
+                setFooterText(data.footer_text);
+            })
+            .catch(error => {
+                console.error("Error fetching customization settings:", error);
+            });
+    }, []);
+
     return (
-        <div className="flex h-screen overflow-hidden bg-gray-100">
+        <div className={`flex h-screen overflow-hidden ${uiPrimaryColor}`}>
             <Head title={title} />
             <I18nextProvider i18n={i18n}>
                 <Sidebar links={sidebarLinks} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -123,7 +146,60 @@ export default function AppLayout({ title, children }: LayoutProps) {
                     </nav>
                 </header>
                 {/* Main Content */}
-                <main className="flex-1 overflow-auto mt-16 p-4 md:p-6 bg-gray-100">{children}</main>
+                <main className="flex-1 overflow-auto mt-16 p-4 md:p-6">
+                    {children}
+                </main>
+                {/* Footer with Social Links */}
+                {showFooter && (
+                    <footer className="p-4">
+                        <div className="container mx-auto px-6 text-center">
+                            <p className="text-sm mb-4">
+                                &copy; {footerText}
+                            </p>
+
+                            {/* Social Media Links */}
+                            <div className="flex justify-center space-x-4">
+                                <a
+                                    href="https://facebook.com"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:text-accent transition duration-200"
+                                    aria-label="Facebook"
+                                >
+                                    <FaFacebookF size={20} />
+                                </a>
+                                <a
+                                    href="https://twitter.com"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:text-accent transition duration-200"
+                                    aria-label="Twitter"
+                                >
+                                    <FaTwitter size={20} />
+                                </a>
+                                <a
+                                    href="https://instagram.com"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:text-accent transition duration-200"
+                                    aria-label="Instagram"
+                                >
+                                    <FaInstagram size={20} />
+                                </a>
+                                <a
+                                    href="https://linkedin.com"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:text-accent transition duration-200"
+                                    aria-label="LinkedIn"
+                                >
+                                    <FaLinkedinIn size={20} />
+                                </a>
+                            </div>
+                        </div>
+                    </footer>
+                )}
+
             </div>
         </div>
     );

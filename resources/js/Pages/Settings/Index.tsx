@@ -13,6 +13,7 @@ import StorageSettings from '@/Components/StorageSettings';
 import CustomizationSettings from '@/Components/CustomizationSettings';
 import LogSettings from '@/Components/LogSettings';
 import LanguageSettings from '@/Components/LanguageSettings';
+import SecuritySettings from '@/Components/SecuritySettings';
 
 const Index = ({ settings }) => {
     const route = useRoute();
@@ -47,6 +48,8 @@ const Index = ({ settings }) => {
                 {currentSection === '/settings/logs' && <LogSettings />}
 
                 {currentSection === '/settings/language' && <LanguageSettings />}
+
+                {currentSection === '/settings/security' && <SecuritySettings />}
 
 
             </SettingsLayout>

@@ -380,6 +380,7 @@ Route::prefix('settings')->group(function () {
     Route::get('/customization', [SettingController::class, 'index']);
     Route::get('/logs', [SettingController::class, 'index']);
     Route::get('/language', [SettingController::class, 'index']);
+    Route::get('/security', [SettingController::class, 'index']);
 });
 //
 

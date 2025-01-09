@@ -104,6 +104,57 @@ class SettingController extends Controller
         return response()->json(['message' => 'General settings updated successfully.']);
     }
 
+    public function getSecuritySettings()
+    {
+        // Fetch settings from the database or return default values
+        $settings = Setting::whereIn('key', ['enable_two_factor_auth', 'password_policy'])->get()->pluck('value', 'key');
+
+        return response()->json($settings);
+    }
+
+    public function updateSecuritySettings(Request $request)
+    {
+        // Validate the request inputs
+        $validated = $request->validate([
+            'enable_two_factor_auth' => 'required|boolean',
+            'password_policy' => 'required',
+        ]);
+
+        try {
+            // Update 'enable_two_factor_auth' setting
+            Setting::updateOrCreate(
+                ['key' => 'enable_two_factor_auth'],
+                ['value' => $validated['enable_two_factor_auth']]
+            );
+
+            // Prepare password policy JSON
+            $passwordPolicy = json_encode([
+                'min_length' => $validated['password_policy'],
+                'uppercase' => 1,
+                'numbers' => 1,
+            ]);
+
+            // Update 'password_policy' setting
+            Setting::updateOrCreate(
+                ['key' => 'password_policy'],
+                ['value' => $passwordPolicy]
+            );
+
+            return response()->json(['message' => 'Security settings updated successfully.'], 200);
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            \Illuminate\Support\Facades\Log::error('Failed to update security settings:', ['error' => $e->getMessage()]);
+
+            return response()->json([
+                'message' => 'Failed to update security settings.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+
+
+
     public function getLogSettings()
     {
         // Fetch settings from the database or return default values
@@ -447,9 +498,9 @@ class SettingController extends Controller
         }
 
 
-        return response()->json(['message' => 'Customization settings updated successfully.']);
+        return redirect()->back();
     }
-
+    //
     /**
      * Display a listing of the resource.
      */

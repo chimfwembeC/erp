@@ -71,43 +71,30 @@ class SettingsSeeder extends Seeder
             ['key' => 'default_theme', 'value' => 'light', 'type' => 'string'],
             // Enable/Disable custom branding options
             ['key' => 'enable_branding', 'value' => '1', 'type' => 'boolean'],
-
             // Branding: Company logo
             ['key' => 'branding_logo', 'value' => 'uploads/logo.png', 'type' => 'string'],
-
             // Branding: Favicon
             ['key' => 'branding_favicon', 'value' => 'uploads/favicon.ico', 'type' => 'string'],
-
             // Primary color for UI elements
             ['key' => 'ui_primary_color', 'value' => '#0052CC', 'type' => 'string'], // Hexadecimal format
-
             // Secondary color for UI elements
             ['key' => 'ui_secondary_color', 'value' => '#FF5722', 'type' => 'string'], // Hexadecimal format
-
             // Default font for the application
             ['key' => 'ui_font_family', 'value' => 'Arial, sans-serif', 'type' => 'string'],
-
             // Enable dark mode
             ['key' => 'enable_dark_mode', 'value' => '1', 'type' => 'boolean'],
-
             // Default layout type: Fixed or Fluid
             ['key' => 'ui_layout_type', 'value' => 'fixed', 'type' => 'string'], // Options: fixed, fluid
-
             // Show or hide the application footer
             ['key' => 'show_footer', 'value' => '1', 'type' => 'boolean'],
-
             // Footer text customization
             ['key' => 'footer_text', 'value' => '© 2025 My Application. All rights reserved.', 'type' => 'string'],
-
             // Enable/Disable custom CSS
             ['key' => 'enable_custom_css', 'value' => '1', 'type' => 'boolean'],
-
             // Path to custom CSS file
             ['key' => 'custom_css_path', 'value' => 'uploads/custom.css', 'type' => 'string'],
-
             // Enable/Disable custom JavaScript
             ['key' => 'enable_custom_js', 'value' => '1', 'type' => 'boolean'],
-
             // Path to custom JavaScript file
             ['key' => 'custom_js_path', 'value' => 'uploads/custom.js', 'type' => 'string'],
         ];
