@@ -15,6 +15,7 @@ import LogSettings from '@/Components/LogSettings';
 import LanguageSettings from '@/Components/LanguageSettings';
 import SecuritySettings from '@/Components/SecuritySettings';
 import IntegrationSettings from '@/Components/IntegrationSettings';
+import AccessControlSettings from '@/Components/AccessControlSettings';
 
 const Index = ({ settings }) => {
     const route = useRoute();
@@ -54,7 +55,7 @@ const Index = ({ settings }) => {
 
                 {currentSection === '/settings/integrations' && <IntegrationSettings />}
 
-                {currentSection === '/settings/access-control' && <IntegrationSettings />}
+                {currentSection === '/settings/access-control' && <AccessControlSettings />}
 
 
             </SettingsLayout>

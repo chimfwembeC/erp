@@ -86,7 +86,7 @@ const LanguageSelector: React.FC = () => {
                 <span>{selectedLanguage.toUpperCase()}</span> {/* Display selected language */}
             </button>
             {dropdownOpen && (
-                <div className="absolute right-0 top-12 bg-white shadow-lg rounded-lg w-40 py-2 z-50">
+                <div className="absolute right-0 top-16 bg-white shadow-lg rounded-lg w-40 py-2 z-50">
                     {languages.map((lang) => (
                         <>
                             {/* <span>

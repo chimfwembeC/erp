@@ -4,7 +4,7 @@ import NotificationCard from './NotificationCard'
 
 export default function NotificationPanel({ notifications }) {
     return (
-        <div className="absolute right-0 top-12 w-64 bg-white shadow-lg rounded-lg py-2">
+        <div className="absolute right-0 top-16 w-64 bg-white shadow-lg rounded-lg py-2">
             <h3 className="px-4 py-2 text-sm font-semibold text-gray-700">
                 Notifications
             </h3>

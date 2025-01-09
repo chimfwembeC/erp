@@ -5,6 +5,7 @@ import { InputSwitch } from 'primereact/inputswitch';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { Dropdown } from 'primereact/dropdown';
+import { Editor } from 'primereact/editor';
 
 export default function CustomizationSettings() {
     const [brandingLogo, setBrandingLogo] = useState('');
@@ -64,8 +65,8 @@ export default function CustomizationSettings() {
                     // Update the state with the uploaded file URL
                     if (fileType === 'branding_logo') setBrandingLogo(response.data[fileType]);
                     if (fileType === 'branding_favicon') setBrandingFavicon(response.data[fileType]);
-                    if (fileType === 'custom_css') setCustomCssPath(response.data[fileType]);
-                    if (fileType === 'custom_js') setCustomJsPath(response.data[fileType]);
+                    if (fileType === 'custom_css_path') setCustomCssPath(response.data[fileType]);
+                    if (fileType === 'custom_js_path') setCustomJsPath(response.data[fileType]);
                 }
 
             } catch (error) {
@@ -136,7 +137,7 @@ export default function CustomizationSettings() {
                 <div className="flex justify-end">
                     <div className="w-1/2 bg-white p-4 rounded-lg shadow-md my-4">
                         {brandingLogo && (
-                            <img src={brandingLogo} alt="Brand Logo" />
+                            <img src={brandingLogo} className='h-48 ' alt="Brand Logo" />
                         )}
                         <label htmlFor="branding_logo" className="block text-md font-medium text-gray-700">
                             Branding Logo
@@ -152,8 +153,8 @@ export default function CustomizationSettings() {
                             type="text"
                             id="branding_logo"
                             value={brandingLogo}
-                            readOnly
-                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                            disabled
+                            className="w-full p-2 mt-1 bg-gray-300 rounded-md"
                         />
                     </div>
                 </div>
@@ -180,7 +181,7 @@ export default function CustomizationSettings() {
                             value={brandingFavicon}
                             disabled
                             readOnly
-                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                            className="w-full p-2 mt-1 bg-gray-300 rounded-md"
                         />
                     </div>
                 </div>
@@ -318,10 +319,10 @@ export default function CustomizationSettings() {
                         <label htmlFor="footer_text" className="block text-md font-medium text-gray-700">
                             Footer Text
                         </label>
-                        <InputText
+                        <Editor
                             id="footer_text"
                             value={footerText}
-                            onChange={(e) => setFooterText(e.target.value)}
+                            onTextChange={(e) => setFooterText(e.htmlValue)}
                             className="w-full mt-1 p-2 border border-gray-300 rounded-md"
                         />
                     </div>
@@ -358,8 +359,9 @@ export default function CustomizationSettings() {
                             type="text"
                             id="custom_css_path"
                             value={customCssPath}
+                            disabled
                             onChange={(e) => setCustomCssPath(e.target.value)}
-                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                            className="w-full p-2 mt-1 bg-gray-300 rounded-md"
                         />
                     </div>
                 </div>
@@ -397,8 +399,9 @@ export default function CustomizationSettings() {
                             type="text"
                             id="custom_js_path"
                             value={customJsPath}
+                            disabled
                             onChange={(e) => setCustomJsPath(e.target.value)}
-                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                            className="w-full p-2 mt-1 bg-gray-300 rounded-md"
                         />
                     </div>
                 </div>

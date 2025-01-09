@@ -119,7 +119,7 @@ class SettingsSeeder extends Seeder
             // Show or hide the application footer
             ['key' => 'show_footer', 'value' => '1', 'type' => 'boolean'],
             // Footer text customization
-            ['key' => 'footer_text', 'value' => '© 2025 My Application. All rights reserved.', 'type' => 'string'],
+            ['key' => 'footer_text', 'value' => '2025 My Application. All rights reserved.', 'type' => 'string'],
             // Enable/Disable custom CSS
             ['key' => 'enable_custom_css', 'value' => '1', 'type' => 'boolean'],
             // Path to custom CSS file

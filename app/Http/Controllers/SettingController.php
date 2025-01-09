@@ -22,8 +22,8 @@ class SettingController extends Controller
         $request->validate([
             'branding_logo' => 'nullable|file|mimes:jpg,jpeg,png,gif|max:2048',
             'branding_favicon' => 'nullable|file|mimes:ico,png,jpeg|max:1024',
-            'custom_css' => 'nullable|file|mimes:css|max:1024',
-            'custom_js' => 'nullable|file|mimes:js|max:1024',
+            'custom_css_path' => 'nullable|file|mimes:css|max:1024',
+            'custom_js_path' => 'nullable|file|mimes:js|max:1024',
         ]);
 
         // Initialize response array
@@ -32,7 +32,7 @@ class SettingController extends Controller
         // Process Branding Logo Upload
         if ($request->hasFile('branding_logo')) {
             $brandingLogo = $request->file('branding_logo');
-            $brandingLogoName = Str::random(40) . '.' . $brandingLogo->getClientOriginalExtension();
+            $brandingLogoName = $brandingLogo->getClientOriginalName() . '.' . $brandingLogo->getClientOriginalExtension();
             // Move the file to the desired location
             $brandingLogo->move(storage_path('app/public/uploads/logos'), $brandingLogoName);
             // Return the file URL for frontend (using Storage facade)
@@ -42,7 +42,7 @@ class SettingController extends Controller
         // Process Branding Favicon Upload
         if ($request->hasFile('branding_favicon')) {
             $brandingFavicon = $request->file('branding_favicon');
-            $brandingFaviconName = Str::random(40) . '.' . $brandingFavicon->getClientOriginalExtension();
+            $brandingFaviconName = $brandingFavicon->getClientOriginalName() . '.' . $brandingFavicon->getClientOriginalExtension();
             // Move the file to the desired location
             $brandingFavicon->move(storage_path('app/public/uploads/favicons'), $brandingFaviconName);
             // Return the file URL for frontend (using Storage facade)
@@ -50,23 +50,23 @@ class SettingController extends Controller
         }
 
         // Process Custom CSS Upload
-        if ($request->hasFile('custom_css')) {
-            $customCss = $request->file('custom_css');
-            $customCssName = Str::random(40) . '.' . $customCss->getClientOriginalExtension();
+        if ($request->hasFile('custom_css_path')) {
+            $customCss = $request->file('custom_css_path');
+            $customCssName = $customCss->getClientOriginalName() . '.' . $customCss->getClientOriginalExtension();
             // Move the file to the desired location
             $customCss->move(storage_path('app/public/uploads/css'), $customCssName);
             // Return the file URL for frontend (using Storage facade)
-            $response['custom_css'] = Storage::url('uploads/css/' . $customCssName);
+            $response['custom_css_path'] = Storage::url('uploads/css/' . $customCssName);
         }
 
         // Process Custom JS Upload
-        if ($request->hasFile('custom_js')) {
-            $customJs = $request->file('custom_js');
-            $customJsName = Str::random(40) . '.' . $customJs->getClientOriginalExtension();
+        if ($request->hasFile('custom_js_path')) {
+            $customJs = $request->file('custom_js_path');
+            $customJsName = $customJs->getClientOriginalName()  . '.' . $customJs->getClientOriginalExtension();
             // Move the file to the desired location
             $customJs->move(storage_path('app/public/uploads/js'), $customJsName);
             // Return the file URL for frontend (using Storage facade)
-            $response['custom_js'] = Storage::url('uploads/js/' . $customJsName);
+            $response['custom_js_path'] = Storage::url('uploads/js/' . $customJsName);
         }
 
         return response()->json($response);  // Return the file URL of the uploaded files
@@ -203,37 +203,156 @@ class SettingController extends Controller
     {
         // Validate the input fields
         $validated = $request->validate([
+            // Access Control
             'enable_access_control' => 'required|boolean',
-            'default_role' => 'required|string',
-            'session_timeout' => 'nullable|integer|min:1',  // Optional: session timeout in minutes
+            'default_access_level' => 'required|string',
+            'session_timeout' => 'nullable|integer|min:1',
+
+            // Integrations
+            'api_key' => 'nullable|string',
+            'third_party_integration_enabled' => 'required|boolean',
+
+            // Authentication
+            'oauth_google_enabled' => 'required|boolean',
+            'oauth_github_enabled' => 'required|boolean',
+
+            // Communication
+            'email_service_provider' => 'nullable|string',
+            'sms_service_provider' => 'nullable|string',
+
+            // Monitoring and Error Reporting
+            'error_reporting_enabled' => 'required|boolean',
+            'error_reporting_tool' => 'nullable|string',
+
+            // Analytics
+            'analytics_enabled' => 'required|boolean',
+            'analytics_tool' => 'nullable|string',
+
+            // Storage
+            'storage_driver' => 'nullable|string',
+            'storage_max_size' => 'nullable|integer|min:1',
+
+            // Security
+            'firewall_enabled' => 'required|boolean',
+            'captcha_enabled' => 'required|boolean',
+
+            // Open-Source Integrations
+            'openai_enabled' => 'required|boolean',
+            'openai_api_key' => 'nullable|string',
+            'chatbot_enabled' => 'required|boolean',
         ]);
 
         try {
-            // Update the settings in the database
+            // Access Control
             Setting::updateOrCreate(
                 ['key' => 'enable_access_control'],
-                ['value' => $validated['enable_access_control']]
+                ['value' => $validated['enable_access_control'] ? '1' : '0']
             );
-
             Setting::updateOrCreate(
-                ['key' => 'default_role'],
-                ['value' => $validated['default_role']]
+                ['key' => 'default_access_level'],
+                ['value' => $validated['default_access_level']]
             );
-
             Setting::updateOrCreate(
                 ['key' => 'session_timeout'],
-                ['value' => $validated['session_timeout'] ?? 30] // Default to 30 minutes
+                ['value' => $validated['session_timeout'] ?? 30] // Default to 30 minutes if not provided
             );
 
-            return response()->json(['message' => 'Access Control settings updated successfully.'], 200);
+            // Integrations
+            Setting::updateOrCreate(
+                ['key' => 'api_key'],
+                ['value' => $validated['api_key'] ?? '']
+            );
+            Setting::updateOrCreate(
+                ['key' => 'third_party_integration_enabled'],
+                ['value' => $validated['third_party_integration_enabled'] ? '1' : '0']
+            );
+
+            // Authentication
+            Setting::updateOrCreate(
+                ['key' => 'oauth_google_enabled'],
+                ['value' => $validated['oauth_google_enabled'] ? '1' : '0']
+            );
+            Setting::updateOrCreate(
+                ['key' => 'oauth_github_enabled'],
+                ['value' => $validated['oauth_github_enabled'] ? '1' : '0']
+            );
+
+            // Communication
+            Setting::updateOrCreate(
+                ['key' => 'email_service_provider'],
+                ['value' => $validated['email_service_provider'] ?? 'smtp'] // Default to SMTP if not provided
+            );
+            Setting::updateOrCreate(
+                ['key' => 'sms_service_provider'],
+                ['value' => $validated['sms_service_provider'] ?? '']
+            );
+
+            // Monitoring and Error Reporting
+            Setting::updateOrCreate(
+                ['key' => 'error_reporting_enabled'],
+                ['value' => $validated['error_reporting_enabled'] ? '1' : '0']
+            );
+            Setting::updateOrCreate(
+                ['key' => 'error_reporting_tool'],
+                ['value' => $validated['error_reporting_tool'] ?? '']
+            );
+
+            // Analytics
+            Setting::updateOrCreate(
+                ['key' => 'analytics_enabled'],
+                ['value' => $validated['analytics_enabled'] ? '1' : '0']
+            );
+            Setting::updateOrCreate(
+                ['key' => 'analytics_tool'],
+                ['value' => $validated['analytics_tool'] ?? 'matomo'] // Default to Matomo if not provided
+            );
+
+            // Storage
+            Setting::updateOrCreate(
+                ['key' => 'storage_driver'],
+                ['value' => $validated['storage_driver'] ?? 'local'] // Default to 'local' storage if not provided
+            );
+            Setting::updateOrCreate(
+                ['key' => 'storage_max_size'],
+                ['value' => $validated['storage_max_size'] ?? 10485760] // Default to 10 MB (10 * 1024 * 1024)
+            );
+
+            // Security
+            Setting::updateOrCreate(
+                ['key' => 'firewall_enabled'],
+                ['value' => $validated['firewall_enabled'] ? '1' : '0']
+            );
+            Setting::updateOrCreate(
+                ['key' => 'captcha_enabled'],
+                ['value' => $validated['captcha_enabled'] ? '1' : '0']
+            );
+
+            // Open-Source Integrations
+            Setting::updateOrCreate(
+                ['key' => 'openai_enabled'],
+                ['value' => $validated['openai_enabled'] ? '1' : '0']
+            );
+            Setting::updateOrCreate(
+                ['key' => 'openai_api_key'],
+                ['value' => $validated['openai_api_key'] ?? '']
+            );
+            Setting::updateOrCreate(
+                ['key' => 'chatbot_enabled'],
+                ['value' => $validated['chatbot_enabled'] ? '1' : '0']
+            );
+
+            return response()->json(['message' => 'Settings updated successfully.'], 200);
         } catch (\Exception $e) {
             // Handle any errors during the update process
+            \Illuminate\Support\Facades\Log::error('Failed to update settings:', ['error' => $e->getMessage()]);
+
             return response()->json([
-                'message' => 'Failed to update access control settings.',
+                'message' => 'Failed to update settings.',
                 'error' => $e->getMessage(),
             ], 500);
         }
     }
+
 
     public function getSecuritySettings()
     {
@@ -629,7 +748,7 @@ class SettingController extends Controller
         }
 
 
-        return redirect()->back();
+        return response()->json(["message" => "Customization settings updated successfully."]);
     }
     //
     /**

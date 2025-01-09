@@ -81,7 +81,7 @@ export function SettingsLayout({
 
                 {/* Main Content Section */}
                 <div className="flex-1">
-                    <div className="h-[calc(100vh-8rem)]">
+                    <div className="">
                         {children}
                     </div>
                 </div>
