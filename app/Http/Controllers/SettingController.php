@@ -104,6 +104,137 @@ class SettingController extends Controller
         return response()->json(['message' => 'General settings updated successfully.']);
     }
 
+    public function getIntegrationSettings()
+    {
+        // Fetch settings from the database or return default values
+        $settings = Setting::whereIn('key', [
+            'api_key',
+            'third_party_integration_enabled',
+            'oauth_google_enabled',
+            'oauth_github_enabled',
+            'email_service_provider',
+            'sms_service_provider',
+            'analytics_enabled',
+            'analytics_tool',
+            'storage_driver',
+            'storage_max_size',
+            'captcha_enabled',
+            'openai_enabled',
+            'openai_api_key',
+            'chatbot_enabled',
+        ])->get()->pluck('value', 'key');
+
+        return response()->json($settings);
+    }
+
+    public function updateIntegrationSettings(Request $request)
+    {
+        $validated = $request->validate([
+            'api_key' => 'nullable|string',
+            'third_party_integration_enabled' => 'required|boolean',
+            'oauth_google_enabled' => 'required|boolean',
+            'oauth_github_enabled' => 'required|boolean',
+            'email_service_provider' => 'nullable|string',
+            'sms_service_provider' => 'nullable|string',
+            'analytics_enabled' => 'required|boolean',
+            'analytics_tool' => 'nullable|string',
+            'storage_driver' => 'nullable|string',
+            'storage_max_size' => 'nullable|integer|min:0',
+            'captcha_enabled' => 'required|boolean',
+            'openai_enabled' => 'required|boolean',
+            'openai_api_key' => 'nullable|string',
+            'chatbot_enabled' => 'required|boolean',
+        ]);
+
+        try {
+            // List of keys to update
+            $keys = [
+                'api_key',
+                'third_party_integration_enabled',
+                'oauth_google_enabled',
+                'oauth_github_enabled',
+                'email_service_provider',
+                'sms_service_provider',
+                'analytics_enabled',
+                'analytics_tool',
+                'storage_driver',
+                'storage_max_size',
+                'captcha_enabled',
+                'openai_enabled',
+                'openai_api_key',
+                'chatbot_enabled',
+            ];
+
+            // Loop through keys and update settings
+            foreach ($keys as $key) {
+                if (array_key_exists($key, $validated)) {
+                    Setting::updateOrCreate(
+                        ['key' => $key],
+                        ['value' => $validated[$key]]
+                    );
+                }
+            }
+
+            return response()->json(['message' => 'Integration settings updated successfully.'], 200);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Failed to update integration settings:', ['error' => $e->getMessage()]);
+
+            return response()->json([
+                'message' => 'Failed to update integration settings.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function getAccessControlSettings()
+    {
+        // Fetch settings from the database
+        $settings = Setting::whereIn('key', [
+            'enable_access_control',
+            'default_role',
+            'session_timeout'
+        ])->get()->pluck('value', 'key');
+
+        return response()->json($settings);
+    }
+
+    // Update Access Control settings
+    public function updateAccessControlSettings(Request $request)
+    {
+        // Validate the input fields
+        $validated = $request->validate([
+            'enable_access_control' => 'required|boolean',
+            'default_role' => 'required|string',
+            'session_timeout' => 'nullable|integer|min:1',  // Optional: session timeout in minutes
+        ]);
+
+        try {
+            // Update the settings in the database
+            Setting::updateOrCreate(
+                ['key' => 'enable_access_control'],
+                ['value' => $validated['enable_access_control']]
+            );
+
+            Setting::updateOrCreate(
+                ['key' => 'default_role'],
+                ['value' => $validated['default_role']]
+            );
+
+            Setting::updateOrCreate(
+                ['key' => 'session_timeout'],
+                ['value' => $validated['session_timeout'] ?? 30] // Default to 30 minutes
+            );
+
+            return response()->json(['message' => 'Access Control settings updated successfully.'], 200);
+        } catch (\Exception $e) {
+            // Handle any errors during the update process
+            return response()->json([
+                'message' => 'Failed to update access control settings.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
     public function getSecuritySettings()
     {
         // Fetch settings from the database or return default values

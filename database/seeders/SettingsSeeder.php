@@ -48,10 +48,40 @@ class SettingsSeeder extends Seeder
             // Access Control
             ['key' => 'enable_access_control', 'value' => '1', 'type' => 'boolean'],
             ['key' => 'default_access_level', 'value' => 'user', 'type' => 'string'],
+            ['key' => 'session_timeout', 'value' => '30', 'type' => 'integer'],
 
             // Integrations
-            ['key' => 'api_key', 'value' => '', 'type' => 'string'],
-            ['key' => 'third_party_integration_enabled', 'value' => '0', 'type' => 'boolean'],
+            ['key' => 'api_key', 'value' => '', 'type' => 'string'], // Generic API key for external services
+            ['key' => 'third_party_integration_enabled', 'value' => '0', 'type' => 'boolean'], // Enable or disable third-party integrations
+
+            // Authentication
+            ['key' => 'oauth_google_enabled', 'value' => '0', 'type' => 'boolean'], // Enable Google OAuth
+            ['key' => 'oauth_github_enabled', 'value' => '0', 'type' => 'boolean'], // Enable GitHub OAuth
+
+            // Communication
+            ['key' => 'email_service_provider', 'value' => 'smtp', 'type' => 'string'], // e.g., SMTP or a provider
+            ['key' => 'sms_service_provider', 'value' => '', 'type' => 'string'], // Open-source SMS gateway (optional)
+
+            // Monitoring and Error Reporting
+            ['key' => 'error_reporting_enabled', 'value' => '0', 'type' => 'boolean'], // Enable error reporting
+            ['key' => 'error_reporting_tool', 'value' => '', 'type' => 'string'], // e.g., Sentry or similar tools
+
+            // Analytics
+            ['key' => 'analytics_enabled', 'value' => '0', 'type' => 'boolean'], // Enable analytics
+            ['key' => 'analytics_tool', 'value' => 'matomo', 'type' => 'string'], // Default: Matomo (open-source analytics)
+
+            // Storage
+            ['key' => 'storage_driver', 'value' => 'local', 'type' => 'string'], // Options: local, S3-compatible
+            ['key' => 'storage_max_size', 'value' => '10485760', 'type' => 'integer'], // Max file size in bytes (default: 10 MB)
+
+            // Security
+            ['key' => 'firewall_enabled', 'value' => '0', 'type' => 'boolean'], // Enable application-level firewall
+            ['key' => 'captcha_enabled', 'value' => '0', 'type' => 'boolean'], // Enable CAPTCHA (e.g., Google reCAPTCHA alternative)
+
+            // Open-Source Integrations
+            ['key' => 'openai_enabled', 'value' => '0', 'type' => 'boolean'], // Enable OpenAI-based services (if applicable)
+            ['key' => 'openai_api_key', 'value' => '', 'type' => 'string'], // OpenAI API key
+            ['key' => 'chatbot_enabled', 'value' => '0', 'type' => 'boolean'], // Enable open-source chatbot (e.g., Rasa, Botpress)
 
             // Data Management
             ['key' => 'data_retention_period_days', 'value' => '365', 'type' => 'integer'],

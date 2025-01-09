@@ -88,6 +88,12 @@ Route::get('/settings/security', [SettingController::class, 'getSecuritySettings
 // Update languages settings
 Route::post('/settings/security/update', [SettingController::class, 'updateSecuritySettings']);
 
+
+// Fetch integrations settings
+Route::get('/settings/integrations', [SettingController::class, 'getIntegrationSettings']);
+// Update integrations settings
+Route::post('/settings/integrations/update', [SettingController::class, 'updateIntegrationSettings']);
+
 Route::post('/settings/upload-files', [SettingController::class, 'uploadFiles']);
 
 
