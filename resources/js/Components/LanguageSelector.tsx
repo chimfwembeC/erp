@@ -79,7 +79,7 @@ const LanguageSelector: React.FC = () => {
 
             {/* Language Selector */}
             <button
-                className="text-gray-700 bg-white p-2 rounded-lg flex items-center space-x-2 focus:outline-none"
+                className={`text-gray-700 bg-white p-2 flex items-center space-x-2  p-2 rounded-full focus:outline-none hover:bg-gray-100 ${dropdownOpen ? "bg-gray-100" : ""}`}
                 onClick={toggleDropdown}
             >
                 <Globe size={24} />
@@ -87,6 +87,10 @@ const LanguageSelector: React.FC = () => {
             </button>
             {dropdownOpen && (
                 <div className="absolute right-0 top-16 bg-white shadow-lg rounded-lg w-40 py-2 z-50">
+                    <h3 className="px-4 py-2 text-sm font-semibold text-gray-700">
+                        Languages
+                    </h3>
+                    <div className="border-t"></div>
                     {languages.map((lang) => (
                         <>
                             {/* <span>

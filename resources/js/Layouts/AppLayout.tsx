@@ -10,6 +10,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from '@/i18n';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
 import axios from 'axios';
+import ThemeToggle from '@/Components/Themes/ThemeToggle';
 
 interface LayoutProps {
     title: string;
@@ -106,39 +107,24 @@ export default function AppLayout({ title, children }: LayoutProps) {
                         <div className="relative">
                             <LanguageSelector />
                         </div>
+                        {/* Mode Selector */}
+                        <div className="relative">
+                            <ThemeToggle />
+                        </div>
                         {/* Notifications */}
-                        <div className="relative" onMouseLeave={closeDropdown}>
-                            <button
-                                className="relative bg-white p-2 rounded-lg focus:outline-none"
-                                onClick={() => toggleDropdown('notifications')}
-                            >
-                                <Bell size={24} />
-                                <span className="absolute -top-2 -right-1 w-4 h-4 bg-accent text-white text-xs flex items-center justify-center rounded-sm">
-                                    3
-                                </span>
-                            </button>
-                            {activeDropdown === 'notifications' && (
-                                <NotificationPanel notifications={notifications} />
-                            )}
+                        <div className="relative">
+                            <NotificationPanel notifications={notifications} />
                         </div>
 
                         {/* Profile Dropdown */}
-                        <div className="relative" onMouseLeave={closeDropdown}>
-                            <button
-                                className="text-gray-700 bg-white p-2 rounded-lg focus:outline-none"
-                                onClick={() => toggleDropdown('settings')}
-                            >
-                                <Settings size={24} />
-                            </button>
-                            {activeDropdown === 'settings' && (
-                                <ProfileDropdown menuItems={menuItems} />
-                            )}
+                        <div className="relative">
+                            <ProfileDropdown menuItems={menuItems} />
                         </div>
                     </nav>
                 </header>
 
                 {/* Main Content */}
-                <main className="h-screen overflow-auto p-8">
+                <main className="h-screen overflow-auto">
                     <div className="mt-24">
                         <div className="pb-12">
                             {children}

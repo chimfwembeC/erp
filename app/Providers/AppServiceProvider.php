@@ -25,6 +25,9 @@ class AppServiceProvider extends ServiceProvider
             'favicon' => function () {
                 return DB::table('settings')->where('key', 'branding_favicon')->value('value');
             },
+            'logo' => function () {
+                return DB::table('settings')->where('key', 'branding_logo')->value('value');
+            },
         ]);
     }
 }

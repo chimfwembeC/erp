@@ -12,6 +12,8 @@ import 'primereact/resources/themes/saga-blue/theme.css'; // PrimeReact theme
 import 'primereact/resources/primereact.min.css'; // PrimeReact core css
 import 'primeicons/primeicons.css'; // PrimeIcons
 import 'sweetalert2/dist/sweetalert2.min.css'; // SweetAlert2 CSS
+import { PrimeReactProvider } from 'primereact/api';
+import { ThemeProvider } from './Components/Themes/ThemeProvider';
 
 
 const appName =
@@ -31,7 +33,11 @@ createInertiaApp({
         const root = createRoot(el);
         return root.render(
             <RouteContext.Provider value={(window as any).route}>
-                <App {...props} />
+                <PrimeReactProvider>
+                    <ThemeProvider>
+                        <App {...props} />
+                    </ThemeProvider>
+                </PrimeReactProvider>
             </RouteContext.Provider>,
         );
     },
