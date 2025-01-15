@@ -33,16 +33,22 @@ use App\Http\Controllers\InventoryAndWarehouse\ProductWarehouseController;
 use App\Http\Controllers\InventoryAndWarehouse\WarehouseController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SettingController;
-
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\MilestoneController;
+use App\Http\Controllers\IssueController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\LandingPagesController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SalesAndOrders\OrderController;
 use App\Http\Controllers\SalesAndOrders\OrderItemController;
 use App\Http\Controllers\SalesAndOrders\QuoteController;
 use App\Http\Controllers\SalesAndOrders\SalesAndOrderController;
+
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+
 
 Route::get('/', function () {
     // return view('landing-page', [
@@ -384,7 +390,13 @@ Route::prefix('settings')->group(function () {
     Route::get('/integrations', [SettingController::class, 'index']);
     Route::get('/access-control', [SettingController::class, 'index']);
 });
-//
+
+
+Route::resource('projects', ProjectController::class);
+Route::resource('milestones', MilestoneController::class);
+Route::resource('issues', IssueController::class);
+Route::resource('tasks', TaskController::class);
+Route::resource('assignments', AssignmentController::class);
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
 Route::resource('/landing-pages', LandingPagesController::class);
