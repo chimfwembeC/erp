@@ -8,7 +8,7 @@ import { FaTasks } from 'react-icons/fa'
 export default function Index({ projects }) {
     return (
         <AppLayout title="Projects">
-            <div className="p-6 space-y-4">
+            <div className="space-y-4">
                 {/* Welcome Section */}
                 <div className="bg-gray-800 text-white rounded-lg p-6">
                     <h1 className="text-3xl font-bold">Welcome to projects</h1>
