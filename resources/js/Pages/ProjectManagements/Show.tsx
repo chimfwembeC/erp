@@ -50,7 +50,7 @@ export default function Show({ project }: Props) {
         <AppLayout title="Project Details">
             <div className="p-2">
                 <ProjectDetails project={projectState} />
-                <TaskBoard tasks={projectState.tasks} updateTaskStatus={handleUpdateTaskStatus} />
+                <TaskBoard projectId={project.id} tasks={projectState.tasks} updateTaskStatus={handleUpdateTaskStatus} />
             </div>
         </AppLayout>
     );
