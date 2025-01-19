@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import axios from 'axios';
-import { Circle, FilterIcon, PlusSquareIcon, X } from 'lucide-react';
+import { Circle, CircleDot, FilterIcon, PlusSquareIcon, X } from 'lucide-react';
+import { Avatar } from 'primereact/avatar';
 
 const TaskBoard = ({ tasks, projectId, updateTaskStatus }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -134,6 +135,14 @@ const TaskBoard = ({ tasks, projectId, updateTaskStatus }) => {
                                                                 {...provided.dragHandleProps}
                                                                 className="bg-white text-black p-2 rounded shadow-sm"
                                                             >
+                                                                <div className="flex justify-between items-center">
+                                                                    <div className="">
+                                                                        <CircleDot size={25} />
+                                                                    </div>
+                                                                    <div className="">
+                                                                        <Avatar className='rounded-full'>ck</Avatar>
+                                                                    </div>
+                                                                </div>
                                                                 {task.title}
                                                             </div>
                                                         )}
