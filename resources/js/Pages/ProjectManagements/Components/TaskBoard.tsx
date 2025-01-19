@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import axios from 'axios';
-import { Circle, CircleDot, FilterIcon, PlusSquareIcon, X } from 'lucide-react';
+import { Circle, CircleAlertIcon, CircleCheck, CircleDot, CircleDotDashed, FilterIcon, PlusSquareIcon, X } from 'lucide-react';
 import { Avatar } from 'primereact/avatar';
+import Swal from 'sweetalert2';
 
-const TaskBoard = ({ tasks, projectId, updateTaskStatus }) => {
+const TaskBoard = ({ project, updateTaskStatus }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [taskState, setTaskState] = useState(project?.tasks);
     const [selectedType, setSelectedType] = useState('task'); // Default to 'task'
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        project_id: projectId,
+        project_id: project.id,
         assignee_id: '',
         due_date: '',
         milestone_id: '',
     });
+
+    const tasks = project?.tasks;
 
     const onDragEnd = (result) => {
         if (!result.destination) return;
@@ -33,7 +37,7 @@ const TaskBoard = ({ tasks, projectId, updateTaskStatus }) => {
         setFormData({
             title: '',
             description: '',
-            project_id: projectId,
+            project_id: project.id,
             assignee_id: '',
             due_date: '',
             milestone_id: '',
@@ -43,22 +47,61 @@ const TaskBoard = ({ tasks, projectId, updateTaskStatus }) => {
     const handleSubmit = async () => {
         try {
             const type = selectedType; // 'task' or 'issue'
-            const response = await axios.post(`/projects/${projectId}/${type}s`, formData);
-            console.log(`${type.charAt(0).toUpperCase() + type.slice(1)} created:`, response.data);
+            const result = await Swal.fire({
+                title: "Create task?",
+                text: 'Are you sure you want to create the task',
+                icon: 'question',
+                confirmButtonText: 'Yes',
+                showCancelButton: true,
+                cancelButtonText: 'No'
+            });
+
+            if (result.isConfirmed) {
+                const response = await axios.post(`/projects/${project.id}/${type}s`, formData).then(() => (
+                    Swal.fire({
+                        title: 'Task created successfully',
+                        icon: 'success',
+                        position: 'bottom-left',
+                        timer: 2000
+                    })
+                ));
+                console.log(`${type.charAt(0).toUpperCase() + type.slice(1)} created:`, response.data);
+
+                // Update local state to reflect task status change
+                // const updatedTasks = project.tasks.map(task =>
+                //     task.id === taskId ? { ...task } : task
+                // );
+
+                // setTaskState({
+                //     ...project,
+                //     tasks: updatedTasks
+                // })
+            } else {
+                Swal.fire({
+                    title: 'Error while creating task',
+                    icon: 'success',
+                    position: 'bottom-left',
+                    timer: 2000
+                })
+            }
+
             handleCloseModal();
         } catch (error) {
             console.error('Failed to create:', error);
         }
     };
 
+
+
     const columns = [
-        { id: 'pending', title: 'Todo', color: 'bg-gray-800', text: 'text-blue-500', description: "This item hasn't been started" },
-        { id: 'in_progress', title: 'In Progress', color: 'bg-gray-800', text: 'text-orange-500', description: 'This is actively being worked on' },
-        { id: 'completed', title: 'Done', color: 'bg-gray-800', text: 'text-green-500', description: 'This has been completed' },
+        { id: 'pending', title: 'Todo', color: 'bg-gray-800', text: 'text-blue-500', icon: <CircleDotDashed size={20} />, description: "This item hasn't been started" },
+        { id: 'in_progress', title: 'In Progress', color: 'bg-gray-800', text: 'text-orange-500', icon: <CircleDot size={20} />, description: 'This is actively being worked on' },
+        // { id: 'review', title: 'Review', color: 'bg-gray-800', text: 'text-yellow-500', icon: <CircleAlertIcon size={20} />, description: 'This has been completed' },
+        { id: 'completed', title: 'Done', color: 'bg-gray-800', text: 'text-green-500', icon: <CircleCheck size={20} />, description: 'This has been completed' },
     ];
 
     const getTaskCountForColumn = (status) => {
-        return tasks.filter((task) => task.status === status).length;
+        return taskState?.filter((task) => task.status === status).length;
     };
 
     return (
@@ -101,7 +144,7 @@ const TaskBoard = ({ tasks, projectId, updateTaskStatus }) => {
             </div>
             {/* Task Board */}
             <DragDropContext onDragEnd={onDragEnd}>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {columns.map((column) => (
                         <Droppable key={column.id} droppableId={column.id}>
                             {(provided) => (
@@ -133,17 +176,24 @@ const TaskBoard = ({ tasks, projectId, updateTaskStatus }) => {
                                                                 ref={provided.innerRef}
                                                                 {...provided.draggableProps}
                                                                 {...provided.dragHandleProps}
-                                                                className="bg-white text-black p-2 rounded shadow-sm"
+                                                                className="bg-gray-700 border border-gray-400 p-2 rounded shadow-sm"
                                                             >
                                                                 <div className="flex justify-between items-center">
-                                                                    <div className="">
-                                                                        <CircleDot size={25} />
+                                                                    <div className="flex justify-start items-center gap-1">
+                                                                        <span className={`${column.text}`}>
+                                                                            {column.icon}
+                                                                        </span>
+                                                                        <span className='hover:underline'>
+                                                                            erp #4
+                                                                        </span>
                                                                     </div>
                                                                     <div className="">
-                                                                        <Avatar className='rounded-full'>ck</Avatar>
+                                                                        <Avatar className='h-6 w-6 rounded-full text-xs text-black'>ck</Avatar>
                                                                     </div>
                                                                 </div>
-                                                                {task.title}
+                                                                <span className="hover:underline cursor-pointer line-clamp-1">
+                                                                    {task.title}
+                                                                </span>
                                                             </div>
                                                         )}
                                                     </Draggable>
@@ -151,12 +201,11 @@ const TaskBoard = ({ tasks, projectId, updateTaskStatus }) => {
                                             {provided.placeholder}
                                         </div>
                                     </div>
-                                    {/* <button
-                                        onClick={handleOpenModal}
-                                        className={`text-white pl-4 text-start w-full mt-auto p-2`}
+                                    <button
+                                        className={`text-white pl-4 text-start w-full hover:bg-gray-700 rounded-lg mt-auto p-2`}
                                     >
                                         Add Item
-                                    </button> */}
+                                    </button>
                                 </div>
                             )}
                         </Droppable>
