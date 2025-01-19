@@ -39,6 +39,12 @@ class DatabaseSeeder extends Seeder
             LandingPageSectionsTableSeeder::class,
             PostedJobsSeeder::class,
             JobApplicationsSeeder::class,
+
+            ProjectsTableSeeder::class,
+            MilestoneSeeder::class,
+            IssueSeeder::class,
+            TaskSeeder::class,
+            AssignmentSeeder::class,
         ]);
     }
 }

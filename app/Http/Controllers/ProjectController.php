@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProjectController extends Controller
 {
@@ -13,7 +14,10 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::all();
-        return response()->json($projects);
+
+        return Inertia::render("ProjectManagements/Index", [
+            'projects' => $projects
+        ]);
     }
 
     /**
@@ -21,7 +25,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render("ProjectManagements/Create");
     }
 
     /**
@@ -36,10 +40,11 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Project $project)
     {
-        $project = Project::with('milestones', 'issues')->findOrFail($id);
-        return response()->json($project);
+        return Inertia::render("ProjectManagements/Show", [
+            'project' => $project->load(['milestones', 'tasks', 'issues'])
+        ]);
     }
 
     /**

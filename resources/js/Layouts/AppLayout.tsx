@@ -126,7 +126,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
                 {/* Main Content */}
                 <main className="h-screen overflow-auto">
                     <div className="mt-24">
-                        <div className="pb-12">
+                        <div className="pb-12 px-6">
                             {children}
                         </div>
 

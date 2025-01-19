@@ -16,6 +16,22 @@ class TaskController extends Controller
         return response()->json($tasks);
     }
 
+    public function updateStatus(Request $request, $projectId, Task $task)
+    {
+        // Validate the status input
+        $request->validate([
+            'status' => 'required|string|in:pending,in_progress,completed', // Adjust according to your status values
+        ]);
+
+        // Update the task status
+        $task->status = $request->status;
+        $task->save();
+
+        return response()->json([
+            'message' => 'Task status updated successfully.',
+            'task' => $task
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      */
