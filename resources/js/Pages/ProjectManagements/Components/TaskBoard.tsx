@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import axios from 'axios';
-import { Circle, CircleAlertIcon, CircleCheck, CircleDot, CircleDotDashed, FilterIcon, PlusSquareIcon, X } from 'lucide-react';
+import { Circle, CircleAlertIcon, CircleCheck, CircleDot, CircleDotDashed, FilterIcon, MoreHorizontal, PlusSquareIcon, X } from 'lucide-react';
 import { Avatar } from 'primereact/avatar';
 import Swal from 'sweetalert2';
 
@@ -22,9 +22,18 @@ const TaskBoard = ({ project, updateTaskStatus }) => {
 
     const onDragEnd = (result) => {
         if (!result.destination) return;
+
         const taskId = parseInt(result.draggableId);
         const newStatus = result.destination.droppableId;
 
+        // Update task state locally
+        const updatedTasks = taskState.map((task) =>
+            task.id === taskId ? { ...task, status: newStatus } : task
+        );
+
+        setTaskState(updatedTasks);
+
+        // Optionally update the backend
         updateTaskStatus(taskId, newStatus);
     };
 
@@ -155,19 +164,21 @@ const TaskBoard = ({ project, updateTaskStatus }) => {
                                 >
                                     <div className="text-white">
                                         <div className="p-4">
-                                            <div className="flex justify-start items-center gap-1">
-                                                {/* Dynamic icon color based on column status */}
-                                                <Circle size={25} className={`font-bold ${column.text}`} />
-                                                <h2 className="text-lg font-semibold">{column.title}</h2>
-                                                {/* Dynamic task count */}
-                                                <div className="flex justify-center items-center bg-gray-600 h-6 w-6 text-xs rounded-full p-2">
-                                                    {getTaskCountForColumn(column.id)}
+                                            <div className="flex justify-between items-center">
+                                                <div className="flex justify-start items-center gap-1">
+                                                    {/* Dynamic icon color based on column status */}
+                                                    <Circle size={25} className={`font-bold ${column.text}`} />
+                                                    <h2 className="text-lg font-semibold">{column.title}</h2>
+                                                    {/* Dynamic task count */}
+                                                    <div className="flex justify-center items-center bg-gray-600 h-6 w-6 text-xs rounded-full p-2">
+                                                        {getTaskCountForColumn(column.id)}
+                                                    </div>
                                                 </div>
                                             </div>
                                             <p className="text-sm text-gray-400">{column.description}</p>
                                         </div>
                                         <div className="space-y-2 p-2 max-h-64 overflow-y-auto">
-                                            {tasks
+                                            {taskState
                                                 .filter((task) => task.status === column.id)
                                                 .map((task, index) => (
                                                     <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
