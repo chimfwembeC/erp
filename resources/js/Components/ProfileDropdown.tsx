@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from '@inertiajs/react';
-import { Settings } from 'lucide-react';
+import { Settings, User, LogOut, Bell, Briefcase } from 'lucide-react'; // Importing Lucide icons
 
 interface MenuItem {
     label: string;
     href?: string;
     onClick?: () => void;
     className?: string;
+    icon?: React.ReactNode; // Added icon property
 }
 
 interface ProfileDropdownProps {
@@ -39,7 +40,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ menuItems }) => {
             {/* Trigger Button */}
             <button
                 onClick={toggleDropdown}
-                className="text-gray-700 bg-white dark:bg-gray-600 dark:text-white p-2  p-2 rounded-full focus:outline-none hover:bg-gray-100"
+                className="text-gray-700 bg-white dark:bg-gray-600 dark:text-white p-2 rounded-full focus:outline-none hover:bg-gray-100"
                 aria-haspopup="true"
                 aria-expanded={dropdownOpen}
             >
@@ -48,9 +49,9 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ menuItems }) => {
 
             {/* Dropdown Menu */}
             {dropdownOpen && (
-                <div className="absolute right-0 top-16 w-48 bg-white shadow-lg rounded-lg py-2 z-50">
-                    <h3 className="px-4 py-2 text-sm font-semibold text-gray-700">Settings</h3>
-                    <div className="border-t border-gray-200"></div>
+                <div className="absolute right-0 top-16 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-lg py-2 z-50">
+                    <h3 className="px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200">Settings</h3>
+                    <div className="border-t border-gray-200 dark:border-gray-600"></div>
 
                     <ul>
                         {menuItems.length > 0 ? (
@@ -60,21 +61,27 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ menuItems }) => {
                                         {item.href ? (
                                             <Link
                                                 href={item.href}
-                                                className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${item.className || ''}`}
+                                                className={`block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 hover:dark:bg-indigo-500 ${item.className || ''}`}
                                             >
-                                                {item.label}
+                                                <div className="flex items-center">
+                                                    {item.icon && <span className="mr-2">{item.icon}</span>}
+                                                    {item.label}
+                                                </div>
                                             </Link>
                                         ) : (
                                             <button
                                                 onClick={item.onClick}
-                                                className={`block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${item.className || ''}`}
+                                                className={`block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-red-500 ${item.className || ''}`}
                                             >
-                                                {item.label}
+                                                <div className="flex items-center">
+                                                    {item.icon && <span className="mr-2">{item.icon}</span>}
+                                                    {item.label}
+                                                </div>
                                             </button>
                                         )}
                                     </li>
                                     {index < menuItems.length - 1 && (
-                                        <div className="border-t border-gray-200"></div>
+                                        <div className="border-t border-gray-200 dark:border-gray-600"></div>
                                     )}
                                 </React.Fragment>
                             ))

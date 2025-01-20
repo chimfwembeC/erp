@@ -3,7 +3,7 @@ import { Head, Link, router } from '@inertiajs/react';
 import Sidebar from './Sidebar';
 import NotificationPanel from '@/Components/NotificationPanel';
 import sidebarLinks from './sidebarLinks';
-import { Bell, Settings, Menu } from 'lucide-react';
+import { Bell, Settings, Menu, User, LogOut } from 'lucide-react';
 import ProfileDropdown from '../Components/ProfileDropdown';
 import LanguageSelector from '@/Components/LanguageSelector';
 import { I18nextProvider } from 'react-i18next';
@@ -49,10 +49,12 @@ export default function AppLayout({ title, children }: LayoutProps) {
         {
             label: 'Profile',
             href: '/profile',
+            icon: <User size={16} />, // Profile icon
         },
         {
             label: 'Settings',
             href: '/settings',
+            icon: <Settings size={16} />, // Settings icon
         },
         {
             label: 'Logout',
@@ -60,8 +62,10 @@ export default function AppLayout({ title, children }: LayoutProps) {
                 router.post('logout');
             },
             className: 'hover:text-red-600',
+            icon: <LogOut size={16} />, // Logout icon
         },
     ];
+
 
     useEffect(() => {
         // Fetch current customization settings from the backend
@@ -132,7 +136,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
 
                         {/* Footer */}
                         {showFooter && (
-                            <footer className="p-4 bottom-0 right-0 left-0 bg-white dark:bg-gray-800">
+                            <footer className="p-4 m-8  bottom-0 right-0 left-0 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600">
                                 <div className="container mx-auto px-6 text-center">
                                     <p className="text-sm mb-4 text-gray-800 dark:text-gray-400">
                                         &copy; {footerText}
