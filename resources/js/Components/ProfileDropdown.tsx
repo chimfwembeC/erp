@@ -39,7 +39,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ menuItems }) => {
             {/* Trigger Button */}
             <button
                 onClick={toggleDropdown}
-                className="text-gray-700 bg-white p-2  p-2 rounded-full focus:outline-none hover:bg-gray-100"
+                className="text-gray-700 bg-white dark:bg-gray-600 dark:text-white p-2  p-2 rounded-full focus:outline-none hover:bg-gray-100"
                 aria-haspopup="true"
                 aria-expanded={dropdownOpen}
             >

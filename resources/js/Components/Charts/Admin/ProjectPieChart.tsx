@@ -11,8 +11,8 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28'];
 
 const ProjectPieChart = () => {
     return (
-        <div className="bg-white p-6 shadow-xl rounded-lg">
-            <h3 className="text-2xl font-bold mb-4">Project Status</h3>
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-6 shadow-xl rounded-lg">
+            <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Project Status</h3>
             <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                     <Pie

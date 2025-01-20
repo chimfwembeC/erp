@@ -88,7 +88,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
 
             <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${sidebarOpen ? 'lg:ml-64' : ''}`}>
                 {/* Header */}
-                <header className={`fixed mt-4 mx-8 rounded-lg top-0 left-0 bg-white dark:bg-gray-800 shadow-lg right-0 z-40 p-4 flex items-center justify-between transition-all duration-300 ease-in-out ${sidebarOpen ? "lg:left-64" : "lg:left-0"}`}>
+                <header className={`fixed mt-4 mx-8  rounded-2xl top-0 left-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 shadow-lg right-0 z-40 p-4 flex items-center justify-between transition-all duration-300 ease-in-out ${sidebarOpen ? "lg:left-64" : "lg:left-0"}`}>
                     {/* Sidebar Toggle for Mobile */}
                     <button
                         onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -126,7 +126,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
                 {/* Main Content */}
                 <main className="h-screen overflow-y-auto bg-white dark:bg-gray-900">
                     <div className="mt-24">
-                        <div className="pb-12 px-8 ml-3">
+                        <div className="pb-12 px-6 ml-2">
                             {children}
                         </div>
 

@@ -35,7 +35,7 @@ export default function NotificationPanel({ notifications }: NotificationPanelPr
         <div className="relative">
             {/* Notification Bell */}
             <button
-                className="relative bg-white p-2 rounded-full focus:outline-none hover:bg-gray-100"
+                className="relative bg-white dark:bg-gray-600 p-2 rounded-full focus:outline-none hover:bg-gray-100"
                 onClick={toggleDropdown}
                 aria-label="Toggle notifications"
             >

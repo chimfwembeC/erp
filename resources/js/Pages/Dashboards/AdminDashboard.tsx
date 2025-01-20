@@ -24,18 +24,12 @@ export default function AdminDashboard() {
 
     return (
         <div className="py-8">
-            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-
-
+            <div className="max-w-7xl mx-auto space-y-6">
+                <Welcome />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     {stats.map((stat) => (
                         <StatCard key={stat.label} {...stat} />
                     ))}
-                </div>
-
-
-                <div className="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                    <Welcome />
                 </div>
 
                 <TaskLineChart />

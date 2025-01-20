@@ -128,7 +128,7 @@ const Sidebar: React.FC<{ links: SidebarLink[]; sidebarOpen: boolean; setSidebar
                         )}
                     </Link>
                 )}
-                {link.divider && <div className="my-1 border-t border-gray-200 dark:border-gray-700"></div>}
+                {link.divider && <div className="my-1 -m-4 border-t border-gray-200 dark:border-gray-700"></div>}
             </li>
         ));
     };
@@ -136,12 +136,12 @@ const Sidebar: React.FC<{ links: SidebarLink[]; sidebarOpen: boolean; setSidebar
     return (
         <>
             {/* Mobile Toggle Button */}
-            <button
+            {/* <button
                 className="p-2 text-gray-600 lg:hidden fixed top-2 left-2 z-50 bg-gray-200 rounded-full shadow dark:bg-gray-700 dark:text-white"
                 onClick={() => setSidebarOpen(prev => !prev)}
             >
                 <Menu size={24} />
-            </button>
+            </button> */}
 
             {/* Mobile Overlay */}
             {sidebarOpen && (
@@ -153,7 +153,7 @@ const Sidebar: React.FC<{ links: SidebarLink[]; sidebarOpen: boolean; setSidebar
 
             {/* Sidebar */}
             <div
-                className={`fixed top-0 left-0 z-50 h-full w-64 bg-white dark:bg-gray-800 text-white shadow-md transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+                className={`fixed top-0 left-0 z-50 h-full w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 text-white shadow-md transition-transform rounded-r-2xl duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
                     }`}
             >
                 <nav className="h-full flex flex-col">
@@ -163,12 +163,12 @@ const Sidebar: React.FC<{ links: SidebarLink[]; sidebarOpen: boolean; setSidebar
                         </h1>
                         <button
                             onClick={() => setSidebarOpen(false)}
-                            className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 text-black dark:bg-gray-700 dark:hover:bg-gray-600"
+                            className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 text-black dark:text-white dark:bg-gray-700 dark:hover:bg-gray-600"
                         >
                             <X size={24} />
                         </button>
                     </div>
-                    <div className="p-4">
+                    <div className="px-4 my-2 -mt-2">
                         <Link href="/dashboard" className="text-xl font-bold text-gray-800 dark:text-white">
                             Tekrem Solutions
                         </Link>
