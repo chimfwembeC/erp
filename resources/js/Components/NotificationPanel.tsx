@@ -35,7 +35,7 @@ export default function NotificationPanel({ notifications }: NotificationPanelPr
         <div className="relative">
             {/* Notification Bell */}
             <button
-                className="relative bg-white p-2 rounded-full focus:outline-none hover:bg-gray-100"
+                className="relative bg-white dark:bg-gray-600 p-2 rounded-full focus:outline-none hover:bg-gray-100"
                 onClick={toggleDropdown}
                 aria-label="Toggle notifications"
             >
@@ -51,14 +51,14 @@ export default function NotificationPanel({ notifications }: NotificationPanelPr
             {dropdownOpen && (
                 <div
                     ref={dropdownRef}
-                    className="absolute right-0 top-16 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50"
+                    className="absolute right-0 top-16 mt-2 w-64 bg-white dark:bg-gray-800  border border-gray-200 dark: border-gray-600 shadow-lg rounded-lg py-2 z-50"
                 >
-                    <h3 className="px-4 py-2 text-sm font-semibold text-gray-700">
+                    <h3 className="px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200">
                         Notifications
                     </h3>
-                    <div className="border-t"></div>
+                    <div className="border-t border-gray-600"></div>
 
-                    <ul className="divide-y divide-gray-200">
+                    <ul className="divide-y divide-gray-600">
                         {notifications.length > 0 ? (
                             notifications.map((notification, index) => (
                                 <NotificationCard
@@ -75,7 +75,7 @@ export default function NotificationPanel({ notifications }: NotificationPanelPr
                         )}
                     </ul>
 
-                    <div className="border-t"></div>
+                    <div className="border-t border-gray-600"></div>
 
                     <div className="text-center p-2">
                         <Link

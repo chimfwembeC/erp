@@ -102,9 +102,9 @@ class SettingsSeeder extends Seeder
             // Enable/Disable custom branding options
             ['key' => 'enable_branding', 'value' => '1', 'type' => 'boolean'],
             // Branding: Company logo
-            ['key' => 'branding_logo', 'value' => 'uploads/logo.png', 'type' => 'string'],
+            ['key' => 'branding_logo', 'value' => '/public/logo.png', 'type' => 'string'],
             // Branding: Favicon
-            ['key' => 'branding_favicon', 'value' => 'uploads/favicon.ico', 'type' => 'string'],
+            ['key' => 'branding_favicon', 'value' => '/public/favicon.ico', 'type' => 'string'],
             // Primary color for UI elements
             ['key' => 'ui_primary_color', 'value' => 'bg-blue-100', 'type' => 'string'], // Hexadecimal format
             // Secondary color for UI elements
@@ -129,7 +129,6 @@ class SettingsSeeder extends Seeder
             // Path to custom JavaScript file
             ['key' => 'custom_js_path', 'value' => 'uploads/custom.js', 'type' => 'string'],
         ];
-
 
         DB::table('settings')->insert($settings);
     }

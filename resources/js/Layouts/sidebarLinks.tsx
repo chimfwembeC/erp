@@ -1,6 +1,6 @@
 import React from 'react'
 import { Activity, Bell, Brush, Clipboard, CreditCard, Database, DollarSign, FileText, Folder, Globe, HelpCircle, Home, LifeBuoy, Link, ListOrdered, Lock, Settings, Shield, ShoppingCart, User, Users, Warehouse } from "lucide-react";
-import { FaFileInvoice, FaMoneyCheckAlt, FaProductHunt } from "react-icons/fa";
+import { FaFileInvoice, FaMoneyCheckAlt, FaProductHunt, FaProjectDiagram } from "react-icons/fa";
 import useTypedPage from '@/Hooks/useTypedPage';
 // import { useTranslation } from 'react-i18next';
 
@@ -146,6 +146,20 @@ const sidebarLinks: SidebarLink[] = [
             { labelKey: 'Leads', href: '/crm/leads' },
             { labelKey: 'Opportunities', href: '/crm/opportunities' },
             { labelKey: 'Customers', href: '/crm/customers' },
+        ],
+    },
+    // POS Module
+    {
+        labelKey: 'projectManagement',
+        icon: <FaProjectDiagram size={20} />,
+        divider: true,
+        roles: ['admin', 'project_manager', 'developer'], // Add roles for project management
+        children: [
+            { labelKey: 'Projects', href: '/projects' },
+            { labelKey: 'Milestones', href: '/projects/milestones' },
+            { labelKey: 'Tasks', href: '/projects/tasks' },
+            { labelKey: 'Issues', href: '/projects/issues' },
+            { labelKey: 'Reports', href: '/projects/reports' },
         ],
     },
 

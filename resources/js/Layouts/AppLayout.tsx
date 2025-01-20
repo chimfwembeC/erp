@@ -3,7 +3,7 @@ import { Head, Link, router } from '@inertiajs/react';
 import Sidebar from './Sidebar';
 import NotificationPanel from '@/Components/NotificationPanel';
 import sidebarLinks from './sidebarLinks';
-import { Bell, Settings, Menu } from 'lucide-react';
+import { Bell, Settings, Menu, User, LogOut } from 'lucide-react';
 import ProfileDropdown from '../Components/ProfileDropdown';
 import LanguageSelector from '@/Components/LanguageSelector';
 import { I18nextProvider } from 'react-i18next';
@@ -49,10 +49,12 @@ export default function AppLayout({ title, children }: LayoutProps) {
         {
             label: 'Profile',
             href: '/profile',
+            icon: <User size={16} />, // Profile icon
         },
         {
             label: 'Settings',
             href: '/settings',
+            icon: <Settings size={16} />, // Settings icon
         },
         {
             label: 'Logout',
@@ -60,8 +62,10 @@ export default function AppLayout({ title, children }: LayoutProps) {
                 router.post('logout');
             },
             className: 'hover:text-red-600',
+            icon: <LogOut size={16} />, // Logout icon
         },
     ];
+
 
     useEffect(() => {
         // Fetch current customization settings from the backend
@@ -80,36 +84,36 @@ export default function AppLayout({ title, children }: LayoutProps) {
     }, []);
 
     return (
-        <div className={`flex flex-col h-screen overflow-hidden ${uiPrimaryColor ? uiPrimaryColor : 'bg-gray-100'}`}>
+        <div className={`flex flex-col h-screen overflow-hidden ${uiPrimaryColor ? uiPrimaryColor : 'bg-gray-100'} dark:bg-gray-900 dark:text-white`}>
             <Head title={title} />
             <I18nextProvider i18n={i18n}>
                 <Sidebar links={sidebarLinks} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
             </I18nextProvider>
 
-            <div className="flex-1 flex flex-col lg:ml-64">
+            <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${sidebarOpen ? 'lg:ml-64' : ''}`}>
                 {/* Header */}
-                <header className="fixed m-4  mx-8 rounded-lg top-0 left-0 lg:left-64 bg-white shadow-lg right-0 z-40 p-4 flex items-center justify-between">
+                <header className={`fixed mt-4 mx-8  rounded-2xl top-0 left-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 shadow-lg right-0 z-40 p-4 flex items-center justify-between transition-all duration-300 ease-in-out ${sidebarOpen ? "lg:left-64" : "lg:left-0"}`}>
                     {/* Sidebar Toggle for Mobile */}
                     <button
                         onClick={() => setSidebarOpen(!sidebarOpen)}
-                        className="lg:hidden p-2"
+                        className="p-2"
                     >
                         <Menu size={24} />
                     </button>
                     <div className="relative hidden md:block">
-                        <div className="left-0 bg-white p-2 rounded-lg">
-                            <h1 className="text-sm md:text-md lg:text-xl font-semibold">{title}</h1>
+                        <div className="left-0 bg-white p-2 rounded-lg dark:bg-gray-800">
+                            <h1 className="text-sm md:text-md lg:text-xl font-semibold text-gray-800 dark:text-white">{title}</h1>
                         </div>
                     </div>
                     {/* Right-side Actions */}
                     <nav className="flex items-center space-x-4 relative">
-                        {/* Language Selector */}
-                        <div className="relative">
-                            <LanguageSelector />
-                        </div>
                         {/* Mode Selector */}
                         <div className="relative">
                             <ThemeToggle />
+                        </div>
+                        {/* Language Selector */}
+                        <div className="relative">
+                            <LanguageSelector />
                         </div>
                         {/* Notifications */}
                         <div className="relative">
@@ -124,18 +128,17 @@ export default function AppLayout({ title, children }: LayoutProps) {
                 </header>
 
                 {/* Main Content */}
-                <main className="h-screen overflow-auto">
+                <main className="h-screen overflow-y-auto bg-white dark:bg-gray-900">
                     <div className="mt-24">
-                        <div className="pb-12">
+                        <div className="pb-12 px-6 ml-2">
                             {children}
                         </div>
 
-
                         {/* Footer */}
                         {showFooter && (
-                            <footer className="p-4 bottom-0 right-0 left-0">
+                            <footer className="p-4 m-8  bottom-0 right-0 left-0 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600">
                                 <div className="container mx-auto px-6 text-center">
-                                    <p className="text-sm mb-4">
+                                    <p className="text-sm mb-4 text-gray-800 dark:text-gray-400">
                                         &copy; {footerText}
                                     </p>
 

@@ -14,6 +14,7 @@ use App\Http\Controllers\Accounting\PaymentController;
 use App\Http\Controllers\Accounting\PurchaseOrderController;
 use App\Http\Controllers\Accounting\SaleInvoiceController;
 use App\Http\Controllers\Accounting\TaxController;
+use App\Http\Controllers\AssetController;
 use App\Http\Controllers\AuditAndCompliance\AuditAndComplianceController;
 use App\Http\Controllers\HRM\HRMController;
 use App\Http\Controllers\HRM\EmployeeController;
@@ -33,16 +34,22 @@ use App\Http\Controllers\InventoryAndWarehouse\ProductWarehouseController;
 use App\Http\Controllers\InventoryAndWarehouse\WarehouseController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SettingController;
-
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\MilestoneController;
+use App\Http\Controllers\IssueController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\LandingPagesController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SalesAndOrders\OrderController;
 use App\Http\Controllers\SalesAndOrders\OrderItemController;
 use App\Http\Controllers\SalesAndOrders\QuoteController;
 use App\Http\Controllers\SalesAndOrders\SalesAndOrderController;
+
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+
 
 Route::get('/', function () {
     // return view('landing-page', [
@@ -384,7 +391,65 @@ Route::prefix('settings')->group(function () {
     Route::get('/integrations', [SettingController::class, 'index']);
     Route::get('/access-control', [SettingController::class, 'index']);
 });
-//
+
+// Projects and Nested Resources
+Route::prefix('projects')->group(function () {
+
+    // Project Routes
+    Route::get('/', [ProjectController::class, 'index'])->name('projects.index');
+    Route::get('/create', [ProjectController::class, 'create'])->name('projects.create');
+    Route::post('/', [ProjectController::class, 'store'])->name('projects.store');
+    Route::get('/{project}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::get('/{project}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
+    Route::put('/{project}', [ProjectController::class, 'update'])->name('projects.update');
+    Route::delete('/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+
+    // Nested Milestones under Projects
+    Route::prefix('{project}/milestones')->group(function () {
+        Route::get('/', [MilestoneController::class, 'index'])->name('milestones.index');
+        Route::get('/create', [MilestoneController::class, 'create'])->name('milestones.create');
+        Route::post('/', [MilestoneController::class, 'store'])->name('milestones.store');
+        Route::get('/{milestone}', [MilestoneController::class, 'show'])->name('milestones.show');
+        Route::get('/{milestone}/edit', [MilestoneController::class, 'edit'])->name('milestones.edit');
+        Route::put('/{milestone}', [MilestoneController::class, 'update'])->name('milestones.update');
+        Route::delete('/{milestone}', [MilestoneController::class, 'destroy'])->name('milestones.destroy');
+    });
+
+    // Nested Issues under Projects
+    Route::prefix('{project}/issues')->group(function () {
+        Route::get('/', [IssueController::class, 'index'])->name('issues.index');
+        Route::get('/create', [IssueController::class, 'create'])->name('issues.create');
+        Route::post('/', [IssueController::class, 'store'])->name('issues.store');
+        Route::get('/{issue}', [IssueController::class, 'show'])->name('issues.show');
+        Route::get('/{issue}/edit', [IssueController::class, 'edit'])->name('issues.edit');
+        Route::put('/{issue}', [IssueController::class, 'update'])->name('issues.update');
+        Route::delete('/{issue}', [IssueController::class, 'destroy'])->name('issues.destroy');
+    });
+
+    // Nested Tasks under Projects
+    Route::prefix('{project}/tasks')->group(function () {
+        Route::get('/', [TaskController::class, 'index'])->name('tasks.index');
+        Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
+        Route::post('/', [TaskController::class, 'store'])->name('tasks.store');
+        Route::get('/{task}', [TaskController::class, 'show'])->name('tasks.show');
+        Route::get('/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
+        Route::put('/{task}/status', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
+        Route::put('/{task}', [TaskController::class, 'update'])->name('tasks.update');
+        Route::delete('/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+    });
+});
+
+// Assignments Routes
+Route::prefix('assignments')->group(function () {
+    Route::get('/', [AssignmentController::class, 'index'])->name('assignments.index');
+    Route::get('/create', [AssignmentController::class, 'create'])->name('assignments.create');
+    Route::post('/', [AssignmentController::class, 'store'])->name('assignments.store');
+    Route::get('/{assignment}', [AssignmentController::class, 'show'])->name('assignments.show');
+    Route::get('/{assignment}/edit', [AssignmentController::class, 'edit'])->name('assignments.edit');
+    Route::put('/{assignment}', [AssignmentController::class, 'update'])->name('assignments.update');
+    Route::delete('/{assignment}', [AssignmentController::class, 'destroy'])->name('assignments.destroy');
+});
+
 
 Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
 Route::resource('/landing-pages', LandingPagesController::class);
