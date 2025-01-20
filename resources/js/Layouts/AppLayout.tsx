@@ -11,6 +11,7 @@ import i18n from '@/i18n';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
 import axios from 'axios';
 import ThemeToggle from '@/Components/Themes/ThemeToggle';
+import useTypedPage from '@/Hooks/useTypedPage';
 
 interface LayoutProps {
     title: string;
@@ -31,7 +32,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
     const [uiNeutralColor, setUiNeutralColor] = useState('bg-gray-100');
     const [showFooter, setShowFooter] = useState(true);
     const [footerText, setFooterText] = useState('2025 My Application. All rights reserved.');
-
+    const page = useTypedPage();
     const toggleDropdown = (label: string) => {
         setActiveDropdown(activeDropdown === label ? null : label);
     };
@@ -144,7 +145,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
 
                                     <div className="flex justify-center space-x-4">
                                         <a
-                                            href="https://facebook.com"
+                                            href={page.props.socials?.site_facebook_url}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="hover:text-accent transition duration-200"
@@ -153,7 +154,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
                                             <FaFacebookF size={20} />
                                         </a>
                                         <a
-                                            href="https://twitter.com"
+                                            href={page.props.socials?.site_twitter_url}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="hover:text-accent transition duration-200"
@@ -162,7 +163,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
                                             <FaTwitter size={20} />
                                         </a>
                                         <a
-                                            href="https://instagram.com"
+                                            href={page.props.socials?.site_instagram_url}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="hover:text-accent transition duration-200"
@@ -171,7 +172,7 @@ export default function AppLayout({ title, children }: LayoutProps) {
                                             <FaInstagram size={20} />
                                         </a>
                                         <a
-                                            href="https://linkedin.com"
+                                            href={page.props.socials?.site_linkedin_url}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="hover:text-accent transition duration-200"

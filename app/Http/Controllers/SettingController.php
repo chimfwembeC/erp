@@ -76,7 +76,7 @@ class SettingController extends Controller
     public function getGeneralSettings()
     {
         // Fetch settings from the database or return default values
-        $settings = Setting::whereIn('key', ['site_name', 'timezone', 'maintenance_mode'])->get()->pluck('value', 'key');
+        $settings = Setting::whereIn('key', ['site_name', 'timezone', 'maintenance_mode', 'site_facebook_url', 'site_twitter_url', 'site_instagram_url', 'site_linkedin_url'])->get()->pluck('value', 'key');
 
         return response()->json($settings);
     }
@@ -97,6 +97,26 @@ class SettingController extends Controller
         Setting::updateOrCreate(
             ['key' => 'maintenance_mode'],
             ['value' => $request->input('maintenance_mode')]
+        );
+
+        Setting::updateOrCreate(
+            ['key' => 'site_facebook_url'],
+            ['value' => $request->input('site_facebook_url')]
+        );
+
+        Setting::updateOrCreate(
+            ['key' => 'site_twitter_url'],
+            ['value' => $request->input('site_twitter_url')]
+        );
+
+        Setting::updateOrCreate(
+            ['key' => 'site_linkedin_url'],
+            ['value' => $request->input('site_linkedin_url')]
+        );
+
+        Setting::updateOrCreate(
+            ['key' => 'site_instagram_url'],
+            ['value' => $request->input('site_instagram_url')]
         );
 
         // Handle logo upload logic here, if applicable

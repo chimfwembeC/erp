@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
                 return DB::table('settings')->where('key', 'branding_logo')->value('value');
             },
             'socials' => function () {
-                return DB::table('settings')->whereIn('key', ['site_facebook_url', 'site_twitter_url', 'site_instagram_url', 'site_linkedin_url'])->value('value');
+                return DB::table('settings')->whereIn('key', ['site_facebook_url', 'site_twitter_url', 'site_instagram_url', 'site_linkedin_url'])->get()->pluck('value', 'key');
             },
         ]);
     }
