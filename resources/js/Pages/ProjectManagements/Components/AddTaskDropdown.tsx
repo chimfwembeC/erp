@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { MoreHorizontalIcon, Edit, Trash } from 'lucide-react';
+import { MoreHorizontalIcon, Edit, Trash, Inspect, PlusSquareIcon } from 'lucide-react';
 import { Toast } from 'primereact/toast';
+import { FaTasks } from 'react-icons/fa';
 
-const ProjectDropdown = ({ projectId }) => {
+const AddTaskDropdown = ({ projectId }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const toastRef = useRef<any>(null);
@@ -61,30 +62,37 @@ const ProjectDropdown = ({ projectId }) => {
             <Toast ref={toastRef} position="bottom-right" />
 
             <button
-                className={`p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 ${dropdownOpen ? "bg-gray-200 dark:bg-gray-600" : ""}`}
+                type='button'
                 onClick={toggleDropdown}
+                className={`w-12 h-12 p-2 text-xs rounded-l-xl
+                            hover:bg-indigo-500 hover:text-white
+                            border-r border-gray-200 dark:border-gray-600
+                            flex justify-center items-center bg-gray-200
+                            dark:bg-gray-800 text-gray-400 dark:text-gray-200
+                            ${dropdownOpen ? "bg-gray-200 dark:bg-gray-600" : ""}
+                            `}
             >
-                <MoreHorizontalIcon size={20} />
+                <PlusSquareIcon size={20} />
             </button>
 
             {dropdownOpen && (
-                <div className="absolute right-0 mt-2 py-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600  rounded-md shadow-lg w-40 z-50">
+                <div className="absolute left-0 -top-40 py-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600  rounded-md shadow-lg w-40 z-50">
                     <div className="text-sm text-gray-700 dark:text-gray-300">
                         <div className="px-4 mb-2">
-                            <div className="text-md">Actions</div>
+                            <div className="text-xs">Default (create task)</div>
                         </div>
                         <div className="border-t border-gray-400 dark:border-gray-600"></div>
                         <button
                             className="block w-full text-left px-4 py-2 hover:bg-gray-200 dark:hover:bg-indigo-500"
                             onClick={handleEdit}
                         >
-                            <Edit size={16} className="inline mr-2" /> Edit Details
+                            <Inspect size={16} className="inline mr-2" /> Create Issue
                         </button>
                         <button
                             className="block w-full text-left px-4 py-2 hover:bg-gray-200 dark:hover:bg-indigo-500"
                             onClick={handleDelete}
                         >
-                            <Trash size={16} className="inline mr-2" /> Delete
+                            <FaTasks size={16} className="inline mr-2" /> Create Task
                         </button>
                     </div>
                 </div>
@@ -93,4 +101,4 @@ const ProjectDropdown = ({ projectId }) => {
     );
 };
 
-export default ProjectDropdown;
+export default AddTaskDropdown;
