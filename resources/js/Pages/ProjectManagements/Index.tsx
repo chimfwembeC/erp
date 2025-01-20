@@ -19,7 +19,7 @@ export default function Index({ projects }) {
                 </div>
 
                 {/* Navigation Links */}
-                <div className="flex space-x-4 items-center">
+                {/* <div className="flex space-x-4 items-center">
                     <Link href="/projects/issues" className="flex items-center  bg-indigo-500 text-white hover:bg-indigo-600 text-white px-4 py-2 rounded-lg">
                         <Inspect className="mr-2" size={20} />
                         Issues
@@ -32,7 +32,7 @@ export default function Index({ projects }) {
                         <FaTasks className="mr-2" size={20} />
                         Tasks
                     </Link>
-                </div>
+                </div> */}
 
                 {/* Project List */}
                 <ProjectsList projects={projects} />
