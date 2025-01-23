@@ -1,9 +1,10 @@
 import { ProgressBar } from "primereact/progressbar";
 import React, { useState } from "react";
-// import "./StackedCardScroll.css";
 
 const StackedCardScroll = ({ children }) => {
     const [activeIndex, setActiveIndex] = useState(0);
+
+    const totalCards = React.Children.count(children);
 
     const handleScroll = (event) => {
         const scrollTop = event.target.scrollTop;
@@ -12,17 +13,57 @@ const StackedCardScroll = ({ children }) => {
         setActiveIndex(newActiveIndex);
     };
 
+    const goToNextCard = () => {
+        if (activeIndex < totalCards - 1) {
+            setActiveIndex((prevIndex) => prevIndex + 1);
+            scrollToCard(activeIndex + 1);
+        }
+    };
+
+    const goToPreviousCard = () => {
+        if (activeIndex > 0) {
+            setActiveIndex((prevIndex) => prevIndex - 1);
+            scrollToCard(activeIndex - 1);
+        }
+    };
+
+    const scrollToCard = (index) => {
+        const cardHeight = window.innerHeight;
+        const container = document.querySelector(".stacked-card-container");
+        container.scrollTo({
+            top: cardHeight * index,
+            behavior: "smooth",
+        });
+    };
+
     return (
         <div className="relative">
-            <div className="absolute z-50 right bottom-center bg-red-500">
-                <div className="relative w-full">
-                    <div className="absolute top-4 left-4  h-4 w-4 bg-red-500 rounded-full"></div>
-                    <div className="absolute border border-red-200 w-full"></div>
-                </div>
+            {/* Progress Bar */}
+            <div className="absolute z-50 top-4 left-4 right-4">
+                <ProgressBar value={(activeIndex / (totalCards - 1)) * 100} />
             </div>
-            <div className="stacked-card-container" onScroll={handleScroll}>
-                <div className="">
 
+            {/* Navigation Buttons */}
+            <div className="absolute z-50 bottom-4 left-4 right-4 flex justify-between">
+                <button
+                    className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
+                    onClick={goToPreviousCard}
+                    disabled={activeIndex === 0}
+                >
+                    Previous
+                </button>
+                <button
+                    className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
+                    onClick={goToNextCard}
+                    disabled={activeIndex === totalCards - 1}
+                >
+                    Next
+                </button>
+            </div>
+
+            {/* Card Container */}
+            <div className="stacked-card-container" onScroll={handleScroll}>
+                <div>
                     {React.Children.map(children, (child, index) => (
                         <div
                             className={`card ${index === activeIndex ? "active" : ""} ${index === activeIndex + 1 ? "next" : ""
@@ -31,11 +72,7 @@ const StackedCardScroll = ({ children }) => {
                             {child}
                         </div>
                     ))}
-
-
-
                 </div>
-
             </div>
         </div>
     );
