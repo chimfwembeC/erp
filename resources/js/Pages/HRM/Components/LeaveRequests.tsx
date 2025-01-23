@@ -11,17 +11,19 @@ interface LeaveRequestsProps {
 
 export function LeaveRequests({ requests, onApprove, onReject }: LeaveRequestsProps) {
     return (
-        <div className="bg-white rounded-lg shadow p-6 max:h-96">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Upcoming Leave Requests</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow max:h-96">
+            <div className="px-6 p-4">
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-200 mb-4">Upcoming Leave Requests</h2>
+            </div>
             <div className="overflow-y-auto">
                 {requests.length > 0 ? (
-                    <div className="space-y-4 max-h-64">
+                    <div className="space-y-4 max-h-64 p-6">
                         {requests.map((request) => (
-                            <div key={request.id} className="flex items-center justify-between bg-gray-100 hover:bg-gray-200 p-2 rounded-sm">
+                            <div key={request.id} className="flex items-center justify-between bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded-sm">
                                 <div className="flex items-center space-x-4">
                                     <div>
                                         {/* <p className="text-sm font-medium text-gray-900">User ID: {request.user_id}</p> */}
-                                        <p className="text-sm text-gray-500">
+                                        <p className="text-xs text-gray-500 dark:text-gray-200">
                                             {request.start_date} to {request.end_date} · Status: {request.status}
                                         </p>
                                     </div>

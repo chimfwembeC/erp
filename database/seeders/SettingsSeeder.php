@@ -30,6 +30,12 @@ class SettingsSeeder extends Seeder
             ['key' => 'sms_notifications_enabled', 'value' => '0', 'type' => 'boolean'],
             ['key' => 'notification_email', 'value' => 'admin@example.com', 'type' => 'string'],
 
+            // Social Settings
+            ['key' => 'site_facebook_url', 'value' => 'https://facebook.com/', 'type' => 'string'],
+            ['key' => 'site_twitter_url', 'value' => 'https://twitter.com/', 'type' => 'string'],
+            ['key' => 'site_instagram_url', 'value' => 'https://instagram.com/', 'type' => 'string'],
+            ['key' => 'site_linkedin_url', 'value' => 'https://linkedin.com/', 'type' => 'string'],
+
             // System Logs
             ['key' => 'enable_logging', 'value' => '1', 'type' => 'boolean'],
             ['key' => 'log_retention_days', 'value' => '30', 'type' => 'integer'],

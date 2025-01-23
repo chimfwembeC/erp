@@ -39,7 +39,7 @@ export default function AttendanceChart() {
     }, [] as { month: string; attendance: number }[]);
 
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto text-black dark:text-white">
             <BarChart width={600} height={300} data={aggregatedData}>
                 <XAxis dataKey="month" />
                 <YAxis />

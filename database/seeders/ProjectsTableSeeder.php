@@ -22,6 +22,7 @@ class ProjectsTableSeeder extends Seeder
                 'start_date' => '2025-01-01',
                 'end_date' => '2025-12-31',
                 'owner_id' => 1, // Assuming user with ID 1 is the owner
+                'status' => 'pending', // Default status
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -31,6 +32,7 @@ class ProjectsTableSeeder extends Seeder
                 'start_date' => '2025-02-01',
                 'end_date' => '2025-08-01',
                 'owner_id' => 2, // Assuming user with ID 2 is the owner
+                'status' => 'in_progress', // Set a custom status
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -40,6 +42,7 @@ class ProjectsTableSeeder extends Seeder
                 'start_date' => '2025-03-01',
                 'end_date' => '2025-09-30',
                 'owner_id' => 3, // Assuming user with ID 3 is the owner
+                'status' => 'completed', // Set a custom status
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

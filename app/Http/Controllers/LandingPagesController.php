@@ -6,17 +6,35 @@ use App\Models\LandingPages;
 use App\Models\LandingPageSection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class LandingPagesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function services()
     {
         // Retrieve all landing pages
-        $landingPages = LandingPages::all();
-        return response()->json($landingPages);
+        return Inertia::render("Pages/Services");
+    }
+
+    public function about()
+    {
+        // Retrieve all landing pages
+        return Inertia::render("Pages/About");
+    }
+
+    public function contact()
+    {
+        // Retrieve all landing pages
+        return Inertia::render("Pages/Contact");
+    }
+
+    public function test()
+    {
+        // Retrieve all landing pages
+        return Inertia::render("Pages/Test");
     }
 
     /**
@@ -66,7 +84,7 @@ class LandingPagesController extends Controller
         }
 
         return response()->json([
-            'landing_page' => $landingPage,            
+            'landing_page' => $landingPage,
         ]);
     }
 

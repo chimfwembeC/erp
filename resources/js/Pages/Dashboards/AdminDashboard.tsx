@@ -54,9 +54,6 @@ export default function AdminDashboard() {
                     </div>
                     <div className="col-span col-span-2">
                         <Activity />
-                        <div className="bg-white p-4 rounded-lg shadow-lg mt-4">
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maiores illum vel atque illo eum qui enim, exercitationem expedita, quam quae ut aspernatur dolor aliquid facilis laborum iste magnam dicta distinctio.
-                        </div>
                     </div>
                 </div>
 

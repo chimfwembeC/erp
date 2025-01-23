@@ -7,6 +7,7 @@ import Breadcrumb from '@/Components/Breadcrumb';
 import { StatCard } from '@/Components/Shared/StatCard';
 import Activity from '@/Components/Activity';
 import { LeaveRequests } from './Components/LeaveRequests';
+import Swal from 'sweetalert2';
 
 export default function Index() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -166,9 +167,30 @@ export default function Index() {
     ]);
 
 
-    const handleApprove = (id: number) => {
-        alert(`Approved leave request ID: ${id}`);
-        setLeaveRequests((prev) => prev.filter((request) => request.id !== id));
+    const handleApprove = async (id: number) => {
+        try {
+            const result = Swal.fire({
+                title: 'Are you sure?',
+                text: 'You want to approve leave request',
+                icon: 'question',
+                confirmButtonText: 'Yes',
+                showConfirmButton: true,
+                showCancelButton: true,
+                cancelButtonText: "No"
+            });
+
+            if ((await result).isConfirmed) {
+                Swal.fire('Success', 'Leave request successfully approved', 'success');
+                setLeaveRequests((prev) => prev.filter((request) => request.id !== id));
+            }
+            else {
+                Swal.fire('Warning?', 'Leave request approval failed ', 'error');
+            }
+        } catch (error) {
+            Swal.fire('Error', 'Leave request approval failed', 'error');
+        }
+
+
     };
 
     const handleReject = (id: number) => {
@@ -209,16 +231,16 @@ export default function Index() {
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mt-4">
                 <div className="col-span col-span-3">
                     <div className="grid grid-cols-1 gap-4">
-                        <div className="bg-white p-4 rounded-lg shadow-lg">
+                        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg">
                             <h2 className="text-2xl font-semibold mb-4">Attendance Chart</h2>
-                            <div className="bg-white p-4 rounded-lg shadow">
+                            <div className="bg-white dark:bg-gray-600 p-4 rounded-lg shadow">
                                 <AttendanceChart />
                             </div>
                         </div>
 
-                        <div className="bg-white p-4 rounded-lg shadow-lg">
+                        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg">
                             <h2 className="text-2xl font-semibold mb-4">Payroll Chart</h2>
-                            <div className="bg-white p-4 rounded-lg shadow">
+                            <div className="bg-white dark:bg-gray-600 p-4 rounded-lg shadow">
                                 <PayrollChart />
                             </div>
                         </div>

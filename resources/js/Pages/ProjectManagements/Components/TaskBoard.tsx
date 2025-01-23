@@ -1,24 +1,16 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import axios from 'axios';
-import { Circle, CircleAlertIcon, CircleCheck, CircleDot, CircleDotDashed, FilterIcon, MoreHorizontal, PlusSquareIcon, X } from 'lucide-react';
+import { Circle, CircleAlertIcon, CircleCheck, CircleDot, CircleDotDashed, Clock4Icon, FilterIcon, MoreHorizontal, PlusSquareIcon, X } from 'lucide-react';
 import { Avatar } from 'primereact/avatar';
 import Swal from 'sweetalert2';
+import TaskDropdown from './TaskDropdown';
+import AddTaskDropdownInput from './AddTaskDropdownInput';
 
 const TaskBoard = ({ project, updateTaskStatus }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [taskState, setTaskState] = useState(project?.tasks);
-    const [selectedType, setSelectedType] = useState('task'); // Default to 'task'
-    const [formData, setFormData] = useState({
-        title: '',
-        description: '',
-        project_id: project.id,
-        assignee_id: '',
-        due_date: '',
-        milestone_id: '',
-    });
-
-    const tasks = project?.tasks;
+    // const tasks = project?.tasks;
 
     const onDragEnd = (result) => {
         if (!result.destination) return;
@@ -37,74 +29,15 @@ const TaskBoard = ({ project, updateTaskStatus }) => {
         updateTaskStatus(taskId, newStatus);
     };
 
+    console.log('project', project);
+
     const handleOpenModal = () => {
         setIsModalOpen(true);
     };
 
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-        setFormData({
-            title: '',
-            description: '',
-            project_id: project.id,
-            assignee_id: '',
-            due_date: '',
-            milestone_id: '',
-        });
-    };
-
-    const handleSubmit = async () => {
-        try {
-            const type = selectedType; // 'task' or 'issue'
-            const result = await Swal.fire({
-                title: "Create task?",
-                text: 'Are you sure you want to create the task',
-                icon: 'question',
-                confirmButtonText: 'Yes',
-                showCancelButton: true,
-                cancelButtonText: 'No'
-            });
-
-            if (result.isConfirmed) {
-                const response = await axios.post(`/projects/${project.id}/${type}s`, formData).then(() => (
-                    Swal.fire({
-                        title: 'Task created successfully',
-                        icon: 'success',
-                        position: 'bottom-left',
-                        timer: 2000
-                    })
-                ));
-                console.log(`${type.charAt(0).toUpperCase() + type.slice(1)} created:`, response.data);
-
-                // Update local state to reflect task status change
-                // const updatedTasks = project.tasks.map(task =>
-                //     task.id === taskId ? { ...task } : task
-                // );
-
-                // setTaskState({
-                //     ...project,
-                //     tasks: updatedTasks
-                // })
-            } else {
-                Swal.fire({
-                    title: 'Error while creating task',
-                    icon: 'success',
-                    position: 'bottom-left',
-                    timer: 2000
-                })
-            }
-
-            handleCloseModal();
-        } catch (error) {
-            console.error('Failed to create:', error);
-        }
-    };
-
-
-
     const columns = [
         { id: 'pending', title: 'Todo', color: 'bg-gray-800', text: 'text-blue-500', icon: <CircleDotDashed size={20} />, description: "This item hasn't been started" },
-        { id: 'in_progress', title: 'In Progress', color: 'bg-gray-800', text: 'text-orange-500', icon: <CircleDot size={20} />, description: 'This is actively being worked on' },
+        { id: 'in_progress', title: 'In Progress', color: 'bg-gray-800', text: 'text-orange-500', icon: <Clock4Icon size={20} />, description: 'This is actively being worked on' },
         // { id: 'review', title: 'Review', color: 'bg-gray-800', text: 'text-yellow-500', icon: <CircleAlertIcon size={20} />, description: 'This has been completed' },
         { id: 'completed', title: 'Done', color: 'bg-gray-800', text: 'text-green-500', icon: <CircleCheck size={20} />, description: 'This has been completed' },
     ];
@@ -119,7 +52,7 @@ const TaskBoard = ({ project, updateTaskStatus }) => {
                 <div className="w-full  flex justify-between items-center gap-4 ">
                     <div className="w-full flex justify-center items-center">
                         <div
-                            className="w-10 h-10 p-2 border-2 border-gray-800 flex justify-center rounded-l-lg items-center bg-gray-800 text-white"
+                            className="w-10 h-10 p-2 border border-gray-300 dark:border-gray-800 flex justify-center rounded-l-lg items-center bg-gray-200 dark:bg-gray-800 text-white"
                         >
                             <FilterIcon size={45} />
                         </div>
@@ -128,9 +61,9 @@ const TaskBoard = ({ project, updateTaskStatus }) => {
                             type="text"
                             name="search"
                             placeholder="Filter by keyword or by field"
-                            value={formData.title}
-                            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                            className="text-white w-full bg-gray-800 p-2 rounded-r-lg"
+                            // value={formData.title}
+                            // onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                            className="text-white w-full bg-gray-200 border border-gray-300 dark:bg-gray-800  p-2 rounded-r-lg"
                         />
                     </div>
                     <div className="flex justify-center items-center gap-4">
@@ -160,17 +93,17 @@ const TaskBoard = ({ project, updateTaskStatus }) => {
                                 <div
                                     ref={provided.innerRef}
                                     {...provided.droppableProps}
-                                    className={`rounded-lg min-h-96 shadow-md border border-gray-200 flex flex-col ${column.color}`}
+                                    className={`rounded-lg min-h-96 shadow-md flex flex-col bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600`}
                                 >
                                     <div className="text-white">
                                         <div className="p-4">
-                                            <div className="flex justify-between items-center">
+                                            <div className="flex justify-between items-center text-black dark:text-white">
                                                 <div className="flex justify-start items-center gap-1">
                                                     {/* Dynamic icon color based on column status */}
                                                     <Circle size={25} className={`font-bold ${column.text}`} />
                                                     <h2 className="text-lg font-semibold">{column.title}</h2>
                                                     {/* Dynamic task count */}
-                                                    <div className="flex justify-center items-center bg-gray-600 h-6 w-6 text-xs rounded-full p-2">
+                                                    <div className="flex justify-center items-center text-white dark:text-gray-200 bg-gray-600 h-6 w-6 text-xs rounded-full p-2">
                                                         {getTaskCountForColumn(column.id)}
                                                     </div>
                                                 </div>
@@ -187,22 +120,27 @@ const TaskBoard = ({ project, updateTaskStatus }) => {
                                                                 ref={provided.innerRef}
                                                                 {...provided.draggableProps}
                                                                 {...provided.dragHandleProps}
-                                                                className="bg-gray-700 border border-gray-400 p-2 rounded shadow-sm"
+                                                                className="bg-gray-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-2 rounded shadow-sm text-black"
                                                             >
                                                                 <div className="flex justify-between items-center">
                                                                     <div className="flex justify-start items-center gap-1">
                                                                         <span className={`${column.text}`}>
                                                                             {column.icon}
                                                                         </span>
-                                                                        <span className='hover:underline'>
-                                                                            erp #4
+                                                                        <span className='hover:underline text-black dark:text-white'>
+                                                                            {task.issue?.title}
                                                                         </span>
                                                                     </div>
-                                                                    <div className="">
-                                                                        <Avatar className='h-6 w-6 rounded-full text-xs text-black'>ck</Avatar>
+                                                                    <div className="flex justify-between items-center gap-2 ">
+                                                                        <img
+                                                                            src={task.assignee ? `https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true&name=${task.assignee?.name}` : `https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true&name=${""}`}
+                                                                            alt="User Avatar"
+                                                                            className="w-6 h-6 text-xs rounded-full"
+                                                                        />
+                                                                        <TaskDropdown taskId={task.id} />
                                                                     </div>
                                                                 </div>
-                                                                <span className="hover:underline cursor-pointer line-clamp-1">
+                                                                <span className="hover:underline cursor-pointer line-clamp-1  text-black dark:text-white">
                                                                     {task.title}
                                                                 </span>
                                                             </div>
@@ -212,11 +150,9 @@ const TaskBoard = ({ project, updateTaskStatus }) => {
                                             {provided.placeholder}
                                         </div>
                                     </div>
-                                    <button
-                                        className={`text-white pl-4 text-start w-full hover:bg-gray-700 rounded-lg mt-auto p-2`}
-                                    >
-                                        Add Item
-                                    </button>
+                                    <div className="mt-auto">
+                                        <AddTaskDropdownInput projectId={project.id} />
+                                    </div>
                                 </div>
                             )}
                         </Droppable>
@@ -224,27 +160,6 @@ const TaskBoard = ({ project, updateTaskStatus }) => {
 
                 </div>
             </DragDropContext>
-            <div className="w-full mt-4">
-                <div className="bg-white w-full flex justify-between items-center">
-                    {/* Submit button */}
-                    <div
-                        onClick={handleSubmit}
-                        className="w-10 h-10 p-2 border-2 border-gray-800 rounded-l-lg flex justify-center items-center bg-gray-800 text-white"
-                    >
-                        <PlusSquareIcon size={45} />
-                    </div>
-
-                    {/* Input field for task title */}
-                    <input
-                        type="text"
-                        name="title"
-                        placeholder="Enter task title"
-                        value={formData.title}
-                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                        className="text-white w-full bg-gray-800 p-2 rounded-r-lg"
-                    />
-                </div>
-            </div>
         </div >
     );
 };

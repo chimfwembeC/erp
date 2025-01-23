@@ -455,5 +455,12 @@ Route::get('/landing-pages/{slug}', [LandingPagesController::class, 'show']);
 Route::resource('/landing-pages', LandingPagesController::class);
 
 
+Route::get('/services', [LandingPagesController::class, 'services']);
+Route::get('/contact', [LandingPagesController::class, 'contact']);
+Route::get('/about', [LandingPagesController::class, 'about']);
+Route::get('/test', [LandingPagesController::class, 'test']);
+
+
+
 Route::post('/save-page', [PageController::class, 'savePage']);
 Route::get('/page/{id}', [PageController::class, 'getPage']);

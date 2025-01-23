@@ -10,14 +10,14 @@ import { Editor } from 'primereact/editor';
 export default function CustomizationSettings() {
     const [brandingLogo, setBrandingLogo] = useState('');
     const [brandingFavicon, setBrandingFavicon] = useState('');
-    const [uiPrimaryColor, setUiPrimaryColor] = useState('bg-blue-100');
-    const [uiSecondaryColor, setUiSecondaryColor] = useState('bg-yellow-100');
-    const [uiNeutralColor, setUiNeutralColor] = useState('bg-gray-100');
+    const [uiPrimaryColor, setUiPrimaryColor] = useState('blue-100');
+    const [uiSecondaryColor, setUiSecondaryColor] = useState('yellow-100');
+    const [uiNeutralColor, setUiNeutralColor] = useState('gray-100');
     const [uiFontFamily, setUiFontFamily] = useState('Arial, sans-serif');
     const [enableDarkMode, setEnableDarkMode] = useState(true);
     const [uiLayoutType, setUiLayoutType] = useState('fixed');
     const [showFooter, setShowFooter] = useState(true);
-    const [footerText, setFooterText] = useState('© 2025 My Application. All rights reserved.');
+    const [footerText, setFooterText] = useState('My Application. All rights reserved.');
     const [enableCustomCss, setEnableCustomCss] = useState(true);
     const [customCssPath, setCustomCssPath] = useState('uploads/custom.css');
     const [enableCustomJs, setEnableCustomJs] = useState(true);
@@ -119,9 +119,9 @@ export default function CustomizationSettings() {
 
     // Color palettes
     const colorPalettes = {
-        primary: ['bg-blue-100', 'bg-blue-200', 'bg-blue-300', 'bg-blue-400', 'bg-blue-500', 'bg-blue-600', 'bg-blue-700', 'bg-blue-800', 'bg-blue-900'],
-        secondary: ['bg-yellow-100', 'bg-yellow-200', 'bg-yellow-300', 'bg-yellow-400', 'bg-yellow-500', 'bg-yellow-600', 'bg-yellow-700', 'bg-yellow-800', 'bg-yellow-900'],
-        neutral: ['bg-gray-100', 'bg-gray-200', 'bg-gray-300', 'bg-gray-400', 'bg-gray-500', 'bg-gray-600', 'bg-gray-700', 'bg-gray-800', 'bg-gray-900'],
+        primary: ['blue-100', 'blue-200', 'blue-300', 'blue-400', 'blue-500', 'blue-600', 'blue-700', 'blue-800', 'blue-900'],
+        secondary: ['yellow-100', 'yellow-200', 'yellow-300', 'yellow-400', 'yellow-500', 'yellow-600', 'yellow-700', 'yellow-800', 'yellow-900'],
+        neutral: ['gray-100', 'gray-200', 'gray-300', 'gray-400', 'gray-500', 'gray-600', 'gray-700', 'gray-800', 'gray-900'],
     };
 
 
@@ -135,18 +135,20 @@ export default function CustomizationSettings() {
             <form onSubmit={handleSubmit}>
                 {/* Branding Logo */}
                 <div className="flex justify-end">
-                    <div className="w-1/2 bg-white p-4 rounded-lg shadow-md my-4">
+                    <div className="w-1/2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 rounded-lg shadow-md my-4">
                         {brandingLogo && (
-                            <img src={brandingLogo} className='h-48 ' alt="Brand Logo" />
+                            <div className="w-48 h-48 rounded-2xl dark:bg-gray-600 border border-gray-200 dark:border-gray-600">
+                                <img src={brandingLogo} className='h-48 h-48' alt="Brand Logo" />
+                            </div>
                         )}
-                        <label htmlFor="branding_logo" className="block text-md font-medium text-gray-700">
+                        <label htmlFor="branding_logo" className="block text-md font-medium text-gray-700 dark:text-gray-200">
                             Branding Logo
                         </label>
                         <input
                             type="file"
                             id="branding_logo"
                             onChange={(e) => handleFileChange(e, 'branding_logo')}
-                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                            className="w-full p-2 mt-1 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md"
                         />
 
                         <input
@@ -154,25 +156,27 @@ export default function CustomizationSettings() {
                             id="branding_logo"
                             value={brandingLogo}
                             disabled
-                            className="w-full p-2 mt-1 bg-gray-300 rounded-md"
+                            className="w-full p-2 mt-1  dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md"
                         />
                     </div>
                 </div>
 
                 {/* Branding Favicon */}
                 <div className="flex justify-end">
-                    <div className="w-1/2 bg-white p-4 rounded-lg shadow-md my-4">
+                    <div className="w-1/2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 rounded-lg shadow-md my-4">
                         {brandingFavicon && (
-                            <img src={brandingFavicon} alt="Brand Favicon" />
+                            <div className="w-24 h-24 rounded-2xl dark:bg-gray-600 border border-gray-200 dark:border-gray-600">
+                                <img src={brandingFavicon} className='h-24 w-24' alt="Brand Favicon" />
+                            </div>
                         )}
-                        <label htmlFor="branding_favicon" className="block text-md font-medium text-gray-700">
+                        <label htmlFor="branding_favicon" className="block text-md font-medium text-gray-700 dark:text-gray-200">
                             Branding Favicon
                         </label>
                         <input
                             type="file"
                             id="branding_favicon"
                             onChange={(e) => handleFileChange(e, 'branding_favicon')}
-                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                            className="w-full p-2 mt-1  dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md"
                         />
 
                         <input
@@ -181,7 +185,7 @@ export default function CustomizationSettings() {
                             value={brandingFavicon}
                             disabled
                             readOnly
-                            className="w-full p-2 mt-1 bg-gray-300 rounded-md"
+                            className="w-full p-2 mt-1 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md"
                         />
                     </div>
                 </div>
@@ -190,8 +194,8 @@ export default function CustomizationSettings() {
                 <div className="space-y-6">
                     {/* UI Primary Color */}
                     <div className="flex justify-end">
-                        <div className="w-1/2 bg-white p-4 rounded-lg shadow-md my-4">
-                            <label htmlFor="ui_primary_color" className="block text-md font-medium text-gray-700">
+                        <div className="w-1/2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 rounded-lg shadow-md my-4">
+                            <label htmlFor="ui_primary_color" className="block text-md font-medium text-gray-700 dark:text-gray-200">
                                 UI Primary Color
                             </label>
                             <div className="flex space-x-2">
@@ -199,7 +203,7 @@ export default function CustomizationSettings() {
                                     <div
                                         key={shade}
                                         onClick={() => setUiPrimaryColor(shade)}
-                                        className={`w-12 h-12 rounded-lg cursor-pointer transition-all duration-300 ease-in-out ${shade} ${uiPrimaryColor === shade ? 'ring-4 ring-blue-500' : 'hover:ring-2 hover:ring-gray-300'
+                                        className={`w-12 h-12 rounded-lg cursor-pointer transition-all duration-300 ease-in-out bg-${shade} ${uiPrimaryColor === shade ? 'ring-4 ring-blue-500' : 'hover:ring-2 hover:ring-gray-300'
                                             }`}
                                     ></div>
                                 ))}
@@ -207,15 +211,15 @@ export default function CustomizationSettings() {
                             {/* Display the Selected Primary Color */}
                             <div className="mt-4">
                                 <p className="text-md font-medium">Selected Primary Color:</p>
-                                <div className={`w-24 h-24 mt-2 rounded-lg ${uiPrimaryColor || 'bg-white'}`}></div>
+                                <div className={`w-24 h-24 mt-2 rounded-lg bg-${uiPrimaryColor || 'bg-white'}`}></div>
                             </div>
                         </div>
                     </div>
 
                     {/* UI Secondary Color */}
                     <div className="flex justify-end">
-                        <div className="w-1/2 bg-white p-4 rounded-lg shadow-md my-4">
-                            <label htmlFor="ui_secondary_color" className="block text-md font-medium text-gray-700">
+                        <div className="w-1/2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 rounded-lg shadow-md my-4">
+                            <label htmlFor="ui_secondary_color" className="block text-md font-medium text-gray-700 dark:text-gray-200">
                                 UI Secondary Color
                             </label>
                             <div className="flex space-x-2">
@@ -223,7 +227,7 @@ export default function CustomizationSettings() {
                                     <div
                                         key={shade}
                                         onClick={() => setUiSecondaryColor(shade)}
-                                        className={`w-12 h-12 rounded-lg cursor-pointer transition-all duration-300 ease-in-out ${shade} ${uiSecondaryColor === shade ? 'ring-4 ring-blue-500' : 'hover:ring-2 hover:ring-gray-300'
+                                        className={`w-12 h-12 rounded-lg cursor-pointer transition-all duration-300 ease-in-out bg-${shade} ${uiSecondaryColor === shade ? 'ring-4 ring-blue-500' : 'hover:ring-2 hover:ring-gray-300'
                                             }`}
                                     ></div>
                                 ))}
@@ -231,15 +235,15 @@ export default function CustomizationSettings() {
                             {/* Display the Selected Secondary Color */}
                             <div className="mt-4">
                                 <p className="text-md font-medium">Selected Secondary Color:</p>
-                                <div className={`w-24 h-24 mt-2 rounded-lg ${uiSecondaryColor || 'bg-white'}`}></div>
+                                <div className={`w-24 h-24 mt-2 rounded-lg bg-${uiSecondaryColor || 'bg-white'}`}></div>
                             </div>
                         </div>
                     </div>
 
                     {/* UI Neutral Color */}
                     <div className="flex justify-end">
-                        <div className="w-1/2 bg-white p-4 rounded-lg shadow-md my-4">
-                            <label htmlFor="ui_neutral_color" className="block text-md font-medium text-gray-700">
+                        <div className="w-1/2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 rounded-lg shadow-md my-4">
+                            <label htmlFor="ui_neutral_color" className="block text-md font-medium text-gray-700 dark:text-gray-200">
                                 UI Neutral Color
                             </label>
                             <div className="flex space-x-2">
@@ -247,7 +251,7 @@ export default function CustomizationSettings() {
                                     <div
                                         key={shade}
                                         onClick={() => setUiNeutralColor(shade)}
-                                        className={`w-12 h-12 rounded-lg cursor-pointer transition-all duration-300 ease-in-out ${shade} ${uiNeutralColor === shade ? 'ring-4 ring-blue-500' : 'hover:ring-2 hover:ring-gray-300'
+                                        className={`w-12 h-12 rounded-lg cursor-pointer transition-all duration-300 ease-in-out bg-${shade} ${uiNeutralColor === shade ? 'ring-4 ring-blue-500' : 'hover:ring-2 hover:ring-gray-300'
                                             }`}
                                     ></div>
                                 ))}
@@ -255,7 +259,7 @@ export default function CustomizationSettings() {
                             {/* Display the Selected Neutral Color */}
                             <div className="mt-4">
                                 <p className="text-md font-medium">Selected Neutral Color:</p>
-                                <div className={`w-24 h-24 mt-2 rounded-lg ${uiNeutralColor || 'bg-white'}`}></div>
+                                <div className={`w-24 h-24 mt-2 rounded-lg bg-${uiNeutralColor || 'bg-white'}`}></div>
                             </div>
                         </div>
                     </div>
@@ -266,8 +270,8 @@ export default function CustomizationSettings() {
 
                 {/* Enable Dark Mode */}
                 <div className="flex justify-end">
-                    <div className="w-1/2 bg-white p-4 rounded-lg shadow-md my-4">
-                        <label htmlFor="enable_dark_mode" className="block text-md font-medium text-gray-700">
+                    <div className="w-1/2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 rounded-lg shadow-md my-4">
+                        <label htmlFor="enable_dark_mode" className="block text-md font-medium text-gray-700 dark:text-gray-200">
                             Enable Dark Mode
                         </label>
                         <InputSwitch
@@ -280,7 +284,7 @@ export default function CustomizationSettings() {
                 </div>
 
                 {/* UI Layout Type */}
-                <div className="flex justify-end">
+                {/* <div className="flex justify-end">
                     <div className="w-1/2 bg-white p-4 rounded-lg shadow-md my-4">
                         <label htmlFor="ui_layout_type" className="block text-md font-medium text-gray-700">
                             UI Layout Type
@@ -296,12 +300,12 @@ export default function CustomizationSettings() {
                             className="w-full border border-gray-300 rounded-lg mt-1"
                         />
                     </div>
-                </div>
+                </div> */}
 
                 {/* Show Footer */}
                 <div className="flex justify-end">
-                    <div className="w-1/2 bg-white p-4 rounded-lg shadow-md my-4">
-                        <label htmlFor="show_footer" className="block text-md font-medium text-gray-700">
+                    <div className="w-1/2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 rounded-lg shadow-md my-4">
+                        <label htmlFor="show_footer" className="block text-md font-medium text-gray-700 dark:text-gray-200">
                             Show Footer
                         </label>
                         <InputSwitch
@@ -315,21 +319,21 @@ export default function CustomizationSettings() {
 
                 {/* Footer Text */}
                 <div className="flex justify-end">
-                    <div className="w-1/2 bg-white p-4 rounded-lg shadow-md my-4">
-                        <label htmlFor="footer_text" className="block text-md font-medium text-gray-700">
+                    <div className="w-1/2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 rounded-lg shadow-md my-4">
+                        <label htmlFor="footer_text" className="block text-md font-medium text-gray-700 dark:text-gray-200">
                             Footer Text
                         </label>
-                        <Editor
+                        <InputText
                             id="footer_text"
                             value={footerText}
-                            onTextChange={(e) => setFooterText(e.htmlValue)}
-                            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+                            onChange={(e) => setFooterText(e.target.value)}
+                            className="w-full mt-1 p-2 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md"
                         />
                     </div>
                 </div>
 
                 {/* Enable Custom CSS */}
-                <div className="flex justify-end">
+                {/* <div className="flex justify-end">
                     <div className="w-1/2 bg-white p-4 rounded-lg shadow-md my-4">
                         <label htmlFor="enable_custom_css" className="block text-md font-medium text-gray-700">
                             Enable Custom CSS
@@ -341,10 +345,10 @@ export default function CustomizationSettings() {
                             className=" mt-1"
                         />
                     </div>
-                </div>
+                </div> */}
 
                 {/* Custom CSS Path */}
-                <div className="flex justify-end">
+                {/* <div className="flex justify-end">
                     <div className="w-1/2 bg-white p-4 rounded-lg shadow-md my-4">
                         <label htmlFor="custom_css_path" className="block text-md font-medium text-gray-700">
                             Custom CSS
@@ -364,10 +368,10 @@ export default function CustomizationSettings() {
                             className="w-full p-2 mt-1 bg-gray-300 rounded-md"
                         />
                     </div>
-                </div>
+                </div> */}
 
                 {/* Enable Custom JS */}
-                <div className="flex justify-end">
+                {/* <div className="flex justify-end">
                     <div className="w-1/2 bg-white p-4 rounded-lg shadow-md my-4">
                         <label htmlFor="enable_custom_js" className="block text-md font-medium text-gray-700">
                             Enable Custom JS
@@ -380,11 +384,11 @@ export default function CustomizationSettings() {
                             className="mt-1"
                         />
                     </div>
-                </div>
+                </div> */}
 
 
                 {/* Custom JS Path */}
-                <div className="flex justify-end">
+                {/* <div className="flex justify-end">
                     <div className="w-1/2 bg-white p-4 rounded-lg shadow-md my-4">
                         <label htmlFor="custom_js_path" className="block text-md font-medium text-gray-700">
                             Custom JS Path
@@ -404,7 +408,7 @@ export default function CustomizationSettings() {
                             className="w-full p-2 mt-1 bg-gray-300 rounded-md"
                         />
                     </div>
-                </div>
+                </div> */}
 
 
                 {/* Submit Button */}

@@ -34,7 +34,9 @@ const Index = ({ settings }) => {
 
     return (
         <AppLayout title="Settings Management">
-            <Breadcrumb items={items} />
+            <div className="pt-4">
+                <Breadcrumb items={items} />
+            </div>
             <SettingsLayout currentSection={currentSection} onSectionChange={handleSectionChange}>
                 {/* Render content based on the current section */}
                 {currentSection === '/settings/general' && <GeneralSettings />}

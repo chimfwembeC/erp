@@ -4,15 +4,15 @@ import useRoute from '@/Hooks/useRoute';
 import useTypedPage from '@/Hooks/useTypedPage';
 import { Head } from '@inertiajs/react';
 import GuestLayout from '@/Layouts/GuestLayout';
-import PlanCards from '@/Components/PlanCard';
-import PlanCard from '@/Components/PlanCard';
-import PlanGrid from '@/Components/PlanGrid';
-import FAQ from '@/Components/FAQ';
-import Testimonials from '@/Components/Testimonials';
-import CTA from '@/Components/CTA';
-import Benefits from '@/Components/Benefits';
-import Features from '@/Components/Features';
-import Hero from '@/Components/Hero';
+import ParallaxSection from '@/Components/ParallaxSection';
+import Hero from '@/Components/home/Hero';
+import ServicesSection from '@/Components/home/ServicesSection';
+import TeamSection from '@/Components/home/TeamSection';
+import ProductsSection from '@/Components/home/ProductsSection';
+import BlogSection from '@/Components/home/BlogSection';
+import CTASection from '@/Components/home/CTASection';
+import OrgChart from '@/Components/OrgChart';
+import StackedCardScroll from '@/Components/StackedCardScroll';
 
 interface Props {
     canLogin: boolean;
@@ -29,67 +29,69 @@ export default function Welcome({
 }: Props) {
     const route = useRoute();
     const page = useTypedPage();
+    const posts = [
+        {
+            id: 1,
+            title: "The Future of Cloud Computing",
+            content: "Cloud computing continues to evolve at a rapid pace. In this article, we explore the latest trends and technologies shaping the future of cloud infrastructure...",
+            image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2072",
+            authorName: "Fackson Kangwa",
+            createdAt: new Date("2024-03-01"),
+        },
+        {
+            id: 2,
+            title: "AI in Business: A Practical Guide",
+            content: "Artificial Intelligence is transforming how businesses operate. Learn how to implement AI solutions in your organization effectively...",
+            image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=2070",
+            authorName: "Joseph Banda",
+            createdAt: new Date("2024-02-28"),
+        },
+        {
+            id: 3,
+            title: "Cybersecurity Best Practices",
+            content: "With increasing cyber threats, protecting your digital assets is more important than ever. Discover the essential cybersecurity practices...",
+            image: "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?auto=format&fit=crop&q=80&w=2070",
+            authorName: "Chimfwembe Kangwa",
+            createdAt: new Date("2024-02-25"),
+        },
+    ];
 
     return (
-        <GuestLayout>
+        <GuestLayout title={'welcome'}>
             <>
-                <Head title="Welcome" />
+                {/* Hero Section */}
+                <Hero />
 
-                {/* Wrapper for Stacked Scroll */}
-                <div className="h-screen snap-y snap-mandatory overflow-y-scroll scroll-smooth">
-                    {/* Hero Section */}
-                    <section className="h-screen snap-start flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
-                        {/* <Hero /> */}
-                        <div className="text-center">
-                            <h1 className="text-4xl font-bold mb-4">Welcome to Our Platform</h1>
-                            <p className="text-lg">Discover amazing features and solutions tailored for your needs.</p>
-                        </div>
-                    </section>
+                {/* Parallax Section 1: After Hero */}
+                <ParallaxSection>
+                    <h1 className="text-4xl font-bold text-white text-center">
+                        Empowering Innovation for a Better Tomorrow
+                    </h1>
+                </ParallaxSection>
 
-                    {/* Benefits Section */}
-                    <section className="h-screen snap-start bg-gray-100 flex items-center justify-center">
-                        {/* <Benefits /> */}
-                        <div className="text-center max-w-xl">
-                            <h2 className="text-3xl font-semibold mb-4">Why Choose Us?</h2>
-                            <ul className="list-disc list-inside text-left">
-                                <li>Benefit 1: Unparalleled Performance</li>
-                                <li>Benefit 2: Reliable and Secure</li>
-                                <li>Benefit 3: 24/7 Customer Support</li>
-                            </ul>
-                        </div>
-                    </section>
+                {/* Services Section */}
+                <ServicesSection />
 
-                    {/* Testimonials Section */}
-                    <section className="h-screen snap-start bg-white flex flex-col items-center justify-center">
-                        {/* <Testimonials /> */}
-                        <div className="text-center max-w-2xl">
-                            <h2 className="text-3xl font-semibold mb-4">What Our Users Say</h2>
-                            <blockquote className="italic">"This platform has transformed the way we work! Highly recommended."</blockquote>
-                            <cite className="block mt-2">- Jane Doe, CEO of ExampleCorp</cite>
-                        </div>
-                    </section>
+                {/* Team Section */}
+                <TeamSection />
 
-                    {/* FAQ Section */}
-                    <section className="h-screen snap-start bg-gray-50 flex flex-col items-center justify-center">
-                        {/* <FAQ /> */}
-                        <div className="text-center max-w-3xl">
-                            <h2 className="text-3xl font-semibold mb-4">Frequently Asked Questions</h2>
-                            <p className="mb-2"><strong>Q:</strong> How do I get started?<br /><strong>A:</strong> Sign up for a free account and explore our features.</p>
-                            <p><strong>Q:</strong> Is there a free trial?<br /><strong>A:</strong> Yes, we offer a 14-day free trial with no credit card required.</p>
-                        </div>
-                    </section>
+                {/* Products Section */}
+                <ProductsSection />
 
-                    {/* Call to Action Section */}
-                    <section className="h-screen snap-start bg-indigo-600 flex items-center justify-center text-white">
-                        {/* <CTA /> */}
-                        <div className="text-center max-w-xl">
-                            <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-                            <p className="mb-6">Sign up now and take your productivity to the next level.</p>
-                            <button className="bg-white text-indigo-600 px-6 py-3 rounded-md shadow-md hover:bg-gray-200">Get Started</button>
-                        </div>
-                    </section>
-                </div>
+
+                {/* Blog Section */}
+                <BlogSection posts={posts} />
+
+                {/* Parallax Section 2: Before CTA */}
+                <ParallaxSection>
+                    <h2 className="text-3xl font-bold text-white text-center">
+                        Ready to Transform Your Business?
+                    </h2>
+                </ParallaxSection>
+
+                {/* CTA Section */}
+                <CTASection />
             </>
-        </GuestLayout>
+        </GuestLayout >
     );
 }
