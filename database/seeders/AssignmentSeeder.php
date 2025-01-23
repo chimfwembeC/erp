@@ -74,6 +74,22 @@ class AssignmentSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
+
+            // Assign users to milestones
+            [
+                'user_id' => 2,
+                'assignable_type' => 'App\Models\Milestone',
+                'assignable_id' => 1, // ID of the assigned milestone
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'user_id' => 1,
+                'assignable_type' => 'App\Models\Milestone',
+                'assignable_id' => 2,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
         ]);
     }
 }

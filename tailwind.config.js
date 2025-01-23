@@ -29,20 +29,25 @@ export default {
                 'sky-blue': '#3498db',
                 violet: '#9b59b6',
             },
-            // This generates the opacity variations for all custom colors.
-            opacity: {
-                100: '1',
-                200: '0.9',
-                300: '0.8',
-                400: '0.7',
-                500: '0.6',
-                600: '0.5',
-                700: '0.4',
-                800: '0.3',
-                900: '0.2',
-            },
             height: {
                 'screen-70': '70vh',
+            },
+            backgroundImage: {
+                'parallax': 'url("/assets/imgs/Uses - La liste complète de mon setup WFH.jpeg")',
+            },
+        },
+        animation: {
+            kenburns: 'kenburns 8s infinite',
+            slideUp: 'slideUp 0.8s ease-out',
+        },
+        keyframes: {
+            kenburns: {
+                '0%, 100%': { transform: 'scale(1)' },
+                '50%': { transform: 'scale(1.05)' },
+            },
+            slideUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
             },
         },
     },

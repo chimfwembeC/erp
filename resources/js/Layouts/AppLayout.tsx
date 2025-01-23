@@ -25,14 +25,15 @@ const notifications = [
 ];
 
 export default function AppLayout({ title, children }: LayoutProps) {
+    const page = useTypedPage();
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
     const [uiPrimaryColor, setUiPrimaryColor] = useState('bg-blue-100');
     const [uiSecondaryColor, setUiSecondaryColor] = useState('bg-yellow-100');
     const [uiNeutralColor, setUiNeutralColor] = useState('bg-gray-100');
     const [showFooter, setShowFooter] = useState(true);
-    const [footerText, setFooterText] = useState('2025 My Application. All rights reserved.');
-    const page = useTypedPage();
+    const [footerText, setFooterText] = useState();
+
     const toggleDropdown = (label: string) => {
         setActiveDropdown(activeDropdown === label ? null : label);
     };
@@ -70,22 +71,12 @@ export default function AppLayout({ title, children }: LayoutProps) {
 
     useEffect(() => {
         // Fetch current customization settings from the backend
-        axios.get('/api/settings/customization')
-            .then(response => {
-                const data = response.data;
-                setUiPrimaryColor(data.ui_primary_color);
-                setUiSecondaryColor(data.ui_secondary_color);
-                setUiNeutralColor(data.ui_neutral_color);
-                setShowFooter(data.show_footer === '1');
-                setFooterText(data.footer_text);
-            })
-            .catch(error => {
-                console.error("Error fetching customization settings:", error);
-            });
+        setShowFooter(page.props.footer?.show_footer === '1' ? true : false)
+        setFooterText(page.props.footer?.footer_text)
     }, []);
 
     return (
-        <div className={`flex flex-col h-screen overflow-hidden ${uiPrimaryColor ? uiPrimaryColor : 'bg-gray-100'} dark:bg-gray-900 dark:text-white`}>
+        <div className={`flex flex-col h-screen overflow-hidden dark:bg-gray-900 dark:text-white`}>
             <Head title={title} />
             <I18nextProvider i18n={i18n}>
                 <Sidebar links={sidebarLinks} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />

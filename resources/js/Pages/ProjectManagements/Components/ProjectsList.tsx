@@ -46,12 +46,12 @@ const ProjectsList = ({ projects }) => {
     return (
         <div>
             {/* Search and New Project Button */}
-            <div className="flex items-center justify-between mb-4 gap-4 flex-wrap">
-                <div className="flex items-center w-full sm:w-2/3 md:w-1/2">
+            <div className="w-full flex items-center justify-between mb-4 gap-4">
+                <div className="w-full">
                     <InputText
                         value={searchTerm}
                         onChange={handleSearchChange}
-                        className="rounded-lg w-full border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
+                        className="rounded-lg w-full dark:bg-gray-800 text- border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
                         placeholder="Search projects"
                     />
                 </div>

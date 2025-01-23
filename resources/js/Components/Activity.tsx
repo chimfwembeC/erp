@@ -17,11 +17,11 @@ const activities = [
 
 const Activity = () => {
     return (
-        <div className="rounded-lg shadow-lg bg-white dark:bg-gray-800 p-6 max-h-96 h-full">
+        <div className="rounded-lg bg-white dark:bg-gray-800 bg-transparent border border-gray-200 dark:border-gray-600 p-6 max-h-[530px] h-full">
             <div className="h-10 mb-4">
                 <div className="text-2xl font-semibold text-gray-800 dark:text-white">Recent Activities</div>
             </div>
-            <div className="overflow-y-scroll max-h-64">
+            <div className="overflow-y-scroll max-h-96 -mx-6 px-6">
                 {activities.map(activity => (
                     <div key={activity.id} className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 bg-gray-100 dark:bg-gray-900 flex justify-between items-center mb-2">
                         <div className="h-10 w-10 bg-gray-800 dark:bg-gray-600 rounded-full">

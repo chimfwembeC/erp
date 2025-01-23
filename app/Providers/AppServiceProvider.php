@@ -31,6 +31,9 @@ class AppServiceProvider extends ServiceProvider
             'socials' => function () {
                 return DB::table('settings')->whereIn('key', ['site_facebook_url', 'site_twitter_url', 'site_instagram_url', 'site_linkedin_url'])->get()->pluck('value', 'key');
             },
+            'footer' => function () {
+                return DB::table('settings')->whereIn('key', ['show_footer', 'footer_text'])->get()->pluck('value', 'key');
+            },
         ]);
     }
 }

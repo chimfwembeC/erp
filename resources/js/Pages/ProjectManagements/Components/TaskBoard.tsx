@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import axios from 'axios';
-import { Circle, CircleAlertIcon, CircleCheck, CircleDot, CircleDotDashed, FilterIcon, MoreHorizontal, PlusSquareIcon, X } from 'lucide-react';
+import { Circle, CircleAlertIcon, CircleCheck, CircleDot, CircleDotDashed, Clock4Icon, FilterIcon, MoreHorizontal, PlusSquareIcon, X } from 'lucide-react';
 import { Avatar } from 'primereact/avatar';
 import Swal from 'sweetalert2';
 import TaskDropdown from './TaskDropdown';
@@ -10,17 +10,7 @@ import AddTaskDropdownInput from './AddTaskDropdownInput';
 const TaskBoard = ({ project, updateTaskStatus }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [taskState, setTaskState] = useState(project?.tasks);
-    // const [selectedType, setSelectedType] = useState('task'); // Default to 'task'
-    // const [formData, setFormData] = useState({
-    //     title: '',
-    //     description: '',
-    //     project_id: project.id,
-    //     assignee_id: '',
-    //     due_date: '',
-    //     milestone_id: '',
-    // });
-
-    const tasks = project?.tasks;
+    // const tasks = project?.tasks;
 
     const onDragEnd = (result) => {
         if (!result.destination) return;
@@ -39,74 +29,15 @@ const TaskBoard = ({ project, updateTaskStatus }) => {
         updateTaskStatus(taskId, newStatus);
     };
 
+    console.log('project', project);
+
     const handleOpenModal = () => {
         setIsModalOpen(true);
     };
 
-    // const handleCloseModal = () => {
-    //     setIsModalOpen(false);
-    //     setFormData({
-    //         title: '',
-    //         description: '',
-    //         project_id: project.id,
-    //         assignee_id: '',
-    //         due_date: '',
-    //         milestone_id: '',
-    //     });
-    // };
-
-    // const handleSubmit = async () => {
-    //     try {
-    //         const type = selectedType; // 'task' or 'issue'
-    //         const result = await Swal.fire({
-    //             title: "Create task?",
-    //             text: 'Are you sure you want to create the task',
-    //             icon: 'question',
-    //             confirmButtonText: 'Yes',
-    //             showCancelButton: true,
-    //             cancelButtonText: 'No'
-    //         });
-
-    //         if (result.isConfirmed) {
-    //             const response = await axios.post(`/projects/${project.id}/${type}s`, formData).then(() => (
-    //                 Swal.fire({
-    //                     title: 'Task created successfully',
-    //                     icon: 'success',
-    //                     position: 'bottom-left',
-    //                     timer: 2000
-    //                 })
-    //             ));
-    //             console.log(`${type.charAt(0).toUpperCase() + type.slice(1)} created:`, response.data);
-
-    //             // Update local state to reflect task status change
-    //             // const updatedTasks = project.tasks.map(task =>
-    //             //     task.id === taskId ? { ...task } : task
-    //             // );
-
-    //             // setTaskState({
-    //             //     ...project,
-    //             //     tasks: updatedTasks
-    //             // })
-    //         } else {
-    //             Swal.fire({
-    //                 title: 'Error while creating task',
-    //                 icon: 'success',
-    //                 position: 'bottom-left',
-    //                 timer: 2000
-    //             })
-    //         }
-
-    //         handleCloseModal();
-    //     } catch (error) {
-    //         console.error('Failed to create:', error);
-    //     }
-    // };
-
-
-
     const columns = [
         { id: 'pending', title: 'Todo', color: 'bg-gray-800', text: 'text-blue-500', icon: <CircleDotDashed size={20} />, description: "This item hasn't been started" },
-        { id: 'in_progress', title: 'In Progress', color: 'bg-gray-800', text: 'text-orange-500', icon: <CircleDot size={20} />, description: 'This is actively being worked on' },
+        { id: 'in_progress', title: 'In Progress', color: 'bg-gray-800', text: 'text-orange-500', icon: <Clock4Icon size={20} />, description: 'This is actively being worked on' },
         // { id: 'review', title: 'Review', color: 'bg-gray-800', text: 'text-yellow-500', icon: <CircleAlertIcon size={20} />, description: 'This has been completed' },
         { id: 'completed', title: 'Done', color: 'bg-gray-800', text: 'text-green-500', icon: <CircleCheck size={20} />, description: 'This has been completed' },
     ];
@@ -197,11 +128,15 @@ const TaskBoard = ({ project, updateTaskStatus }) => {
                                                                             {column.icon}
                                                                         </span>
                                                                         <span className='hover:underline text-black dark:text-white'>
-                                                                            erp #4
+                                                                            {task.issue?.title}
                                                                         </span>
                                                                     </div>
                                                                     <div className="flex justify-between items-center gap-2 ">
-                                                                        <div className='h-6 w-6 rounded-full text-xs border border-indigo-500 text-black dark:text-white bg-gray-400 dark:bg-gray-600 flex justify-center items-center'>ck</div>
+                                                                        <img
+                                                                            src={task.assignee ? `https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true&name=${task.assignee?.name}` : `https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true&name=${""}`}
+                                                                            alt="User Avatar"
+                                                                            className="w-6 h-6 text-xs rounded-full"
+                                                                        />
                                                                         <TaskDropdown taskId={task.id} />
                                                                     </div>
                                                                 </div>
@@ -218,11 +153,6 @@ const TaskBoard = ({ project, updateTaskStatus }) => {
                                     <div className="mt-auto">
                                         <AddTaskDropdownInput projectId={project.id} />
                                     </div>
-                                    {/* <button
-                                        className={`text-gray-400 pl-4 text-start w-full hover:bg-indigo-500 hover:text-white rounded-sm mt-auto p-2`}
-                                    >
-                                        Add Item
-                                    </button> */}
                                 </div>
                             )}
                         </Droppable>
@@ -230,27 +160,6 @@ const TaskBoard = ({ project, updateTaskStatus }) => {
 
                 </div>
             </DragDropContext>
-            {/* <div className="w-full mt-4">
-                <div className="w-full flex justify-between items-center  border-2 border-gray-400 dark:border-gray-600  ring focus:ring-indigo-500 rounded-2xl">
-                    Submit button
-                    <button
-                        onClick={handleSubmit}
-                        className="w-12 h-12 p-2 rounded-l-xl hover:bg-indigo-500 hover:text-white border-r border-gray-200 dark:border-gray-600 flex justify-center items-center bg-gray-200 dark:bg-gray-800 text-gray-400 dark:text-gray-200"
-                    >
-                        <PlusSquareIcon size={45} />
-                    </button>
-
-                    Input field for task title
-                    <input
-                        type="text"
-                        name="title"
-                        placeholder="Enter task title"
-                        value={formData.title}
-                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                        className="text-white dark:text-gray-200 w-full h-12 bg-gray-200 border-none dark:bg-gray-800 p-4 rounded-r-2xl"
-                    />
-                </div>
-            </div> */}
         </div >
     );
 };
