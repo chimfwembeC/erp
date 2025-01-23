@@ -83,6 +83,7 @@ const Sidebar: React.FC<{ links: SidebarLink[]; sidebarOpen: boolean; setSidebar
     };
 
     // Render links
+    // Render links
     const renderLinks = (links: SidebarLink[]) => {
         return links.map(link => (
             <li key={link.labelKey}>
@@ -90,14 +91,16 @@ const Sidebar: React.FC<{ links: SidebarLink[]; sidebarOpen: boolean; setSidebar
                     <div>
                         <div
                             onClick={() => toggleDropdowns(link.labelKey)}
-                            className={`flex items-center justify-between p-3 rounded-md cursor-pointer transition ${activeDropdowns.includes(link.labelKey) ? 'bg-indigo-50 dark:bg-indigo-900' : 'hover:bg-indigo-100 dark:hover:bg-indigo-700'
+                            className={`flex items-center justify-between p-3 rounded-md cursor-pointer transition ${activeDropdowns.includes(link.labelKey)
+                                    ? 'bg-indigo-100 dark:bg-indigo-800'
+                                    : 'hover:bg-indigo-50 dark:hover:bg-gray-700'
                                 }`}
                         >
                             <div className="flex items-center space-x-3">
-                                <span className="text-gray-700 dark:text-white">
-                                    {link.icon}
+                                {link.icon && <span className="text-indigo-600 dark:text-indigo-400">{link.icon}</span>}
+                                <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                                    {t(link.labelKey)}
                                 </span>
-                                <span className="text-sm font-medium text-gray-700 dark:text-white">{link.label}</span>
                             </div>
                             {activeDropdowns.includes(link.labelKey) ? (
                                 <ChevronUp size={18} className="text-gray-500 dark:text-gray-300" />
@@ -105,6 +108,7 @@ const Sidebar: React.FC<{ links: SidebarLink[]; sidebarOpen: boolean; setSidebar
                                 <ChevronDown size={18} className="text-gray-500 dark:text-gray-300" />
                             )}
                         </div>
+
                         {activeDropdowns.includes(link.labelKey) && (
                             <ul className="ml-4 mt-2 space-y-2 border-l-2 border-indigo-100 dark:border-indigo-700 pl-2">
                                 {renderLinks(link.children)}
@@ -112,26 +116,29 @@ const Sidebar: React.FC<{ links: SidebarLink[]; sidebarOpen: boolean; setSidebar
                         )}
                     </div>
                 ) : (
-                    <Link
-                        href={link.href!}
-                        className={`flex items-center p-3 rounded-md transition ${isActiveLink(link.href) ? 'bg-indigo-200 font-semibold text-indigo-800 dark:bg-indigo-900 dark:text-white' : 'hover:bg-indigo-50 dark:hover:bg-indigo-700'
-                            }`}
-                    >
-                        <span className="text-gray-700 dark:text-white">
-                            {link.icon}
-                        </span>
-                        <span className="ml-3 text-sm text-gray-700 dark:text-white">{link.label}</span>
-                        {link.badge && (
-                            <span className="ml-auto inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-600 dark:bg-indigo-800 dark:text-indigo-400">
-                                {link.badge}
-                            </span>
-                        )}
-                    </Link>
+                    <>
+                        <Link
+                            href={link.href!}
+                            className={`flex items-center p-3 rounded-md transition ${isActiveLink(link.href)
+                                    ? 'bg-indigo-200 text-indigo-800 font-semibold dark:bg-indigo-800 dark:text-indigo-200'
+                                    : 'hover:bg-indigo-50 text-gray-700 dark:hover:bg-gray-700 dark:text-gray-200'
+                                }`}
+                        >
+                            {link.icon && <span className="text-indigo-600 dark:text-indigo-400">{link.icon}</span>}
+                            <span className="ml-3 text-sm">{t(link.labelKey)}</span>
+                            {link.badge && (
+                                <span className="ml-auto inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-600 dark:bg-indigo-700 dark:text-indigo-200">
+                                    {link.badge}
+                                </span>
+                            )}
+                        </Link>
+                    </>
                 )}
-                {link.divider && <div className="my-1 -m-4 border-t border-gray-200 dark:border-gray-700"></div>}
+                {link.divider && <div className="my-1 border-t border-gray-200 dark:border-gray-700"></div>}
             </li>
         ));
     };
+
 
     return (
         <>
